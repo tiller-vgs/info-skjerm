@@ -16,6 +16,13 @@ export function NavBar() {
           <a href="/admin" className="hover:underline">
             Admin
           </a>
+          <a href="/auth/signin" className="hover:underline">
+            Logg inn
+          </a>
+          <a href="/auth/signout" className="hover:underline">
+            Logg ut
+          </a>
+          {/* <Button onClick={() => handleSignOut()}>Logg ut</Button> */}
         </div>
       </nav>
     </main>
