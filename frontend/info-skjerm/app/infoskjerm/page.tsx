@@ -24,6 +24,9 @@ export default function InfoPage() {
         <div className="row-span-3">
           <Bus />
         </div>
+        <div className=" absolute right-0 pr-3">
+          <Bus />
+        </div>
       </div>
       {/* <div className="">
         <Info />
