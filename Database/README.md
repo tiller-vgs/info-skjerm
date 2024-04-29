@@ -2,6 +2,8 @@
 
 This database is required to run the application. It contains data for both users and events. It's based on a _Microsoft SQL Server_ docker image.
 
+The port number is by default `1433`
+
 ## Prerequisites
 
 - You must have Docker installed on your machine
