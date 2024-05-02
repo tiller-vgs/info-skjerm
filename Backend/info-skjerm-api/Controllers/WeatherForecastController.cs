@@ -23,12 +23,15 @@ namespace info_skjerm_api.Controllers
             {
                 var content = await response.Content.ReadAsStreamAsync();
                 var jsonElements = await JsonSerializer.DeserializeAsync<WeatherForecastInfo>(content, JsonSerializerOptions.Default);
-
+                var presentTimeData = jsonElements.properties.timeseries[0].data;
                 
-                var airTemperature = jsonElements.properties.timeseries[0].data.instant.details.air_temperature;
 
+                WeatherJsonResponse weatherJsonResponse = new WeatherJsonResponse();
 
-                return Ok(airTemperature);
+                weatherJsonResponse.airTemperature = presentTimeData.instant.details.air_temperature;
+                weatherJsonResponse.symbol_code = presentTimeData.next_1_hours.summary.symbol_code;
+
+                return Ok(weatherJsonResponse);
             }
             else
             {

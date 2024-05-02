@@ -1,33 +1,47 @@
 namespace info_skjerm_api.Model
+
+//LYKKE TIL :-) HILSEN JØRGEN 
 {
-    public class WeatherForecastInfo
+    public struct WeatherForecastInfo
     {
         public Properties properties { get; set; }
     }
 
-    public class Properties
+    public struct Properties
     {
         public List<TimeSeries> timeseries { get; set; }
     }
 
-    public class TimeSeries
+    public struct TimeSeries
     {
         public string time { get; set; }
         public Data data { get; set; }
     }
-    public class Data
+
+    public struct Data
     {
         public Instant instant { get; set; }
 
-        public
+        public Next_1_Hours next_1_hours { get; set; }
     }
 
-    public class Instant
+    public struct Instant
     {
         public Details details { get; set; }
     }
-    public class Details
+
+    public struct Details
     {
         public float air_temperature { get; set; }
+    }
+
+    public struct Next_1_Hours
+    {
+       public Summary summary { get; set; }
+    }
+
+    public struct Summary
+    {
+        public string symbol_code { get; set; }
     }
 }

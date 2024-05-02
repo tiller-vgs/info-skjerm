@@ -4,6 +4,6 @@
     {
         public float airTemperature { get; set; }
 
-        public 
+        public string symbol_code { get; set; }
     }
 }

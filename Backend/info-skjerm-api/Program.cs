@@ -1,11 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using info_skjerm_api;
-using info_skjerm_api.Model;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using System.Text.Json.Serialization;
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().AddJsonOptions(options =>
