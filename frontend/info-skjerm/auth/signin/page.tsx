@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useTransition } from "react";
 
-// import { LoginSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -17,60 +16,48 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoginValue } from "@/types";
-// import { signIn } from "next-auth/react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
+import { LoginSchema } from "@/schemas";
 
 export default function LogIn() {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
 
   const form = useForm({
-    // resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  // const onSubmit = (values: LoginValue) => {
-  //   startTransition(async () => {
-  //     const result = await signIn("credentials", {
-  //       ...values,
-  //       redirect: false,
-  //     });
-  //     if (result && result.error) {
-  //       if (result.error === "CredentialsSignin") {
-  //         toast({
-  //           title: "Feil",
-  //           description: "Ugyldig legitimasjon eller bruker eksisterer ikke",
-  //           duration: 5000,
-  //           variant: "destructive",
-  //         });
-  //       } else {
-  //         toast({
-  //           title: "Feil",
-  //           description: "En feil oppstod. Vennligst prøv igjen",
-  //           duration: 5000,
-  //           variant: "destructive",
-  //         });
-  //       }
-  //     } else {
-  //       window.location.href = "/min-side";
-  //     }
-  //   });
-  // };
-
-  const onSubmit = (values: any) => {
-    console.log(values);
+  const onSubmit = (values: LoginValue) => {
+    startTransition(async () => {
+      const result = await signIn("credentials", {
+        ...values,
+        redirect: false,
+      });
+      if (result && result.error) {
+        if (result.error === "CredentialsSignin") {
+          toast({
+            title: "Feil",
+            description: "Ugyldig legitimasjon eller bruker eksisterer ikke",
+            duration: 5000,
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Feil",
+            description: "En feil oppstod. Vennligst prøv igjen",
+            duration: 5000,
+            variant: "destructive",
+          });
+        }
+      } else {
+        window.location.href = "/min-side";
+      }
+    });
   };
-
-  // const handlerSignInProvider = (provider: string) => {
-  //   startTransition(async () => {
-  //     await signIn(provider);
-  //   });
-  // };
 
   return (
     <>

@@ -13,6 +13,9 @@ export function NavBar() {
           <a href="/admin" className="hover:underline">
             Admin
           </a>
+          <a href="/auth/signin" className="hover:underline">
+            Logg inn
+          </a>
         </div>
       </nav>
     </main>
