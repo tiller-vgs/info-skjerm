@@ -12,8 +12,6 @@ CREATE TABLE Events
     ID INT IDENTITY(1,1) PRIMARY KEY,
     title VARCHAR(100),
     body TEXT,
-    startdate DATE,
-    starttime TIME,
-    enddate DATE,
-    endtime TIME,
+    starttime DATETIME,
+    endtime DATETIME,
 );
