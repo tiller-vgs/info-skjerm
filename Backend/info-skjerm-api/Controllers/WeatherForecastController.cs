@@ -1,3 +1,5 @@
+using System.Text.Json;
+using info_skjerm_api.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace info_skjerm_api.Controllers
@@ -6,28 +8,32 @@ namespace info_skjerm_api.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+        [HttpGet("weatherforecast")]
+        public async Task<IActionResult> GetWeatherForecastAsync()
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+            var apiUrl = "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=63.21&lon=10.22";
 
-        private readonly ILogger<WeatherForecastController> _logger;
+            using HttpClient client = new HttpClient();
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
+            client.DefaultRequestHeaders.Add("User-Agent", "C# console program");
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var response = await client.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
             {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                var content = await response.Content.ReadAsStreamAsync();
+                var jsonElements = await JsonSerializer.DeserializeAsync<WeatherForecastInfo>(content, JsonSerializerOptions.Default);
+
+                
+                var airTemperature = jsonElements.properties.timeseries[0].data.instant.details.air_temperature;
+
+
+                return Ok(airTemperature);
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
         }
     }
 }
