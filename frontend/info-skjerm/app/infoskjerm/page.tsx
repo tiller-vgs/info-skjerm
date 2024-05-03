@@ -24,9 +24,18 @@ export default function InfoPage() {
         <div className="row-span-3">
           <Bus />
         </div>
-        <div className=" absolute right-0 pr-3">
+        <div className="col-span-2">
+          <WeatherHours />
+        </div>
+        <div className="col-span-2">
+          <WeatherDays />
+        </div>
+        <div className="row-span-3">
           <Bus />
         </div>
+      </div>
+      <div className="">
+        <Info />
       </div>
     </main>
   );
