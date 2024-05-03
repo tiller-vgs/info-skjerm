@@ -4,7 +4,7 @@ CREATE TABLE Users
 (
     email VARCHAR(100) PRIMARY KEY,
     fullname VARCHAR(100),
-    password_hash TEXT,
+    password TEXT,
 );
 
 CREATE TABLE Events
