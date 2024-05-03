@@ -28,6 +28,9 @@ export default function InfoPage() {
         <Info />
       </div> */}
       </div>
+      <div className="">
+        <Info />
+      </div>
     </main>
   );
 }
