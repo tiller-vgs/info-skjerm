@@ -35,17 +35,11 @@ datasource db {
 //   @@unique([provider, providerAccountId])
 // }
 
-// model User {
-//   id            String    @id @default(cuid())
-//   name          String?
-//   password      String?
-//   email         String?   @unique
-//   emailVerified DateTime?
-//   image         String?
-//   role          String?   @default("user")
-//   accounts      Account[]
-//   teams         Team[]
-// }
+model User {
+  email    String     @id
+  fullname String
+  password  String
+}
 
 // model Team {
 //   id          String   @id @default(cuid())

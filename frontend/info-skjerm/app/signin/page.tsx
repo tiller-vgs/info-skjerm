@@ -42,14 +42,12 @@ export default function LogIn() {
           toast({
             title: "Feil",
             description: "Ugyldig legitimasjon eller bruker eksisterer ikke",
-            duration: 5000,
             variant: "destructive",
           });
         } else {
           toast({
             title: "Feil",
             description: "En feil oppstod. Vennligst prøv igjen",
-            duration: 5000,
             variant: "destructive",
           });
         }
