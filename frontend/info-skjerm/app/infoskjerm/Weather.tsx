@@ -1,20 +1,21 @@
 import React from "react";
 import WeatherComponent from "./WeatherComponent";
 
-import { weatherData } from "@/data";
+import { weatherDataDays, weatherDataHours } from "@/data";
 
-export default function Weather() {
+export function WeatherDays() {
   return (
-    <div className="border-2 border-white rounded-lg w-screen h-28 flex items-center justify-center">
+    <div className="border-2 border-slate-500 rounded-lg h-28 flex items-center justify-center">
       <div className="w-full">
         <div className=" p-2 grid grid-cols-7 w-full">
-          {weatherData.slice(0, 7).map((data) => {
+          {weatherDataDays.slice(0, 7).map((data) => {
             return (
               <WeatherComponent
                 key={data.date}
                 date={data.date}
                 temperature={data.temperature}
                 symbolCode={data.symbolCode}
+                showWeek  
               />
             );
           })}
@@ -22,4 +23,27 @@ export default function Weather() {
       </div>
     </div>
   );
+}
+
+
+export function WeatherHours() {
+  return (
+    <div className="border-2 border-slate-500 rounded-lg h-28 flex items-center justify-center">
+      <div className="w-full">
+        <div className=" p-2 grid grid-cols-7 w-full">
+          {weatherDataHours.slice(0, 7).map((data) => {
+            return (
+              <WeatherComponent
+                key={data.date}
+                date={data.date}
+                temperature={data.temperature}
+                symbolCode={data.symbolCode}
+                showHours
+              />
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  )
 }

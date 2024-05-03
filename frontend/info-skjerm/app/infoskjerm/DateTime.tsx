@@ -28,7 +28,7 @@ export default function DateTime() {
   });
 
   return (
-    <div className="border-2 border-white rounded-lg w-44 h-28">
+    <div className="border-2 border-slate-500 rounded-lg h-28">
       <h1 className="text-2xl font-bold text-center p-2">{formattedDate}</h1>
       <h1 className="text-2xl font-bold text-center p-2">{formattedTime}</h1>
     </div>
