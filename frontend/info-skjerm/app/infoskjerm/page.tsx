@@ -21,13 +21,9 @@ export default function InfoPage() {
         {/* <div className="col-span-1">
           <Info />
         </div> */}
-        <div className="row-span-3">
+        <div className="col-span-1">
           <Bus />
         </div>
-        <div className=" absolute right-0 pr-3">
-          <Bus />
-        </div>
-      </div>
       {/* <div className="">
         <Info />
       </div> */}
