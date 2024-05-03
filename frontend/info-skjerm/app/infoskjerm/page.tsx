@@ -24,9 +24,10 @@ export default function InfoPage() {
         <div className="col-span-1">
           <Bus />
         </div>
-      {/* <div className="">
+        {/* <div className="">
         <Info />
       </div> */}
+      </div>
     </main>
   );
 }
