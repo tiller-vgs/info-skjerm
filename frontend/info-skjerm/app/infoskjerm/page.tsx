@@ -1,31 +1,29 @@
 "use client";
 import React from "react";
-import Weather from "./Weather";
+import { WeatherHours, WeatherDays } from "./Weather";
 import DateTime from "./DateTime";
 import Bus from "./Bus";
+import Info from "./Info";
 
 export default function InfoPage() {
   return (
-    <main className=" p-3 max-w-screen">
-      <div className=" pb-3 flex gap-3">
-        <DateTime />
-        <Weather />
-      </div>
-      <div className="pt-3 w-screen flex">
-        <div className="border-2 border-white rounded-lg w-96 h-auto max-h-screen overflow-hidden">
-          <h1 className="text-2xl p-3 bg-white bg-opacity-10">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu
-            elit tempor, tempor nunc eget, ultricies dui. Phasellus ut finibus
-            velit. Maecenas sit amet dolor tortor. Fusce eleifend, quam id
-            condimentum porttitor, eros eros sagittis libero, vitae lobortis
-            magna nisi sit amet ipsum. Curabitur cursus, diam et volutpat
-            iaculis, nibh magna aliquet sem, sit amet aliquam tellus lacus eu
-            metus.
-          </h1>
+    <main className="p-3">
+      <div className="grid grid-rows-3 grid-flow-col gap-4">
+        <div className="row-span-3">
+          <DateTime />
         </div>
-        <div className=" absolute right-0 pr-3">
+        <div className="col-span-2">
+          <WeatherHours />
+        </div>
+        <div className="col-span-2">
+          <WeatherDays />
+        </div>
+        <div className="row-span-3">
           <Bus />
         </div>
+      </div>
+      <div className="">
+        <Info />
       </div>
     </main>
   );
