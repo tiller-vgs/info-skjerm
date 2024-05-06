@@ -11,29 +11,8 @@ generator client {
 // prisma/schema.prisma
 datasource db {
   provider  = "sqlserver"
-  url  	    = "sa@localhost:1433;database=Info_Skjerm;password=mysecretpassword;trustServerCertificate=true;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
-  // uncomment next line if you use Prisma <5.10
-  // directUrl = env("DATABASE_URL_UNPOOLED")
+  url = env("DATABASE_URL")
 }
-
-// model Account {
-//   id                 String  @id @default(cuid())
-//   userId             String
-//   type               String
-//   provider           String
-//   providerAccountId  String
-//   refresh_token      String?  @db.Text
-//   access_token       String?  @db.Text
-//   expires_at         Int?
-//   token_type         String?
-//   scope              String?
-//   id_token           String?  @db.Text
-//   session_state      String?
-
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   @@unique([provider, providerAccountId])
-// }
 
 model User {
   email    String     @id
@@ -41,15 +20,10 @@ model User {
   password  String
 }
 
-// model Team {
-//   id          String   @id @default(cuid())
-//   name        String
-//   email       String
-//   countParticipants String
-//   youngestParticipant String
-//   oldestParticipant String
-//   teamName    String   @unique
-//   createdAt   DateTime @default(now())
-//   createdBy   User     @relation(fields: [createdById], references: [id])
-//   createdById String
-// }
+model Events {
+  ID        Int      @id @default(autoincrement())
+  title     String   
+  body      String
+  starttime DateTime
+  endtime   DateTime
+}
