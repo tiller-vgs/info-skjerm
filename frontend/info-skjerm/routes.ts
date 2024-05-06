@@ -10,7 +10,7 @@ export const publicRoutes = ["/", "/infoskjerm"];
  * These routes will redirect logged in users to /dashboard.
  * @type {string[]}
  */
-export const authRoutes = ["/signin", "/auth/register"];
+export const authRoutes = ["/auth/signin", "/auth/register"];
 
 /**
  * The prefix for API authentication routes.
