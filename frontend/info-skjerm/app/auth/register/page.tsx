@@ -1,58 +1,56 @@
 "use client";
+import { RegisterValue } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { useTransition } from "react";
-
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
-  FormLabel,
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { LoginValue } from "@/types";
-import { signIn } from "next-auth/react";
+import { Input } from "@/components/ui/input";
+import { RegisterSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { register } from "@/actions";
+import Link from "next/link";
+import React, { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
-import { LoginSchema } from "@/schemas";
 
-export default function LogIn() {
+export default function SignUp() {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: LoginValue) => {
+  const onSubmit = (values: RegisterValue) => {
     startTransition(async () => {
-      const result = await signIn("credentials", {
-        ...values,
-        redirect: false,
-      });
-      if (result && result.error) {
-        if (result.error === "CredentialsSignin") {
-          toast({
-            title: "Feil",
-            description: "Ugyldig legitimasjon eller bruker eksisterer ikke",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Feil",
-            description: "En feil oppstod. Vennligst prøv igjen",
-            variant: "destructive",
-          });
-        }
-      } else {
-        window.location.href = "/min-side";
+      const result = await register(values);
+
+      if (result.error) {
+        toast({
+          title: "Feil",
+          description: result.error,
+          variant: "destructive",
+        });
+      }
+      if (result.success) {
+        toast({
+          title: "Suksess",
+          description: result.success,
+          variant: "default",
+        });
+        router.push("/auth/login");
       }
     });
   };
@@ -60,20 +58,42 @@ export default function LogIn() {
   return (
     <>
       <head>
-        <title>Logg inn</title>
-        <meta name="description" content="Logg inn" />
+        <title>Register</title>
+        <meta name="Register" content="Register page" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
-      <main className="flex flex-col items-center justify-center min-h-screen ">
+      <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
         <Card className=" w-[400]">
           <CardHeader>
-            <CardTitle className="font-bold">Logg inn</CardTitle>
+            <CardTitle className="font-bold">Registrer</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-6">
             <Form {...form}>
               <form
                 className="space-y-6"
                 onSubmit={form.handleSubmit(onSubmit)}
               >
+                <div className="flex flex-col space-y-1.5">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Navn</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            disabled={isPending}
+                            id="name"
+                            type="text"
+                            placeholder="Ola Nordmann"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <div className="flex flex-col space-y-1.5">
                   <FormField
                     control={form.control}
@@ -87,7 +107,7 @@ export default function LogIn() {
                             disabled={isPending}
                             id="email"
                             type="email"
-                            placeholder="Email"
+                            placeholder="E-post"
                           />
                         </FormControl>
                         <FormMessage />
@@ -108,7 +128,7 @@ export default function LogIn() {
                             disabled={isPending}
                             type="password"
                             id="Password"
-                            placeholder="Password"
+                            placeholder="Passord"
                           />
                         </FormControl>
                         <FormMessage />
@@ -116,10 +136,11 @@ export default function LogIn() {
                     )}
                   />
                 </div>
+
                 <div className="flex gap-3">
-                  <Link href="/auth/register">
+                  <Link href="/auth/login">
                     <Button className="w-full" variant="outline">
-                      Har du ikke konto?
+                      Har allerede en konto?
                     </Button>
                   </Link>
                   <Button
@@ -128,7 +149,7 @@ export default function LogIn() {
                     type="submit"
                     disabled={isPending}
                   >
-                    Logg inn
+                    Registrer
                   </Button>
                 </div>
               </form>
