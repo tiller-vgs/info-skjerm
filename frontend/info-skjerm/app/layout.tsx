@@ -3,12 +3,14 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "../components/ui/NavBar";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Info-skjerm",
-  description: "Info-skjermen til IT ved Tiller VGS",
+  description: "Info-skjermen til IT-linjen ved Tiller VGS",
 };
 
 export default function RootLayout({
@@ -17,20 +19,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="no">
-      <body className={inter.className}>
-        <main className=" min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NavBar />
-            {children}
-          </ThemeProvider>
-        </main>
-      </body>
-    </html>
+    <SessionProvider>
+      <html lang="no">
+        <body className={inter.className}>
+          <NavBar />
+          <main className=" min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </main>
+          <Toaster />
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

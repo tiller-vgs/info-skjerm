@@ -25,6 +25,9 @@ export default function InfoPage() {
           <Bus />
         </div>
       </div>
+      <div className="">
+        <Info />
+      </div>
     </main>
   );
 }
