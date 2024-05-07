@@ -9,13 +9,13 @@ export default function InfoPage() {
   return (
     <main className="p-3">
       <div className="grid grid-rows-3 grid-flow-col gap-4">
-        <div className="row-span-2">
+        <div className="row-span-3">
           <DateTime />
         </div>
-        <div className="row-span-2">
+        <div className="row-span-3">
           <WeatherHours />
         </div>
-        <div className="row-span-3 col-span-1">
+        <div className="col-span-1">
           <WeatherDays />
         </div>
         <div className="col-span-1">
