@@ -1,6 +1,6 @@
 namespace info_skjerm_api.Model
 
-//LYKKE TIL :-) HILSEN JØRGEN 
+//Objekt oppsett basert pï¿½ yr apiet
 {
     public struct WeatherForecastInfo
     {
@@ -23,6 +23,8 @@ namespace info_skjerm_api.Model
         public Instant instant { get; set; }
 
         public Next_1_Hours next_1_hours { get; set; }
+        
+        public Next_6_Hours next_6_hours { get; set; }
     }
 
     public struct Instant
@@ -38,6 +40,11 @@ namespace info_skjerm_api.Model
     public struct Next_1_Hours
     {
        public Summary summary { get; set; }
+    }
+
+    public struct Next_6_Hours
+    {
+        public Summary summary { get; set; }
     }
 
     public struct Summary
