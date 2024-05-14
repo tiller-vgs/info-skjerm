@@ -79,5 +79,5 @@ export function WeatherHours() {
         </div>
       </div>
     </div>
-  )
+  );
 }
