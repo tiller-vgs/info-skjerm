@@ -18,16 +18,16 @@ export default function InfoPage() {
         <div className="col-span-1">
           <WeatherDays />
         </div>
-        <div className="col-span-1">
+        {/* <div className="col-span-1">
           <Info />
-        </div>
+        </div> */}
         <div className="row-span-3">
           <Bus />
         </div>
       </div>
-      <div className="">
+      {/* <div className="">
         <Info />
-      </div>
+      </div> */}
     </main>
   );
 }
