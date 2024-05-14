@@ -1,6 +1,6 @@
 namespace info_skjerm_api.Model
 
-//Objekt oppsett basert på yr apiet
+//Objekt oppsett basert pï¿½ yr apiet
 {
     public struct WeatherForecastInfo
     {
