@@ -1,7 +1,7 @@
 /*
-This file is for all GET-endpoints for Events
+This file is for all POST-endpoints for Events
 For other endpoints, create new controllers
-The route for these endpoints are {baseurl}/GetEvents/{endpoint}
+The route for these endpoints are {baseurl}/PostEvents/{endpoint}
 
 Authored by @Marcus-Aastum
 */
