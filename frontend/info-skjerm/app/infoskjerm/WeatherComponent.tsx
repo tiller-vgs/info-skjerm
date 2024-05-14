@@ -34,7 +34,7 @@ export default function WeatherComponent({
     } else if (showHours) {
       setHours(new Date(date).getHours());
     }
-  }, [showHours, showWeek]);
+  }, [date, showHours, showWeek]);
 
   return (
     <>
@@ -51,7 +51,7 @@ export default function WeatherComponent({
             temperature >= 0 ? "text-red-500" : "text-blue-500"
           }`}
         >
-          {temperature}
+          {temperature}˚
         </h2>
       </div>
     </>
