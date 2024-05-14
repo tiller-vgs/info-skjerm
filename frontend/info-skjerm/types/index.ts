@@ -18,7 +18,7 @@ export type UpdateProfileValue = {
 };
 
 export type weatherData = {
-  date: string;
+  time: string;
   airTemperature: number;
-  symbolCode: string;
+  symbol_code: string;
 };

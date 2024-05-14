@@ -1,25 +1,41 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import WeatherComponent from "./WeatherComponent";
 
-import { weatherDataDays, weatherDataHours } from "@/data";
 import { weatherData } from "@/types";
 
 export function WeatherDays() {
+  const [weatherDaysData, setWeatherDaysData] = useState<weatherData>();
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    startTransition(async () => {
+      await fetch("http://localhost:5237/WeatherForecast/NextDays")
+        .then((response) => response.json())
+        .then((data) => setWeatherDaysData(data))
+        .catch((error) => console.error("Error:", error));
+    });
+  }, []);
+
   return (
     <div className="border-2 border-slate-500 rounded-lg h-28 flex items-center justify-center">
       <div className="w-full">
-        <div className=" p-2 grid grid-cols-7 w-full">
-          {weatherDataDays.slice(0, 7).map((data) => {
-            return (
-              <WeatherComponent
-                key={data.date}
-                date={data.date}
-                temperature={data.temperature}
-                symbolCode={data.symbolCode}
-                showWeek
-              />
-            );
-          })}
+        <div className=" p-2 grid grid-cols-5 w-full">
+          {isPending ? (
+            <p>Loading...</p>
+          ) : (
+            weatherDaysData &&
+            weatherDaysData.slice(0, 5).map((data) => {
+              return (
+                <WeatherComponent
+                  key={data.time}
+                  date={data.time}
+                  temperature={Math.floor(data.airTemperature)}
+                  symbolCode={data.symbol_code}
+                  showWeek
+                />
+              );
+            })
+          )}
         </div>
       </div>
     </div>
@@ -28,40 +44,38 @@ export function WeatherDays() {
 
 export function WeatherHours() {
   const [weatherHoursData, setWeatherHoursData] = useState<weatherData>();
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    fetch("http://localhost:5237/WeatherForecast/weatherforecast")
-      .then((response) => response.json())
-      .then((data) => setWeatherHoursData(data))
-      .catch((error) => console.error("Error:", error));
+    startTransition(async () => {
+      await fetch("http://localhost:5237/WeatherForecast/Today")
+        .then((response) => response.json())
+        .then((data) => setWeatherHoursData(data))
+        .catch((error) => console.error("Error:", error));
+    });
   }, []);
 
   return (
     <div className="border-2 border-slate-500 rounded-lg h-28 flex items-center justify-center">
       <div className="w-full">
-        <div className=" p-2 grid grid-cols-7 w-full">
-          {weatherDataHours.slice(0, 4).map((data) => {
-            return (
-              <WeatherComponent
-                key={data.date}
-                date={data.date}
-                temperature={data.temperature}
-                symbolCode={data.symbolCode}
-                showHours
-              />
-            );
-          })}
-          {/* {weatherHoursData && (
-            <WeatherComponent
-              // key={data.date}
-              date={"2021-10-10T10:00:00Z"}
-              temperature={parseInt(
-                Math.floor(weatherHoursData.airTemperature)
-              )}
-              symbolCode={weatherHoursData.symbolCode}
-              showHours
-            />
-          )} */}
+        <div className=" p-2 grid grid-cols-5 w-full">
+          {isPending ? (
+            <p>Loading...</p>
+          ) : (
+            weatherHoursData &&
+            weatherHoursData.slice(0, 5).map((data) => {
+              return (
+                <div key={data.time} className=" w-16">
+                  <WeatherComponent
+                    date={data.time}
+                    temperature={Math.floor(data.airTemperature)}
+                    symbolCode={data.symbol_code}
+                    showHours
+                  />
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     </div>
