@@ -22,7 +22,6 @@ export function NavBar() {
           <a href="/auth/signout" className="hover:underline">
             Logg ut
           </a>
-          {/* <Button onClick={() => handleSignOut()}>Logg ut</Button> */}
         </div>
       </nav>
     </main>
