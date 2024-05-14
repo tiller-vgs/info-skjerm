@@ -16,3 +16,9 @@ export type UpdateProfileValue = {
   email?: string | null | undefined;
   id?: string | null | undefined;
 };
+
+export type weatherData = {
+  date: string;
+  airTemperature: number;
+  symbolCode: string;
+};
