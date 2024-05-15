@@ -6,14 +6,31 @@ import { weatherData } from "@/types";
 export function WeatherDays() {
   const [weatherDaysData, setWeatherDaysData] = useState<weatherData>();
   const [isPending, startTransition] = useTransition();
+  const [firstRender, setFirstRender] = useState(true);
 
-  useEffect(() => {
+  const fetchWeather = () => {
     startTransition(async () => {
       await fetch("http://localhost:5237/WeatherForecast/NextDays")
         .then((response) => response.json())
         .then((data) => setWeatherDaysData(data))
         .catch((error) => console.error("Error:", error));
     });
+  };
+
+  useEffect(() => {
+    if (firstRender) {
+      fetchWeather();
+      setFirstRender(false);
+    }
+    setInterval(() => {
+      if (new Date().getHours() === 12) {
+        fetchWeather();
+        console.log(
+          "fetching next days weather at",
+          new Date().toLocaleTimeString("no-BK")
+        );
+      }
+    }, 1000 * 60 * 60);
   }, []);
 
   return (
@@ -45,14 +62,33 @@ export function WeatherDays() {
 export function WeatherHours() {
   const [weatherHoursData, setWeatherHoursData] = useState<weatherData>();
   const [isPending, startTransition] = useTransition();
+  const [firstRender, setFirstRender] = useState(true);
 
-  useEffect(() => {
+  const fetchWeather = () => {
     startTransition(async () => {
       await fetch("http://localhost:5237/WeatherForecast/Today")
         .then((response) => response.json())
         .then((data) => setWeatherHoursData(data))
         .catch((error) => console.error("Error:", error));
     });
+  };
+
+  useEffect(() => {
+    if (firstRender) {
+      fetchWeather();
+      setFirstRender(false);
+    }
+    setInterval(() => {
+      if (new Date().getMinutes() === 15) {
+        startTransition(async () => {
+          fetchWeather();
+          console.log(
+            "fetching todays weather at",
+            new Date().toLocaleTimeString("no-BK")
+          );
+        });
+      }
+    }, 1000 * 60);
   }, []);
 
   return (
