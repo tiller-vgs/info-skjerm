@@ -23,14 +23,14 @@ export function WeatherDays() {
       setFirstRender(false);
     }
     setInterval(() => {
-      if (new Date().getMinutes() === 15) {
+      if (new Date().getHours() === 12) {
         fetchWeather();
         console.log(
           "fetching next days weather at",
           new Date().toLocaleTimeString("no-BK")
         );
       }
-    }, 1000 * 60);
+    }, 1000 * 60 * 60);
   }, []);
 
   return (
