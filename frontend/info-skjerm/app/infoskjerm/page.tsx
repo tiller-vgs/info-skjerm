@@ -21,13 +21,13 @@ export default function InfoPage() {
         {/* <div className="col-span-1">
           <Info />
         </div> */}
-        <div className="col-span-1">
+        <div className="row-span-3">
           <Bus />
         </div>
-        {/* <div className="">
+      </div>
+      {/* <div className="">
         <Info />
       </div> */}
-      </div>
     </main>
   );
 }
