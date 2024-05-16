@@ -35,3 +35,10 @@ export type busDataValues = {
   northBound: BusItem[];
   southBound: BusItem[];
 };
+
+export type EventsValues = {
+  title: string;
+  body: string;
+  starttime: Date | null;
+  endtime: Date | null;
+}

@@ -1,6 +1,6 @@
 "use server";
 
-import { RegisterValue } from "@/types";
+import { EventsValues, RegisterValue } from "@/types";
 import { RegisterSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
@@ -50,4 +50,27 @@ export const handleSignOut = async () => {
 export const getUser = async () => {
   const session = await auth();
   return session;
+};
+
+export const createEvent = async (values: EventsValues) => {
+  try {
+    const res = await fetch("http://localhost:5237/PostEvents/createevent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+      },
+      body: JSON.stringify(values),
+    });
+    console.log(res);
+
+    if (res.ok) {
+      return { success: "Event opprettet!" };
+    } else {
+      return { error: "En feil oppstod, venligst prøv igjen" };
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return { error: `En feil oppstod, venligst prøv igjen: ${error}` };
+  }
 };
