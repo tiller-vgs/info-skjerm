@@ -62,12 +62,6 @@ export default function LogIn() {
     });
   };
 
-  const handlerSignInProvider = (provider: string) => {
-    startTransition(async () => {
-      await signIn(provider);
-    });
-  };
-
   return (
     <>
       <head>
