@@ -22,3 +22,16 @@ export type weatherData = {
   airTemperature: number;
   symbol_code: string;
 };
+
+export type BusItem = {
+  busLine: number;
+  destination: string;
+  time: string;
+  isRealTime: boolean;
+};
+
+export type busDataValues = {
+  all: BusItem[];
+  northBound: BusItem[];
+  southBound: BusItem[];
+};
