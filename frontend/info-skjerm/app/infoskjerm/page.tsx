@@ -22,7 +22,10 @@ export default function InfoPage() {
           <Info />
         </div> */}
         <div className="row-span-3">
-          <Bus />
+          <div className="mb-2">
+            <Bus north/>
+          </div>
+          <Bus south/>
         </div>
       </div>
       {/* <div className="">
