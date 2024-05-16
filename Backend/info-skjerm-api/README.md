@@ -15,7 +15,7 @@ You must have .net 8 installed.
 To launch the application: 
 
 1. Navigate to ..\info-skjerm\Backend\info-skjerm-api in your terminal
-2. Run the command: '''bash dotnet run build''' it will open port 
+2. Run the command: "dotnet run build"
 3. To open the swagger page type /swagger after the url.
 
 ## shutting down the backend
