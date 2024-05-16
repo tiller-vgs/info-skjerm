@@ -38,8 +38,21 @@ export default function Bus({ south, north }: Props) {
   }, [firstRender]);
 
   const formatTime = (timeString: string) => {
-    const date = new Date(timeString);
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const now = new Date();
+    const departureTime = new Date(timeString);
+    const diffMs = departureTime.getTime() - now.getTime();
+    const diffMins = Math.floor(diffMs / 1000 / 60);
+
+    if (diffMins <= 0) return "Nå";
+
+    if (diffMins >= 0 && diffMins < 10) {
+      return `${diffMins} min`;
+    }
+
+    return departureTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
   return (
