@@ -42,3 +42,12 @@ export type EventsValues = {
   starttime: Date | null;
   endtime: Date | null;
 }
+
+export type TodaysEventsData = {
+  id: number;
+  title: string;
+  body: string;
+  starttime: Date;
+  endtime: Date | undefined;
+};
+
