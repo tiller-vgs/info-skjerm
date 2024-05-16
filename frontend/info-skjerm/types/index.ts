@@ -23,6 +23,26 @@ export type weatherData = {
   symbol_code: string;
 };
 
+export type BusItem = {
+  busLine: number;
+  destination: string;
+  time: string;
+  isRealTime: boolean;
+};
+
+export type busDataValues = {
+  all: BusItem[];
+  northBound: BusItem[];
+  southBound: BusItem[];
+};
+
+export type EventsValues = {
+  title: string;
+  body: string;
+  starttime: Date | null;
+  endtime: Date | null;
+}
+
 export type TodaysEventsData = {
   id: number;
   title: string;
@@ -30,3 +50,4 @@ export type TodaysEventsData = {
   starttime: Date;
   endtime: Date | undefined;
 };
+

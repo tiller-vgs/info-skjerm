@@ -57,14 +57,8 @@ export default function LogIn() {
           });
         }
       } else {
-        router.push("/admin");
+        window.location.reload();
       }
-    });
-  };
-
-  const handlerSignInProvider = (provider: string) => {
-    startTransition(async () => {
-      await signIn(provider);
     });
   };
 

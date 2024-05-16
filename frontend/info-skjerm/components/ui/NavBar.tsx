@@ -1,6 +1,8 @@
+import { auth } from "@/auth";
 import Link from "next/link";
 
-export function NavBar() {
+export async function NavBar() {
+  const session = await auth();
   return (
     <main>
       <nav className="flex items-center justify-between p-4 bg-gray-800 text-white">
@@ -16,12 +18,11 @@ export function NavBar() {
           <a href="/admin" className="hover:underline">
             Admin
           </a>
-          <a href="/auth/signin" className="hover:underline">
-            Logg inn
-          </a>
-          <a href="/auth/signout" className="hover:underline">
-            Logg ut
-          </a>
+          {session && (
+            <a href="/auth/signout" className="hover:underline">
+              Logg ut
+            </a>
+          )}
         </div>
       </nav>
     </main>

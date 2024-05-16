@@ -1,13 +1,13 @@
 "use server";
 
-import { RegisterValue } from "@/types";
+import { EventsValues, RegisterValue } from "@/types";
 import { RegisterSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { auth, signOut } from "@/auth";
 
 export const register = async (values: RegisterValue) => {
-  const users = await db.user.findMany();
+  const users = await db.users.findMany();
   console.log(users);
 
   const validatedFields = RegisterSchema.safeParse(values);
@@ -22,7 +22,7 @@ export const register = async (values: RegisterValue) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const existingUser = await db.user.findUnique({
+  const existingUser = await db.users.findUnique({
     where: {
       email,
     },
@@ -32,7 +32,7 @@ export const register = async (values: RegisterValue) => {
     return { error: "Epost allerede i bruk!" };
   }
 
-  await db.user.create({
+  await db.users.create({
     data: {
       fullname: name,
       email,
@@ -50,4 +50,27 @@ export const handleSignOut = async () => {
 export const getUser = async () => {
   const session = await auth();
   return session;
+};
+
+export const createEvent = async (values: EventsValues) => {
+  try {
+    const res = await fetch("http://localhost:5237/PostEvents/createevent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+      },
+      body: JSON.stringify(values),
+    });
+    console.log(res);
+
+    if (res.ok) {
+      return { success: "Event opprettet!" };
+    } else {
+      return { error: "En feil oppstod, venligst prøv igjen" };
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return { error: `En feil oppstod, venligst prøv igjen: ${error}` };
+  }
 };
