@@ -15,7 +15,7 @@ export default function Bus({ south, north }: Props) {
 
   const fetchBusData = () => {
     startTransition(async () => {
-      await fetch("http://localhost:5237/BusTimes/departures?num=8")
+      await fetch("http://localhost:5237/BusTimes/departures?num=15")
         .then((response) => response.json())
         .then((data) => setBusData(data))
         .catch((error) => console.error("Error:", error));
@@ -43,11 +43,11 @@ export default function Bus({ south, north }: Props) {
     <div className="border-2 border-slate-500 rounded-lg h-auto pb-2">
       <div>
         <h1 className="text-2xl font-bold text-center p-1">
-          {south ? "Tillerterminalen 2" : "Tillerterminalen 1"}
+          {south ? "Tillerterminalen 1" : "Tillerterminalen 2"}
         </h1>
         <div className="flex justify-between flex-col-3 gap-2 border-b border-slate-700 p-2 mb-2">
           <h1>Linje</h1>
-          <h1>Til</h1>
+          <h1 className="mr-10">Til</h1>
           <h1>Kl.</h1>
         </div>
         <div className="p-2">
