@@ -33,6 +33,7 @@ namespace info_skjerm_api.Controllers
             //Defines a request object with url and graphql-query
             var request = new HttpRequestMessage(HttpMethod.Post, "https://api.entur.io/journey-planner/v3/graphql");
             var query = """{"query": "{ stopPlace( id: \"NSR:StopPlace:44029\" ) { id name estimatedCalls( numberOfDepartures: """ + num.ToString() + """ ) { realtime aimedArrivalTime expectedArrivalTime destinationDisplay { frontText } quay { id } serviceJourney { journeyPattern { line { id name transportMode } } } } }}"}""";
+
             
             //Sends the request and converts response into a "Businfo" object
             HttpClient httpClient = new HttpClient();
@@ -62,6 +63,7 @@ namespace info_skjerm_api.Controllers
                     northBound.Add(busRoute);
                 }
                 else if (jsonResponse.data.stopPlace.estimatedCalls[i].quay.id == "NSR:Quay:75607"){
+
                     southBound.Add(busRoute);
                 }
             }
