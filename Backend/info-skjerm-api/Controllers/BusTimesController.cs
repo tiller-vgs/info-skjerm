@@ -51,7 +51,7 @@ namespace info_skjerm_api.Controllers
             {
                 //Assigns the departure to a "BusRoute"-object, and adds it to a list of all bus departures
                 BusRoute busRoute = new BusRoute();
-                busRoute.name = jsonResponse.data.stopPlace.estimatedCalls[i].destinationDisplay.frontText;
+                busRoute.destination = jsonResponse.data.stopPlace.estimatedCalls[i].destinationDisplay.frontText;
                 busRoute.time = jsonResponse.data.stopPlace.estimatedCalls[i].expectedArrivalTime;
                 busRoute.isRealTime = jsonResponse.data.stopPlace.estimatedCalls[i].realtime;
                 busRoute.busLine = Int32.Parse(jsonResponse.data.stopPlace.estimatedCalls[i].serviceJourney.journeyPattern.line.id.Split(":")[2].Split("_")[1]);

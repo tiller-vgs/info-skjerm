@@ -4,7 +4,7 @@ namespace info_skjerm_api.Model
     public struct BusRoute
     {
         public int busLine { get; set; }
-        public string name { get; set; }
+        public string destination { get; set; }
         public DateTime time { get; set; }
         public bool isRealTime { get; set; }
     }
