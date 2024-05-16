@@ -21,7 +21,8 @@ export default function InfoPage() {
           </div>
         </div>
         <div className="float-right">
-          <Bus />
+          <Bus north/>
+          <Bus south/>
         </div>
       </div>
       <div className=" float-left -mt-60">

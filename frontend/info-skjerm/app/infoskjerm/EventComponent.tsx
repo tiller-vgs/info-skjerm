@@ -19,7 +19,7 @@ export default function EventComponent({
 }: EventComponentProps) {
   return (
     <>
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center p-4">
         <h1 className="text-2xl font-bold">{title}</h1>
         <h2 className="text-xl">{body}</h2>
         <h2>

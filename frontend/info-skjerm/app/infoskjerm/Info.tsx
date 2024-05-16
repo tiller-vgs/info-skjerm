@@ -60,7 +60,7 @@ export default function Info() {
             else{return 0}
           } )).map((x) =>{
             return(
-              <div className="border-2 border-slate-500 rounded-lg overflow-hidden">
+              <div className="border-2 border-slate-500 rounded-lg overflow-hidden mb-2">
                 <EventComponent title={x.title} body={x.body} starttime={x.starttime}  endtime={x.endtime} />
               </div>
             )
