@@ -22,3 +22,11 @@ export type weatherData = {
   airTemperature: number;
   symbol_code: string;
 };
+
+export type TodaysEventsData = {
+  id: number;
+  title: string;
+  body: string;
+  starttime: Date;
+  endtime: Date | undefined;
+};
