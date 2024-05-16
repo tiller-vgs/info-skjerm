@@ -13,25 +13,28 @@ export default function Bus({ south, north }: Props) {
   const [isPending, startTransition] = useTransition();
   const [firstRender, setFirstRender] = useState(true);
 
-  const fetchBusData = () => {
+  const fetchBusData = async () => {
     startTransition(async () => {
-      await fetch("http://localhost:5237/BusTimes/departures?num=15")
-        .then((response) => response.json())
-        .then((data) => setBusData(data))
-        .catch((error) => console.error("Error:", error));
+      try {
+        const response = await fetch(
+          "http://localhost:5237/BusTimes/departures?num=15"
+        );
+        const data = await response.json();
+        setBusData(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
     });
   };
 
   useEffect(() => {
     if (firstRender) {
-      setBusData(null);
       fetchBusData();
       setFirstRender(false);
     }
     setInterval(() => {
-      setBusData(null);
       fetchBusData();
-    }, 1000 * 30);
+    }, 1000 * 5);
   }, [firstRender]);
 
   const formatTime = (timeString: string) => {
@@ -51,45 +54,41 @@ export default function Bus({ south, north }: Props) {
           <h1>Kl.</h1>
         </div>
         <div className="p-2">
-          {busData && busData ? (
-            south ? (
-              busData.northBound.map((data: BusItem) => (
-                <div
-                  key={data.busLine}
-                  className="flex justify-between flex-col-3 gap-2 border-b border-slate-700 pb-2 mb-2"
-                >
-                  <h2 className="text-xl font-bold">{data.busLine}</h2>
-                  <h2 className="text-xl font-bold">{data.destination}</h2>
-                  <p
-                    className={`text-lg font-bold ${
-                      data.isRealTime ? "text-yellow-300" : "white"
-                    }`}
+          {busData &&
+            busData &&
+            (south
+              ? busData.northBound.map((data: BusItem, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-between flex-col-3 gap-2 border-b border-slate-700 pb-2 mb-2"
                   >
-                    {formatTime(data.time)}
-                  </p>
-                </div>
-              ))
-            ) : (
-              busData.southBound.map((data: BusItem) => (
-                <div
-                  key={data.busLine}
-                  className="flex justify-between flex-col-3 gap-2 border-b border-slate-700 pb-2 mb-2"
-                >
-                  <h2 className="text-xl font-bold">{data.busLine}</h2>
-                  <h2 className="text-xl font-bold">{data.destination}</h2>
-                  <p
-                    className={`text-lg font-bold ${
-                      data.isRealTime ? "text-yellow-300" : "white"
-                    }`}
+                    <h2 className="text-xl font-bold">{data.busLine}</h2>
+                    <h2 className="text-xl font-bold">{data.destination}</h2>
+                    <p
+                      className={`text-lg font-bold ${
+                        data.isRealTime ? "text-yellow-300" : "white"
+                      }`}
+                    >
+                      {formatTime(data.time)}
+                    </p>
+                  </div>
+                ))
+              : busData.southBound.map((data: BusItem, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-between flex-col-3 gap-2 border-b border-slate-700 pb-2 mb-2"
                   >
-                    {formatTime(data.time)}
-                  </p>
-                </div>
-              ))
-            )
-          ) : (
-            <h1 className="text-2xl font-bold text-center p-1">Loading...</h1>
-          )}
+                    <h2 className="text-xl font-bold">{data.busLine}</h2>
+                    <h2 className="text-xl font-bold">{data.destination}</h2>
+                    <p
+                      className={`text-lg font-bold ${
+                        data.isRealTime ? "text-yellow-300" : "white"
+                      }`}
+                    >
+                      {formatTime(data.time)}
+                    </p>
+                  </div>
+                )))}
         </div>
       </div>
     </div>
