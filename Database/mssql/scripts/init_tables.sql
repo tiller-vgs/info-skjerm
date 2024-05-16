@@ -1,6 +1,6 @@
 USE Info_Skjerm;
 
-CREATE TABLE User
+CREATE TABLE Users
 (
     email VARCHAR(100) PRIMARY KEY,
     fullname VARCHAR(100),
