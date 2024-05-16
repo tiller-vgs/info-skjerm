@@ -1,4 +1,4 @@
-##Backend Guide
+## Backend Guide
 
 The info-skjerm backend is responsible retrieval, processing and storage of data. 
 The program is mainly a rest api that has various endpoints (more info under ##endpoints).
@@ -7,11 +7,11 @@ The default port is 5237
 
 
 
-##prerequisites 
+## prerequisites 
 
 You must have .net 8 installed.
 
-##Launching the backend
+## Launching the backend
 
 To launch the application: 
 
