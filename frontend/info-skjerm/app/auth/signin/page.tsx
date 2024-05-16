@@ -57,7 +57,7 @@ export default function LogIn() {
           });
         }
       } else {
-        router.push("/admin");
+        window.location.reload();
       }
     });
   };
