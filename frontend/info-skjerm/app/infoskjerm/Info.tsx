@@ -14,23 +14,10 @@ export default function Info() {
       await fetch("http://localhost:5237/GetEvents/todaysevents")
         .then((response) => response.json())
         .then((data) => {setTodaysEventsData(data)})
-        // .then((data) => console.log(data[0].title))
         .catch((error) => console.error("Error:", error));
     });
-    // if (todaysEventsData != undefined){
-    // setTodaysEventsData(todaysEventsData.sort((a, b) =>{
-    //   if (a.starttime < b.starttime){
-    //     return -1
-    //   }
-    //   if (a.starttime > b.starttime){
-    //     return 1
-    //   }
-    //   else{return 0}
-    // } ))}
   };
   console.log(todaysEventsData)
-
-  // todaysEventsData?.concat( {"id": 1, "title": "meow", "body": "meow", "starttime": undefined, "endtime": undefined });
 
   useEffect(() => {
     if (firstRender) {
@@ -67,9 +54,6 @@ export default function Info() {
           })
         )
       }
-      {/* <div className="border-2 border-slate-500 rounded-lg overflow-hidden">
-        <EventComponent title="test" body="test" />
-      </div> */}
     </div>
   );
 }
