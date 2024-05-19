@@ -9,11 +9,11 @@ export default function InfoPage() {
   return (
     <main className="p-3">
       <div className=" w-full">
-        <div className="grid grid-rows-3 grid-flow-col gap-4 float-left">
-          <div className="row-span-1">
+        <div className="grid grid-flow-col gap-4 float-left">
+          <div className="row-span-1 mb-0">
             <DateTime />
           </div>
-          <div className="row-span-3">
+          <div className="row-span-3 mb-0">
             <WeatherHours />
           </div>
           <div className="row-span-1">
@@ -21,16 +21,13 @@ export default function InfoPage() {
           </div>
         </div>
         <div className="float-right">
-          <Bus north/>
           <Bus south/>
+          <Bus north/>
         </div>
       </div>
-      <div className=" float-left -mt-60">
+      <div className=" float-left mr-52">
         <Info />
       </div>
-      {/* <div className="">
-        <Info />
-      </div> */}
     </main>
   );
 }
