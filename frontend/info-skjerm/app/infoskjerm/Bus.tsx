@@ -50,7 +50,7 @@ export default function Bus({ south, north }: Props) {
   };
 
   return (
-    <div className="border-2 border-slate-500 rounded-lg h-auto pb-2 mb-3">
+    <div className="border-2 border-slate-500 rounded-lg h-auto pb-2">
       <div>
         <h1 className="text-2xl font-bold text-center p-1">
           {south ? "Tillerterminalen 1" : "Tillerterminalen 2"}
