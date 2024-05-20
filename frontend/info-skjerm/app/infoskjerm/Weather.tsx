@@ -25,10 +25,6 @@ export function WeatherDays() {
     setInterval(() => {
       if (new Date().getHours() === 12) {
         fetchWeather();
-        console.log(
-          "fetching next days weather at",
-          new Date().toLocaleTimeString("no-BK")
-        );
       }
     }, 1000 * 60 * 60);
   }, []);
@@ -82,10 +78,6 @@ export function WeatherHours() {
       if (new Date().getMinutes() === 15) {
         startTransition(async () => {
           fetchWeather();
-          console.log(
-            "fetching todays weather at",
-            new Date().toLocaleTimeString("no-BK")
-          );
         });
       }
     }, 1000 * 60);
