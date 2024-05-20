@@ -25,7 +25,7 @@ The port number is by default `1433`
 
 ## Shutting down the database
 
-- If you're running in the terminal, press `control/command + C`
+- If you're running in the terminal, press `control + C`
 - If you're running from _Docker Desktop_, press the stop-button
 
 ## Deleting the database
