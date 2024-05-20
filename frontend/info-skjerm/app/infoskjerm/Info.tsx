@@ -1,19 +1,67 @@
-import React from 'react'
+import { TodaysEventsData } from "@/types";
+import React, { useEffect, useState, useTransition } from "react";
+import EventComponent from "./EventComponent";
 
 export default function Info() {
+  const [todaysEventsData, setTodaysEventsData] =
+    useState<TodaysEventsData[]>();
+  const [isPending, startTransition] = useTransition();
+  const [firstRender, setFirstRender] = useState(true);
+
+  const fetchTodaysevents = () => {
+    startTransition(async () => {
+      await fetch("http://localhost:5237/GetEvents/todaysevents")
+        .then((response) => response.json())
+        .then((data) => {
+          setTodaysEventsData(data);
+        })
+        .catch((error) => console.error("Error:", error));
+    });
+  };
+
+  function sortEvents(events: TodaysEventsData[]) {
+    events.sort((a, b) => {
+      if (a.starttime < b.starttime) {
+        return -1;
+      }
+      if (a.starttime > b.starttime) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return events;
+  }
+
+  useEffect(() => {
+    if (firstRender) {
+      fetchTodaysevents();
+      setFirstRender(false);
+    }
+    setInterval(() => {
+      fetchTodaysevents();
+    }, 1000 * 10);
+  }, []);
+
   return (
     <div className="">
-        <div className="border-2 border-slate-500 rounded-lg overflow-hidden">
-          <h1 className="text-2xl p-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu
-            elit tempor, tempor nunc eget, ultricies dui. Phasellus ut finibus
-            velit. Maecenas sit amet dolor tortor. Fusce eleifend, quam id
-            condimentum porttitor, eros eros sagittis libero, vitae lobortis
-            magna nisi sit amet ipsum. Curabitur cursus, diam et volutpat
-            iaculis, nibh magna aliquet sem, sit amet aliquam tellus lacus eu
-            metus.
-          </h1>
-        </div>
-      </div>
-  )
+      {todaysEventsData == undefined ? (
+        <p>Loading</p>
+      ) : (
+        sortEvents(todaysEventsData).map((data) => {
+            return (
+              <div className="border-2 border-slate-500 rounded-lg overflow-hidden mb-2">
+                <EventComponent
+                  title={data.title}
+                  body={data.body}
+                  starttime={data.starttime}
+                  endtime={data.endtime}
+                  key={data.id}
+                />
+              </div>
+            );
+          })
+      )}
+    </div>
+  );
 }
