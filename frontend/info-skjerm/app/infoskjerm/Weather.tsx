@@ -34,9 +34,9 @@ export function WeatherDays() {
   }, []);
 
   return (
-    <div className="border-2 border-slate-500 rounded-lg h-28 flex items-center justify-center p-2">
+    <div className="border-2 border-slate-500 rounded-lg h-28 flex items-center justify-center">
       <div className="w-full">
-        <div className=" p-5 grid grid-cols-5 w-full gap-3">
+        <div className=" p-2 grid grid-cols-5 w-full">
           {isPending ? (
             <p>Loading...</p>
           ) : (
