@@ -1,7 +1,6 @@
 import { TodaysEventsData } from "@/types";
 import React, { useEffect, useState, useTransition } from "react";
 import EventComponent from "./EventComponent";
-import { weatherDataDays } from "@/data";
 
 export default function Info() {
   const [todaysEventsData, setTodaysEventsData] =
@@ -13,11 +12,26 @@ export default function Info() {
     startTransition(async () => {
       await fetch("http://localhost:5237/GetEvents/todaysevents")
         .then((response) => response.json())
-        .then((data) => {setTodaysEventsData(data)})
+        .then((data) => {
+          setTodaysEventsData(data);
+        })
         .catch((error) => console.error("Error:", error));
     });
   };
-  console.log(todaysEventsData)
+
+  function sortEvents(events: TodaysEventsData[]) {
+    events.sort((a, b) => {
+      if (a.starttime < b.starttime) {
+        return -1;
+      }
+      if (a.starttime > b.starttime) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return events;
+  }
 
   useEffect(() => {
     if (firstRender) {
@@ -25,35 +39,29 @@ export default function Info() {
       setFirstRender(false);
     }
     setInterval(() => {
-      if (new Date().getHours() === 12) {
-        fetchTodaysevents();
-        
-      }
-    }, 1000 * 60 * 60);
+      fetchTodaysevents();
+    }, 1000 * 10);
   }, []);
 
   return (
     <div className="">
-      {
-        
-        (todaysEventsData == undefined) ? (<p>Loading</p>):(
-          (todaysEventsData.sort((a, b) =>{
-            if (a.starttime < b.starttime){
-              return -1
-            }
-            if (a.starttime > b.starttime){
-              return 1
-            }
-            else{return 0}
-          } )).map((x) =>{
-            return(
+      {todaysEventsData == undefined ? (
+        <p>Loading</p>
+      ) : (
+        sortEvents(todaysEventsData).map((data) => {
+            return (
               <div className="border-2 border-slate-500 rounded-lg overflow-hidden mb-2">
-                <EventComponent title={x.title} body={x.body} starttime={x.starttime}  endtime={x.endtime} />
+                <EventComponent
+                  title={data.title}
+                  body={data.body}
+                  starttime={data.starttime}
+                  endtime={data.endtime}
+                  key={data.id}
+                />
               </div>
-            )
+            );
           })
-        )
-      }
+      )}
     </div>
   );
 }
