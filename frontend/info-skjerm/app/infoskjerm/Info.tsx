@@ -50,7 +50,7 @@ export default function Info() {
         sortEvents(todaysEventsData).map((data) => {
           return (
             <div
-              className="border-2 border-slate-500 rounded-lg overflow-hidden mb-2 grid grid-cols-1 "
+              className="border-2 border-slate-500 rounded-lg overflow-hidden mb-2 "
               key={data.id}
             >
               <EventComponent
