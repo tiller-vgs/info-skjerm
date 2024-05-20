@@ -16,5 +16,6 @@ export const RegisterSchema = z.object({
 export const CreateEventsSchema = z.object({
   title: z.string().min(1, { message: "Tittel er påkrevd!" }),
   body: z.string().min(1, { message: "Informasjon er påkrevd!" }),
-  starttime: z.string(),
+  starttime: z.string({ message: "Vennligst oppgi en start dato" }),
+  endtime: z.string().optional(),
 });
