@@ -28,7 +28,7 @@ export function CreateEvent() {
       title: "",
       body: "",
       starttime: new Date(),
-      endtime: new Date(),
+      endtime: undefined,
     },
   });
 

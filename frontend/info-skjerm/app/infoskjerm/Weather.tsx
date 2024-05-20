@@ -25,18 +25,14 @@ export function WeatherDays() {
     setInterval(() => {
       if (new Date().getHours() === 12) {
         fetchWeather();
-        console.log(
-          "fetching next days weather at",
-          new Date().toLocaleTimeString("no-BK")
-        );
       }
     }, 1000 * 60 * 60);
   }, []);
 
   return (
-    <div className="border-2 border-slate-500 rounded-lg h-28 flex items-center justify-center">
+    <div className="border-2 border-slate-500 rounded-lg h-28 flex items-center justify-center p-2">
       <div className="w-full">
-        <div className=" p-2 grid grid-cols-5 w-full">
+        <div className=" p-5 grid grid-cols-5 w-full gap-8">
           {isPending ? (
             <p>Loading...</p>
           ) : (
@@ -82,10 +78,6 @@ export function WeatherHours() {
       if (new Date().getMinutes() === 15) {
         startTransition(async () => {
           fetchWeather();
-          console.log(
-            "fetching todays weather at",
-            new Date().toLocaleTimeString("no-BK")
-          );
         });
       }
     }, 1000 * 60);
