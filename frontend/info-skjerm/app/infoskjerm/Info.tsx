@@ -43,14 +43,14 @@ export default function Info() {
   }, [firstRender]);
 
   return (
-    <div className="">
+    <div className="grid grid-cols-3 gap-8">
       {todaysEventsData == undefined ? (
         <p>Loading</p>
       ) : (
         sortEvents(todaysEventsData).map((data) => {
           return (
             <div
-              className="border-2 border-slate-500 rounded-lg overflow-hidden mb-2"
+              className="border-2 border-slate-500 rounded-lg overflow-hidden mb-2 "
               key={data.id}
             >
               <EventComponent
