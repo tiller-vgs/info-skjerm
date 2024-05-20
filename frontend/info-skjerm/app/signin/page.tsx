@@ -62,10 +62,6 @@ export default function LogIn() {
   //   });
   // };
 
-  const onSubmit = (values: any) => {
-    console.log(values);
-  };
-
   // const handlerSignInProvider = (provider: string) => {
   //   startTransition(async () => {
   //     await signIn(provider);
