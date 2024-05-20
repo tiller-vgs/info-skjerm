@@ -37,9 +37,8 @@ export type busDataValues = {
 };
 
 export type EventsValues = {
-  id: number;
   title: string;
   body: string;
-  starttime: Date;
-  endtime: Date | null;
+  starttime: Date | string | null;
+  endtime: Date | string | null;
 };
