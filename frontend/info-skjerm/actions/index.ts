@@ -7,6 +7,9 @@ import { db } from "@/lib/db";
 import { auth, signOut } from "@/auth";
 
 export const register = async (values: RegisterValue) => {
+  const users = await db.users.findMany();
+  console.log(users);
+
   const validatedFields = RegisterSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -59,6 +62,7 @@ export const createEvent = async (values: EventsValues) => {
       },
       body: JSON.stringify(values),
     });
+    console.log(res);
 
     if (res.ok) {
       return { success: "Event opprettet!" };
@@ -66,6 +70,7 @@ export const createEvent = async (values: EventsValues) => {
       return { error: "En feil oppstod, venligst prøv igjen" };
     }
   } catch (error) {
+    console.error("Error:", error);
     return { error: `En feil oppstod, venligst prøv igjen: ${error}` };
   }
 };
