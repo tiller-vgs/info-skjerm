@@ -3,16 +3,9 @@
 interface EventComponentProps {
   title: string;
   body: string;
-  starttime: Date;
-  endtime?: Date;
 }
 
-export default function EventComponent({
-  title,
-  body,
-  starttime,
-  endtime,
-}: EventComponentProps) {
+export default function EventComponent({ title, body }: EventComponentProps) {
   return (
     <>
       <div className="flex flex-col items-center justify-center p-4 max-w-96 text-center">

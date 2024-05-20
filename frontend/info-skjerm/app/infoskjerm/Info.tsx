@@ -1,10 +1,9 @@
-import { TodaysEventsData } from "@/types";
+import { EventsValues } from "@/types";
 import React, { useEffect, useState, useTransition } from "react";
 import EventComponent from "./EventComponent";
 
 export default function Info() {
-  const [todaysEventsData, setTodaysEventsData] =
-    useState<TodaysEventsData[]>();
+  const [todaysEventsData, setTodaysEventsData] = useState<EventsValues[]>();
   const [isPending, startTransition] = useTransition();
   const [firstRender, setFirstRender] = useState(true);
 
@@ -19,7 +18,7 @@ export default function Info() {
     });
   };
 
-  function sortEvents(events: TodaysEventsData[]) {
+  function sortEvents(events: EventsValues[]) {
     events.sort((a, b) => {
       if (a.starttime < b.starttime) {
         return -1;
@@ -41,7 +40,7 @@ export default function Info() {
     setInterval(() => {
       fetchTodaysevents();
     }, 1000 * 10);
-  }, []);
+  }, [firstRender]);
 
   return (
     <div className="">
@@ -49,18 +48,19 @@ export default function Info() {
         <p>Loading</p>
       ) : (
         sortEvents(todaysEventsData).map((data) => {
-            return (
-              <div className="border-2 border-slate-500 rounded-lg overflow-hidden mb-2">
-                <EventComponent
-                  title={data.title}
-                  body={data.body}
-                  starttime={data.starttime}
-                  endtime={data.endtime}
-                  key={data.id}
-                />
-              </div>
-            );
-          })
+          return (
+            <div
+              className="border-2 border-slate-500 rounded-lg overflow-hidden mb-2"
+              key={data.id}
+            >
+              <EventComponent
+                title={data.title}
+                body={data.body}
+                key={data.id}
+              />
+            </div>
+          );
+        })
       )}
     </div>
   );

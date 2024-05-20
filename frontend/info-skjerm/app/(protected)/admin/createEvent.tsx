@@ -27,7 +27,7 @@ export function CreateEvent() {
     defaultValues: {
       title: "",
       body: "",
-      starttime: new Date().toISOString().split("T")[0],
+      starttime: new Date(),
       endtime: undefined,
     },
   });
