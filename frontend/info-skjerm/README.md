@@ -20,4 +20,4 @@
 1. Navigate to this folder in your terminal (Frontend/infoskjerm)
 1. Run the command `npm run dev`
 1. Your website is now up on `http://localhost:3000`
-1. To shut down the website, press `control/command` + `C`, followed by the letter `y` on the next prompt
+1. To shut down the website, press `control` + `C`, followed by the letter `y` on the next prompt
