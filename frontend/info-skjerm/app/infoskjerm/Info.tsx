@@ -1,6 +1,7 @@
 import { EventsValues } from "@/types";
 import React, { useEffect, useState, useTransition } from "react";
 import EventComponent from "./EventComponent";
+import { getEvent } from "@/actions";
 
 export default function Info() {
   const [todaysEventsData, setTodaysEventsData] = useState<EventsValues[]>();
@@ -8,14 +9,12 @@ export default function Info() {
   const [firstRender, setFirstRender] = useState(true);
 
   const fetchTodaysevents = () => {
+    let eventdata: EventsValues[]= []
     startTransition(async () => {
-      await fetch("http://localhost:5237/GetEvents/todaysevents")
-        .then((response) => response.json())
-        .then((data) => {
-          setTodaysEventsData(data);
-        })
-        .catch((error) => console.error("Error:", error));
+      setTodaysEventsData(await getEvent())
     });
+    // console.log(eventdata)
+    return eventdata;
   };
 
   function sortEvents(events: EventsValues[]) {
@@ -39,11 +38,12 @@ export default function Info() {
     }
     setInterval(() => {
       fetchTodaysevents();
+      // console.log(todaysEventsData)
     }, 1000 * 10);
   }, [firstRender]);
 
   return (
-    <div className="grid grid-cols-3 gap-8">
+    <div className="grid grid-cols-3 gap-4">
       {todaysEventsData == undefined ? (
         <p>Loading</p>
       ) : (

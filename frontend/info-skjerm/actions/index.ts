@@ -69,3 +69,37 @@ export const createEvent = async (values: EventsValues) => {
     return { error: `En feil oppstod, venligst prøv igjen: ${error}` };
   }
 };
+export async function getEvent() {
+  let eventdata: EventsValues[] = []
+  await fetch("http://localhost:5237/GetEvents/todaysevents")
+    .then((response) => response.json())
+    .then((data) => {
+      eventdata = data;
+    })
+    .catch((error) => console.error("Error:", error));
+  return eventdata;
+};
+export async function getTodayWeather() {
+  let weatherdata: any
+  await fetch("http://localhost:5237/WeatherForecast/Today")
+        .then((response) => response.json())
+        .then((data) => weatherdata = data)
+        .catch((error) => console.error("Error:", error));
+  return weatherdata;
+};
+export async function getWeekWeather() {
+  let weatherdata: any
+  await fetch("http://localhost:5237/WeatherForecast/NextDays")
+        .then((response) => response.json())
+        .then((data) => weatherdata = data)
+        .catch((error) => console.error("Error:", error));
+  return weatherdata;
+};
+export async function getBus() {
+  let busdata: any
+  await fetch("http://localhost:5237/BusTimes/departures?num=15")
+        .then((response) => response.json())
+        .then((data) => busdata = data)
+        .catch((error) => console.error("Error:", error));
+  return busdata;
+};

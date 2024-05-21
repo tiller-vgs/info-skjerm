@@ -1,5 +1,6 @@
 "use client";
 
+import { getBus } from "@/actions";
 import { BusItem, busDataValues } from "@/types";
 import React, { useEffect, useState, useTransition } from "react";
 
@@ -15,15 +16,8 @@ export default function Bus({ south, north }: Props) {
 
   const fetchBusData = async () => {
     startTransition(async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5237/BusTimes/departures?num=15"
-        );
-        const data = await response.json();
-        setBusData(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
+      let busdata = await getBus();
+      setBusData(busdata);
     });
   };
 
