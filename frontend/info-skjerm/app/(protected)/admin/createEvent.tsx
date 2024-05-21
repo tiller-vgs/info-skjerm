@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-
 import {
   Form,
   FormControl,
@@ -19,22 +18,33 @@ import { createEvent } from "@/actions";
 import { CreateEventsSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+function formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 export function CreateEvent() {
-  const [isPending, startTransistion] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<EventsValues>({
     resolver: zodResolver(CreateEventsSchema),
     defaultValues: {
       title: "",
       body: "",
-      starttime: new Date(),
+      starttime: formatDate(new Date()),
       endtime: undefined,
     },
   });
 
   function onSubmit(data: EventsValues) {
-    startTransistion(async () => {
-      const response = await createEvent(data);
+    startTransition(async () => {
+      const response = await createEvent({
+        ...data,
+        starttime: new Date(data.starttime),
+        endtime: data.endtime ? new Date(data.endtime) : undefined,
+      });
       if (response.success) {
         toast({
           title: "Suksess",
@@ -53,9 +63,9 @@ export function CreateEvent() {
   }
 
   return (
-    <div className=" pr-10 pl-10 pb-20">
+    <div className="pr-10 pl-10 pb-20">
       <Form {...form}>
-        <div className=" flex items-center justify-center">
+        <div className="flex items-center justify-center">
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8 w-96"
@@ -95,7 +105,14 @@ export function CreateEvent() {
                     <FormItem>
                       <FormLabel>Start</FormLabel>
                       <FormControl>
-                        <Input {...field} type="date" />
+                        <Input
+                          {...field}
+                          type="date"
+                          value={
+                            field.value ? formatDate(new Date(field.value)) : ""
+                          }
+                          onChange={(e) => field.onChange(e.target.value)}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -110,7 +127,14 @@ export function CreateEvent() {
                     <FormItem>
                       <FormLabel>Slutt</FormLabel>
                       <FormControl>
-                        <Input {...field} type="date" />
+                        <Input
+                          {...field}
+                          type="date"
+                          value={
+                            field.value ? formatDate(new Date(field.value)) : ""
+                          }
+                          onChange={(e) => field.onChange(e.target.value)}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -118,12 +142,10 @@ export function CreateEvent() {
                 />
               </div>
             </div>
-            <div>
-              <div className="flex justify-center">
-                <Button type="submit" disabled={isPending}>
-                  Opprett event
-                </Button>
-              </div>
+            <div className="flex justify-center">
+              <Button type="submit" disabled={isPending}>
+                Opprett event
+              </Button>
             </div>
           </form>
         </div>
