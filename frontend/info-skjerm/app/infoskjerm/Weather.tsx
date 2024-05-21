@@ -2,6 +2,7 @@ import { useEffect, useState, useTransition } from "react";
 import WeatherComponent from "./WeatherComponent";
 
 import { weatherData } from "@/types";
+import { getTodayWeather, getWeekWeather } from "@/actions";
 
 export function WeatherDays() {
   const [weatherDaysData, setWeatherDaysData] = useState<weatherData>();
@@ -10,10 +11,8 @@ export function WeatherDays() {
 
   const fetchWeather = () => {
     startTransition(async () => {
-      await fetch("http://localhost:5237/WeatherForecast/NextDays")
-        .then((response) => response.json())
-        .then((data) => setWeatherDaysData(data))
-        .catch((error) => console.error("Error:", error));
+      let weatherdata = await getWeekWeather()
+      setWeatherDaysData(weatherdata)
     });
   };
 
@@ -62,10 +61,8 @@ export function WeatherHours() {
 
   const fetchWeather = () => {
     startTransition(async () => {
-      await fetch("http://localhost:5237/WeatherForecast/Today")
-        .then((response) => response.json())
-        .then((data) => setWeatherHoursData(data))
-        .catch((error) => console.error("Error:", error));
+      let weatherdata = await getTodayWeather()
+      setWeatherHoursData(weatherdata)
     });
   };
 
