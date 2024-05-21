@@ -1,11 +1,11 @@
 import { useEffect, useState, useTransition } from "react";
 import WeatherComponent from "./WeatherComponent";
 
-import { weatherData } from "@/types";
+import { WeatherData } from "@/types";
 import { getTodayWeather, getWeekWeather } from "@/actions";
 
 export function WeatherDays() {
-  const [weatherDaysData, setWeatherDaysData] = useState<weatherData>();
+  const [weatherDaysData, setWeatherDaysData] = useState<WeatherData>();
   const [isPending, startTransition] = useTransition();
   const [firstRender, setFirstRender] = useState(true);
 
@@ -55,7 +55,7 @@ export function WeatherDays() {
 }
 
 export function WeatherHours() {
-  const [weatherHoursData, setWeatherHoursData] = useState<weatherData>();
+  const [weatherHoursData, setWeatherHoursData] = useState<WeatherData>();
   const [isPending, startTransition] = useTransition();
   const [firstRender, setFirstRender] = useState(true);
 

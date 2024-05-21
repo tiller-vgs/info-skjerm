@@ -9,9 +9,9 @@ export default function Info() {
   const [firstRender, setFirstRender] = useState(true);
 
   const fetchTodaysevents = () => {
-    let eventdata: EventsValues[]= []
+    let eventdata: EventsValues[] = [];
     startTransition(async () => {
-      setTodaysEventsData(await getEvent())
+      setTodaysEventsData(await getEvent());
     });
     // console.log(eventdata)
     return eventdata;

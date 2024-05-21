@@ -7,7 +7,6 @@ export type RegisterValue = {
   name: string;
   email: string;
   password: string;
-  confirmPassword: string;
 };
 
 export type UpdateProfileValue = {
@@ -17,11 +16,14 @@ export type UpdateProfileValue = {
   id?: string | null | undefined;
 };
 
-export type weatherData = {
+export interface WeatherDataItem {
   time: string;
   airTemperature: number;
   symbol_code: string;
-};
+}
+
+export type WeatherData = WeatherDataItem[];
+
 
 export type BusItem = {
   busLine: number;
@@ -40,6 +42,6 @@ export type EventsValues = {
   id: number;
   title: string;
   body: string;
-  starttime: Date;
-  endtime: Date | null;
+  starttime: Date | string;
+  endtime: Date | string | undefined;
 };
