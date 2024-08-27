@@ -1,21 +1,19 @@
 import { EventsValues } from "@/types";
 import React, { useEffect, useState, useTransition } from "react";
 import EventComponent from "./EventComponent";
-import { getEvent } from "@/actions";
+import info from "../../../info.json";
 
 export default function Info() {
   const [todaysEventsData, setTodaysEventsData] = useState<EventsValues[]>();
   const [isPending, startTransition] = useTransition();
   const [firstRender, setFirstRender] = useState(true);
 
-  const fetchTodaysevents = () => {
-    let eventdata: EventsValues[] = [];
-    startTransition(async () => {
-      setTodaysEventsData(await getEvent());
-    });
-    // console.log(eventdata)
-    return eventdata;
-  };
+  useEffect(() => {
+    if (firstRender) {
+      setTodaysEventsData(info);
+      setFirstRender(false);
+    }
+  }, [firstRender]);
 
   function sortEvents(events: EventsValues[]) {
     events.sort((a, b) => {
@@ -33,11 +31,11 @@ export default function Info() {
 
   useEffect(() => {
     if (firstRender) {
-      fetchTodaysevents();
+      // fetchTodaysevents();
       setFirstRender(false);
     }
     setInterval(() => {
-      fetchTodaysevents();
+      // fetchTodaysevents();
       // console.log(todaysEventsData)
     }, 1000 * 10);
   }, [firstRender]);
