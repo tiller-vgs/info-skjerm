@@ -1,43 +1,19 @@
 services:
-  mssql:
-    container_name: sql-server
-    user: root
-    image: mcr.microsoft.com/mssql/server:latest
+  postgres:
+    container_name: postgres-server
+    image: postgres:15
     restart: always
     environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: info_skjerm
     ports:
-      - 1433:1433
+      - 5432:5432
     volumes:
-      - ./mssql/data:/var/opt/mssql/data
-      - ./mssql/scripts:/scripts/
-      - ./mssql/.initialized:/var/opt/mssql/.initialized
-    command:
-      - /bin/bash
-      - -c
-      - |
-        # Launch MSSQL and send to background
-        /opt/mssql/bin/sqlservr &
-        pid=$!
-        # Wait for it to be available
-        echo "Waiting for database"
-        /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P $$SA_PASSWORD -Q "SET NOCOUNT ON SELECT \"YAY WE ARE UP\" , @@servername"
-        is_up=$$?
-        while [ $$is_up -ne 0 ] ; do 
-          echo -e $$(date) 
-          /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P $$SA_PASSWORD -Q "SET NOCOUNT ON SELECT \"YAY WE ARE UP\" , @@servername"
-          is_up=$$?
-          sleep 5 
-        done
-        if [ ! -f /var/opt/mssql/.initialized/meow ]; then 
-          for foo in /scripts/*.sql
-            do /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i $$foo
-          done
-          touch /var/opt/mssql/.initialized/meow
-        fi
-        # trap SIGTERM and send same to sqlservr process for clean shutdown
-        trap "kill -15 $$pid" SIGTERM
-        # Wait on the sqlserver process
-        wait $$pid
-        exit 0
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/scripts:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

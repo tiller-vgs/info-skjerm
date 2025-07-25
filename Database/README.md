@@ -1,8 +1,8 @@
 # Database Guide
 
-This database is required to run the application. It contains data for both users and events. It's based on a _Microsoft SQL Server_ docker image.
+This database is required to run the application. It contains data for both users and events. It's based on a _PostgreSQL_ docker image.
 
-The port number is by default `1433`
+The port number is by default `5432`
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ The port number is by default `1433`
 ## Launching the database for the first time
 
 1. Create a new file in the _Database_ folder called `.env`
-1. Inside this file, write `DATABASE_PASSWORD=` followed by a suitible password for your databse
+1. Inside this file, write `DATABASE_PASSWORD=` followed by a suitable password for your database
    1. For example, your `.env` file could look like this: `DATABASE_PASSWORD=mysecurepassword`
 1. Open your command line or terminal
 1. Navigate to the "Database" folder
@@ -37,12 +37,13 @@ To delete the database, **including all data**, complete the following steps:
    ```bash
    docker compose down -v
    ```
-1. Delete the folders `Database/mssql/data` and `Database/mssql/.initialized`
+1. Delete the folder `Database/postgres/data`
 
 ## For developers: adding startup-scripts
 
 If you would like for more sql-commands to run on startup, do the following:
 
-1. Navigate to the `Database/mssql/scripts/` folder. By default you'll find a file named _init.sql_
-1. Either create a new file ending with `.sql` or add additional commands to the _init.sql_ file
-1. If you've ran the database before, follow the steps in the _Deleting the database_ section, as these sql commands only run when the database is first created
+1. Navigate to the `Database/postgres/scripts/` folder. By default you'll find a file named _01-init-tables.sql_
+1. Either create a new file ending with `.sql` or add additional commands to an existing file
+1. **Note:** Files are executed in alphabetical order, so use numeric prefixes (01-, 02-, etc.) to control execution order
+1. If you've run the database before, follow the steps in the _Deleting the database_ section, as these sql commands only run when the database is first created

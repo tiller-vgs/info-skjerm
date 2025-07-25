@@ -10,19 +10,19 @@ generator client {
 
 // prisma/schema.prisma
 datasource db {
-  provider  = "sqlserver"
-  url = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Users {
-  email    String     @id
+  email    String @id
   fullname String
-  password  String
+  password String
 }
 
 model Events {
   ID        Int      @id @default(autoincrement())
-  title     String   
+  title     String
   body      String
   starttime DateTime
   endtime   DateTime

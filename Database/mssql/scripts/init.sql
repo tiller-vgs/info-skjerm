@@ -1,1 +1,0 @@
-CREATE DATABASE Info_Skjerm;
