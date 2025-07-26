@@ -9,7 +9,7 @@ export default function LeaderboardComponent({
   rotationInterval = 15000, // 15 seconds by default, configurable
 }: {
   title: string;
-  leaderboardData: LeaderboardData | undefined;
+  leaderboardData: LeaderboardData | undefined | null;
   rotationInterval?: number;
 }) {
   const [currentPage, setCurrentPage] = useState(0);

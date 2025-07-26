@@ -14,6 +14,7 @@
    DATABASE_URL="postgresql://postgres:mysecurepassword@localhost:5433/info_skjerm"
    TQ_BACKEND_URL="http://url:PORT"
    API_KEY="super-secure-superlong-random-string"
+   API_SECRET="super-secure-superlonger-random-string"
    ```
 1. Use your terminal, and navigate to this folder (Frontend/infoskjerm)
 1. Run the command `npm install`
