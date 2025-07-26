@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { NavBar } from "../components/ui/NavBar";
+import { NavBarWrapper } from "@/components/ui/NavBarWrapper";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
@@ -22,7 +22,7 @@ export default function RootLayout({
     <SessionProvider>
       <html lang="no">
         <body className={inter.className}>
-          <NavBar />
+          <NavBarWrapper />
           <main className=" min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
             <ThemeProvider
               attribute="class"

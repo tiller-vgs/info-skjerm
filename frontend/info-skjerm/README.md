@@ -11,7 +11,9 @@
 1. Fill out these following variables. Auth secret can be any string you want. Replace the _mysecurepassword_ property in the DATABASE_URL with the password you've configured your database with.
    ```
    AUTH_SECRET="YourAuthSecretHere"
-   DATABASE_URL="postgresql://postgres:mysecurepassword@localhost:5432/info_skjerm"
+   DATABASE_URL="postgresql://postgres:mysecurepassword@localhost:5433/info_skjerm"
+   TQ_BACKEND_URL="http://url:PORT"
+   API_KEY="super-secure-superlong-random-string"
    ```
 1. Use your terminal, and navigate to this folder (Frontend/infoskjerm)
 1. Run the command `npm install`

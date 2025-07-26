@@ -3,7 +3,7 @@
 The info-skjerm backend is responsible retrieval, processing and storage of data.
 The program is mainly a rest api that has various endpoints, see swagger page for overview.
 
-The default port is `5237`
+The default port for the backend is `5237`
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ To be able to use the events endpoints you need a appsettings.json file in your 
 ```json
 {
   "ConnectionStrings": {
-    "Default": "Host=localhost;Port=5432;Database=info_skjerm;Username=postgres;Password=mysecurepassword;"
+    "Default": "Host=localhost;Port=5433;Database=info_skjerm;Username=postgres;Password=mysecurepassword;"
   }
 }
 ```

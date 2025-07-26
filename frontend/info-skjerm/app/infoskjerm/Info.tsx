@@ -39,7 +39,7 @@ export default function Info() {
     setInterval(() => {
       fetchTodaysevents();
       // console.log(todaysEventsData)
-    }, 1000 * 10);
+    }, 1000 * 60); // fetch every 60 seconds
   }, [firstRender]);
 
   return (

@@ -11,8 +11,8 @@ export function WeatherDays() {
 
   const fetchWeather = () => {
     startTransition(async () => {
-      let weatherdata = await getWeekWeather()
-      setWeatherDaysData(weatherdata)
+      let weatherdata = await getWeekWeather();
+      setWeatherDaysData(weatherdata);
     });
   };
 
@@ -25,7 +25,7 @@ export function WeatherDays() {
       if (new Date().getHours() === 12) {
         fetchWeather();
       }
-    }, 1000 * 60 * 60);
+    }, 1000 * 60 * 60); // fetch every hour at 12
   }, []);
 
   return (
@@ -61,8 +61,8 @@ export function WeatherHours() {
 
   const fetchWeather = () => {
     startTransition(async () => {
-      let weatherdata = await getTodayWeather()
-      setWeatherHoursData(weatherdata)
+      let weatherdata = await getTodayWeather();
+      setWeatherHoursData(weatherdata);
     });
   };
 

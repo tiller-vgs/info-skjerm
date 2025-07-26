@@ -1,6 +1,6 @@
 "use server";
 
-import { EventsValues, RegisterValue } from "@/types";
+import { EventsValues, LeaderboardData, RegisterValue } from "@/types";
 import { RegisterSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
@@ -70,7 +70,7 @@ export const createEvent = async (values: EventsValues) => {
   }
 };
 export async function getEvent() {
-  let eventdata: EventsValues[] = []
+  let eventdata: EventsValues[] = [];
   await fetch("http://localhost:5237/GetEvents/todaysevents")
     .then((response) => response.json())
     .then((data) => {
@@ -78,28 +78,55 @@ export async function getEvent() {
     })
     .catch((error) => console.error("Error:", error));
   return eventdata;
-};
+}
 export async function getTodayWeather() {
-  let weatherdata: any
+  let weatherdata: any;
   await fetch("http://localhost:5237/WeatherForecast/Today")
-        .then((response) => response.json())
-        .then((data) => weatherdata = data)
-        .catch((error) => console.error("Error:", error));
+    .then((response) => response.json())
+    .then((data) => (weatherdata = data))
+    .catch((error) => console.error("Error:", error));
   return weatherdata;
-};
+}
 export async function getWeekWeather() {
-  let weatherdata: any
+  let weatherdata: any;
   await fetch("http://localhost:5237/WeatherForecast/NextDays")
-        .then((response) => response.json())
-        .then((data) => weatherdata = data)
-        .catch((error) => console.error("Error:", error));
+    .then((response) => response.json())
+    .then((data) => (weatherdata = data))
+    .catch((error) => console.error("Error:", error));
   return weatherdata;
-};
+}
 export async function getBus() {
-  let busdata: any
+  let busdata: any;
   await fetch("http://localhost:5237/BusTimes/departures?num=15")
-        .then((response) => response.json())
-        .then((data) => busdata = data)
-        .catch((error) => console.error("Error:", error));
+    .then((response) => response.json())
+    .then((data) => (busdata = data))
+    .catch((error) => console.error("Error:", error));
   return busdata;
-};
+}
+
+const TQ_BACKEND_URL = process.env.TQ_BACKEND_URL || "http://localhost:8080";
+const API_KEY = process.env.API_KEY;
+
+export async function getTQLeaderboard(
+  endpoint: string
+): Promise<LeaderboardData> {
+  let leaderboardData: LeaderboardData | null = null;
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+  };
+  if (API_KEY) {
+    headers["X-API-Key"] = API_KEY;
+  }
+  await fetch(`${TQ_BACKEND_URL}/api/leaderboard/${endpoint}`, {
+    method: "GET",
+    headers,
+  })
+    .then((response) => response.json())
+    .then((data) => (leaderboardData = data))
+    .catch((error) => console.error("Error:", error));
+
+  if (!leaderboardData) {
+    throw new Error("Failed to fetch leaderboard data");
+  }
+  return leaderboardData;
+}
