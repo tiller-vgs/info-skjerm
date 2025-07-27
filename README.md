@@ -5,10 +5,10 @@ This is an informational screen created as a school project for Tiller VGS by a 
 - @Sigdriv (Frontend)
 - @JorgenMU (Backend)
 
-This screen allows you to create events, and show them. You will also get information about the current and future weather, as well as bus departures from a nearby bus terminal, *Tillerterminalen*. 
+Additional bugfixes by:
+- @Enderz420
 
-### Demo site
-A demo-site will from Monday the 20th be available on the url [https://infoskjerm.aastum.no/infoskjerm](https://infoskjerm.aastum.no/infoskjerm)
+This screen allows you to create events, and show them. You will also get information about the current and future weather, as well as bus departures from a nearby bus terminal, *Tillerterminalen*. 
 
 ## Modules
 ### The informational screen is divided into three modules:
