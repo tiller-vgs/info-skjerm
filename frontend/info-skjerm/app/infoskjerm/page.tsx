@@ -13,9 +13,9 @@ export default function InfoPage() {
 
   // Define the components to rotate through
   const views = [
-    // { component: <Info />, name: "Info" },
+    { component: <Info />, name: "Info" },
     { component: <TQLeaderboard />, name: "TillerQuest" },
-    // { component: <Slideshow />, name: "Bildefremvisning" },
+    { component: <Slideshow />, name: "Bildefremvisning" },
   ];
 
   // Auto rotation effect
