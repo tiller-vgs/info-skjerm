@@ -28,7 +28,7 @@ export default function Bus({ south, north }: Props) {
     }
     setInterval(() => {
       fetchBusData();
-    }, 1000 * 5);
+    }, 1000 * 30); // fetch every 30 seconds
   }, [firstRender]);
 
   const formatTime = (timeString: string) => {

@@ -7,7 +7,7 @@ export default function DateTime() {
   useEffect(() => {
     const timer = setInterval(() => {
       setDate(new Date());
-    }, 1000);
+    }, 1000); // Update every second
 
     return () => {
       clearInterval(timer);

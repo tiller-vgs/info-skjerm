@@ -24,7 +24,6 @@ export interface WeatherDataItem {
 
 export type WeatherData = WeatherDataItem[];
 
-
 export type BusItem = {
   busLine: number;
   destination: string;
@@ -44,4 +43,18 @@ export type EventsValues = {
   body: string;
   starttime: Date | string;
   endtime: Date | string | undefined;
+};
+export type LeaderboardData = {
+  users: {
+    id: string;
+    xp: number;
+    title: string;
+    titleRarity: string;
+    name: string;
+    image: string;
+    level: number;
+    class: string;
+    guildName: string;
+    schoolClass: string;
+  }[];
 };

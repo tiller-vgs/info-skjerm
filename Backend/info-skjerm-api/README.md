@@ -1,21 +1,23 @@
 # Backend Guide
 
-The info-skjerm backend is responsible retrieval, processing and storage of data. 
+The info-skjerm backend is responsible retrieval, processing and storage of data.
 The program is mainly a rest api that has various endpoints, see swagger page for overview.
 
-The default port is `5237`
+The default port for the backend is `5237`
 
-
-## Prerequisites 
+## Prerequisites
 
 You must have .NET 8 installed.
 
 ## Setup
 
 To be able to use the events endpoints you need a appsettings.json file in your project with a connection string like this:
+
 ```json
 {
-  "ConnectionStrings": {"Default": "Server=localhost;Database=Info_Skjerm;User Id=sa;Password=YOURPASSWORD;TrustServerCertificate=True;"}
+  "ConnectionStrings": {
+    "Default": "Host=localhost;Port=5433;Database=info_skjerm;Username=postgres;Password=mysecurepassword;"
+  }
 }
 ```
 
@@ -23,7 +25,7 @@ The password need to match your database password. The file should be located li
 
 ## Launching the backend
 
-To launch the application: 
+To launch the application:
 
 1. Navigate to `\info-skjerm\Backend\info-skjerm-api` in your terminal
 2. Run the command: `dotnet run build`

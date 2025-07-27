@@ -64,9 +64,7 @@ namespace info_skjerm_api.Controllers
                 var content = await response.Content.ReadAsStreamAsync();
                 var jsonElements = await JsonSerializer.DeserializeAsync<WeatherForecastInfo>(content, JsonSerializerOptions.Default);
                 var timeSeries = jsonElements.properties.timeseries;
-                
-                var currentDate = int.Parse(jsonElements.properties.timeseries[0].time.Substring(startIndex:8, length:2));
-                
+                                
                 const int noon = 12;
                 var dayIndexer = 1;
                 
@@ -81,10 +79,8 @@ namespace info_skjerm_api.Controllers
                     }
                     
                     //koverterer og deler opp en streng til nummer man kan behandle
-                    var nextHours = int.Parse(timeSeriesElement.time.Substring(startIndex: 11, length: 2));
-                    var nextDate = int.Parse(timeSeriesElement.time.Substring(startIndex: 8, length: 2));
-                    
-                    if (nextDate != currentDate + dayIndexer || nextHours != noon) continue;
+                    var nextHours = int.Parse(timeSeriesElement.time.Substring(startIndex: 11, length: 2));                    
+                    if (nextHours != noon) continue;
                     
                     nextDaysForcastList.Add(new NextDaysWeatherForcast
                     {
