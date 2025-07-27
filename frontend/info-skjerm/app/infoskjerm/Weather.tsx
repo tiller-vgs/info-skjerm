@@ -26,7 +26,7 @@ export function WeatherDays() {
         fetchWeather();
       }
     }, 1000 * 60 * 60); // fetch every hour at 12
-  }, []);
+  }, [firstRender]);
 
   return (
     <div className="border-2 border-slate-500 rounded-lg h-28 flex items-center justify-center p-2">
@@ -78,7 +78,7 @@ export function WeatherHours() {
         });
       }
     }, 1000 * 60);
-  }, []);
+  }, [firstRender]);
 
   return (
     <div className="border-2 border-slate-500 rounded-lg h-28 flex items-center justify-center">

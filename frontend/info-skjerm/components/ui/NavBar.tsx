@@ -17,18 +17,18 @@ export function NavBar({ session }: { session: any }) {
       }
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    
+    document.addEventListener("mousemove", handleMouseMove);
+
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
   return (
     <main>
-      <nav 
+      <nav
         className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-4 bg-gray-800 text-white transition-transform duration-300 ease-in-out ${
-          isVisible ? 'translate-y-0' : '-translate-y-full'
+          isVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
         <Link href="/infoskjerm">
@@ -37,16 +37,16 @@ export function NavBar({ session }: { session: any }) {
           </div>
         </Link>
         <div className="flex items-center space-x-4">
-          <a href="/" className="hover:underline">
+          <Link href="/" className="hover:underline">
             Hjem
-          </a>
-          <a href="/admin" className="hover:underline">
+          </Link>
+          <Link href="/admin" className="hover:underline">
             Admin
-          </a>
+          </Link>
           {session && (
-            <a href="/auth/signout" className="hover:underline">
+            <Link href="/auth/signout" className="hover:underline">
               Logg ut
-            </a>
+            </Link>
           )}
         </div>
       </nav>

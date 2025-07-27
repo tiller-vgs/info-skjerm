@@ -31,7 +31,7 @@ export function TQLeaderboard() {
         fetchLeaderboard();
       }
     }, 1000 * 60); // fetch every minute
-  }, []);
+  }, [firstRender]);
 
   // If no data is available, show nothing
   if (!leaderboardDataVg1 && !leaderboardDataVg2) {
