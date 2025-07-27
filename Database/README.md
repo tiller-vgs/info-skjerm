@@ -2,7 +2,7 @@
 
 This database is required to run the application. It contains data for both users and events. It's based on a _PostgreSQL_ docker image.
 
-The port number is by default `5432`
+The port number is by default `5433`
 
 ## Prerequisites
 
@@ -21,6 +21,7 @@ The port number is by default `5432`
    docker compose up
    ```
 1. After a few seconds your database should be up.
+1. The scripts does not seem to work, and the database schema should be loaded with npx prisma db push in the frontend
 1. For subsequent runs, you can start the database from _Docker Desktop_, or by running the same command
 
 ## Shutting down the database
