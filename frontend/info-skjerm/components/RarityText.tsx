@@ -1,12 +1,12 @@
 import React from "react";
 
 const RARITY_CLASSES = {
-  common: "text-common opacity-",
-  uncommon: "text-uncommon opacity-80",
-  rare: "text-rare opacity-",
-  epic: "rarity text-epic opacity-80",
-  legendary: "rarity text-legendary opacity-80",
-  mythic: "rarity text-mythic opacity-80",
+  common: "text-common/80 animate-shine",
+  uncommon: "text-uncommon/80 animate-shine",
+  rare: "text-rare/80 animate-shine",
+  epic: "rarity text-epic/80 animate-shine",
+  legendary: "rarity text-legendary/80 animate-shine",
+  mythic: "rarity text-mythic/80 animate-shine",
 } as const;
 
 function RarityText({

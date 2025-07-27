@@ -23,7 +23,7 @@ export default function RootLayout({
       <html lang="no">
         <body className={inter.className}>
           <NavBarWrapper />
-          <main className=" min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+          <main className=" min-h-screen bg-linear-to-br from-slate-900 to-slate-800">
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"

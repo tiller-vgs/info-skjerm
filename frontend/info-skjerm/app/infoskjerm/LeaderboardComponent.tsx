@@ -71,7 +71,10 @@ export default function LeaderboardComponent({
             {/* <!-- Table Body --> */}
             <tbody>
               {currentUsers.map((user) => (
-                <tr className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700 transition-colors">
+                <tr
+                  key={user.id}
+                  className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700 transition-colors"
+                >
                   {/* <!-- User Image --> */}
                   <td className="text-center py-2">
                     <p className="text-3xl">
@@ -80,7 +83,7 @@ export default function LeaderboardComponent({
                   </td>
 
                   <td className="text-center py-2">
-                    <div className="flex justify-center w-24 h-24 mx-auto bg-gradient-to-r from-zinc-600 to-zinc-700 p-1.5 rounded-full">
+                    <div className="flex justify-center w-24 h-24 mx-auto bg-linear-to-r from-zinc-600 to-zinc-700 p-1.5 rounded-full">
                       <Image
                         className="rounded-full w-full h-full object-cover"
                         width={112}
