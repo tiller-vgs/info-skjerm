@@ -11,13 +11,19 @@ export function TQLeaderboard() {
     useState<LeaderboardData | null>();
   const [isPending, startTransition] = useTransition();
   const [firstRender, setFirstRender] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchLeaderboard = () => {
     startTransition(async () => {
-      let leaderboardDataVg1 = await getTQLeaderboard("vg1");
-      let leaderboardDataVg2 = await getTQLeaderboard("vg2");
-      setLeaderboardDataVg1(leaderboardDataVg1);
-      setLeaderboardDataVg2(leaderboardDataVg2);
+      try {
+        let leaderboardDataVg1 = await getTQLeaderboard("vg1");
+        let leaderboardDataVg2 = await getTQLeaderboard("vg2");
+        setLeaderboardDataVg1(leaderboardDataVg1);
+        setLeaderboardDataVg2(leaderboardDataVg2);
+      } catch (error) {
+        console.error("Error fetching leaderboard data:", error);
+        setError("Kunne ikke hente data :(");
+      }
     });
   };
 
@@ -32,6 +38,10 @@ export function TQLeaderboard() {
       }
     }, 1000 * 60); // fetch every minute
   }, [firstRender]);
+
+  if (error) {
+    return <p className="mx-auto">{error}</p>;
+  }
 
   // If no data is available, show nothing
   if (!leaderboardDataVg1 && !leaderboardDataVg2) {

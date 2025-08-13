@@ -20,7 +20,7 @@ import { LoginValue } from "@/types";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 export default function LogIn() {
   const [isPending, startTransition] = useTransition();
@@ -42,19 +42,9 @@ export default function LogIn() {
       });
       if (result && result.error) {
         if (result.error === "CredentialsSignin") {
-          toast({
-            title: "Feil",
-            description: "Ugyldig epost/passord eller bruker eksisterer ikke",
-            duration: 5000,
-            variant: "destructive",
-          });
+          toast("Ugyldig epost/passord eller bruker eksisterer ikke");
         } else {
-          toast({
-            title: "Feil",
-            description: "En feil oppstod. Vennligst prøv igjen",
-            duration: 5000,
-            variant: "destructive",
-          });
+          toast("En feil oppstod. Vennligst prøv igjen");
         }
       } else {
         window.location.reload();

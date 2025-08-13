@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { useTransition } from "react";
 import { EventsValues } from "@/types";
 import { createEvent } from "@/actions";
@@ -46,18 +46,9 @@ export function CreateEvent() {
         endtime: data.endtime ? new Date(data.endtime) : undefined,
       });
       if (response.success) {
-        toast({
-          title: "Suksess",
-          description: response.success,
-          variant: "default",
-        });
+        toast(response.success);
       } else {
-        toast({
-          title: "Noe gikk galt",
-          description:
-            response.error || "En feil oppstod. Vennligst prøv igjen",
-          variant: "destructive",
-        });
+        toast(response.error || "En feil oppstod. Vennligst prøv igjen");
       }
     });
   }

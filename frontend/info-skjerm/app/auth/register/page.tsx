@@ -18,7 +18,7 @@ import Link from "next/link";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 export default function SignUp() {
   const [isPending, startTransition] = useTransition();
@@ -38,18 +38,10 @@ export default function SignUp() {
       const result = await register(values);
 
       if (result.error) {
-        toast({
-          title: "Feil",
-          description: result.error,
-          variant: "destructive",
-        });
+        toast(result.error);
       }
       if (result.success) {
-        toast({
-          title: "Suksess",
-          description: result.success,
-          variant: "default",
-        });
+        toast(result.success);
         router.push("/auth/login");
       }
     });
