@@ -43,9 +43,10 @@ export default function Bus({ south, north }: Props) {
       return `${diffMins} min`;
     }
 
-    return departureTime.toLocaleTimeString([], {
+    return departureTime.toLocaleTimeString("no-NO", {
       hour: "2-digit",
       minute: "2-digit",
+      hour12: false,
     });
   };
 

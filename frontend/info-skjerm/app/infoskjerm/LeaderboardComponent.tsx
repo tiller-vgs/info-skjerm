@@ -72,7 +72,7 @@ export default function LeaderboardComponent({
             <tbody>
               {currentUsers.map((user) => (
                 <tr
-                  key={user.id}
+                  key={user.name + user.id}
                   className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700 transition-colors"
                 >
                   {/* <!-- User Image --> */}
