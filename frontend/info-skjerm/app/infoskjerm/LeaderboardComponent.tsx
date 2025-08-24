@@ -98,7 +98,10 @@ export default function LeaderboardComponent({
                   {/* <!-- User Info --> */}
                   <td className="text-center py-2 px-2 text-lg">
                     <div className="flex flex-col text-center items-center space-y-1">
-                      <RarityText rarity={user.titleRarity || "Common"}>
+                      <RarityText
+                        width="full"
+                        rarity={user.titleRarity || "Common"}
+                      >
                         {user.title}
                       </RarityText>
                       <p className="text-white text-lg">{user.name}</p>
