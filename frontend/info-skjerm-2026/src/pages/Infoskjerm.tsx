@@ -1,7 +1,11 @@
-import React from "react";
+import Clock from "../components/Clock";
 
 function Infoskjerm() {
-  return <div>Infoskjerm</div>;
+  return (
+    <div>
+      <Clock />
+    </div>
+  );
 }
 
 export default Infoskjerm;
