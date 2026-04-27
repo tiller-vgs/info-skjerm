@@ -24,7 +24,7 @@ const Clock = () => {
 
   return (
     <div id="clock">
-      <h1 className="text-xxl ">{formattedTime}</h1>
+      <h1 className="text-6xl text-center">{formattedTime}</h1>
     </div>
   );
 };
