@@ -10,10 +10,16 @@ function Infoskjerm() {
           <Bus />
         </td>
         <td className="border-b-4 border-l-4 h-1/4 border-[#6e40c9]">
-          <div>
-            <Clock />
-            <DateDisplay />
-          </div>
+          <table className="w-full h-full">
+            <tr>
+              <td className="w-1/2">
+                <Clock />
+              </td>
+              <td className="w-1/2">
+                <DateDisplay />
+              </td>
+            </tr>
+          </table>
         </td>
       </tr>
       <tr>
