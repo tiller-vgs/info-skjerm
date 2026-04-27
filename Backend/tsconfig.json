@@ -9,6 +9,7 @@
     // See also https://aka.ms/tsconfig/module
     "module": "ESNext",
     "target": "ES2020",
+    "types": [],
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "noEmit": true,
@@ -17,12 +18,13 @@
       "*": ["./src/*"],
       "@models": ["./src/models/index.ts"],
       "@helpers": ["./src/utils/index.ts"],
-      "@controllers/": ["./src/controllers/"],
+      "@db": ["./src/db/context.ts"],
+      "@controllers": ["./src/controllers/index.ts"]
     },
 
     // For nodejs:
-    "lib": ["esnext"],
-    "types": ["node"],
+    // "lib": ["esnext"],
+    // "types": ["node"],
 
     // Other Outputs
     "sourceMap": true,
@@ -44,7 +46,7 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+    // "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
