@@ -1,5 +1,6 @@
 import Bus from "../components/Bus";
 import Clock from "../components/Clock";
+import DateDisplay from "../components/DateDisplay";
 
 function Infoskjerm() {
   return (
@@ -11,6 +12,7 @@ function Infoskjerm() {
         <td className="border-b-4 border-l-4 h-1/4 border-[#6e40c9]">
           <div>
             <Clock />
+            <DateDisplay />
           </div>
         </td>
       </tr>
