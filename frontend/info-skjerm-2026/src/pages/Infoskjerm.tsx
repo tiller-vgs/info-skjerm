@@ -6,10 +6,10 @@ function Infoskjerm() {
   return (
     <table className="w-screen h-screen bg-background">
       <tr>
-        <td rowSpan={2} className="border-r-4 w-1/4 border-[#6e40c9]">
+        <td rowSpan={2} className="border-r-10 w-1/4 border-[#21252b]">
           <Bus />
         </td>
-        <td className="border-b-4 border-l-4 h-1/4 border-[#6e40c9]">
+        <td className="border-b-10 border-l-10 h-1/4 border-[#21252b]">
           <table className="w-full h-full">
             <tr>
               <td className="w-1/2">
@@ -23,7 +23,7 @@ function Infoskjerm() {
         </td>
       </tr>
       <tr>
-        <td className="border-t-4 border-l-4 border-[#6e40c9]"></td>
+        <td className="border-t-10 border-l-10 border-[#21252b]"></td>
       </tr>
     </table>
   );
