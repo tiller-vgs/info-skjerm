@@ -2,19 +2,25 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router";
-import Infoscreen from "./pages/Infoscreen";
 import Navbar from "./components/Navbar";
-
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import InfoScreen from "./pages/InfoScreen"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<Navbar/>}/>
-        <Route path="/">
-          <Route index element={<Infoscreen />} />
+        <Route path="/" element={<Navbar />}>
+          <Route index element={<Home />} />
+          <Route path="info-screen">
+            <Route index element={<InfoScreen/>}/>
+          </Route>
+          <Route path="login">
+            <Route index element={<Login/>}/>
+          </Route>
+          
         </Route>
-        <Route path="admin"></Route>
       </Routes>
     </BrowserRouter>
   </StrictMode>,

@@ -1,29 +1,75 @@
-function Navbar() {
+import { NavLink, Outlet } from "react-router";
 
-    const currentUser = {
-        isLoggedIn: false,
-        isNotLoggedIn: true,
-    } 
+function Navbar() {
+  const currentUser = {
+    isLoggedIn: true,
+  };
 
   return (
-    <div>
-      <h1>Infoskjerm</h1>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/info-board">Info Board</a>
+    <>
+      <div className="group">
+        <div className="fixed top-0 left-0 w-full h-15 z-40"></div>
+        <div
+          className=" fixed top-0 left-0 w-full
+      flex items-center justify-between px-6 py-4
+      bg-tqblue text-tqwhite shadow-md
 
-        {currentUser?.isNotLoggedIn && <a href="/login">Login</a>}
+      transform -translate-y-full opacity-0
+      transition-all duration-300 ease-in-out 
 
-        {currentUser?.isLoggedIn && (
-          <div className="flex ">
-            <a href="/admin/dashboard">Admin Dashboard</a>
-            <a href="/admin/register">Register user</a>
-            {/* Må legge til logg ut til denne */}
-            <a href="/login">Log out</a>
-          </div>
-        )}
-      </nav>
-    </div>
+      group-hover:translate-y-0 group-hover:opacity-100
+      hover:translate-y-0 hover:opacity-100
+
+      z-50"
+        >
+          <h1 className="text-5xl font-bold">
+            <NavLink to={"/"}>Infoskjerm</NavLink>
+          </h1>
+          <nav className="flex items-center gap-6">
+            <NavLink className="hover:text-blue-400 transition" to={"/"}>
+              Hjem
+            </NavLink>
+            <NavLink
+              className="hover:text-blue-400 transition"
+              to={"/info-screen"}
+            >
+              Infoskjerm
+            </NavLink>
+
+            {!currentUser?.isLoggedIn && (
+              <NavLink className="hover:text-blue-400 transition" to={"/login"}>
+                Logg in
+              </NavLink>
+            )}
+
+            {currentUser?.isLoggedIn && (
+              <div className="flex items-center gap-6">
+                <NavLink
+                  className="hover:text-blue-400 transition"
+                  to={"/admin/dashboard"}
+                >
+                  Adminpanel
+                </NavLink>
+                <NavLink
+                  className="hover:text-blue-400 transition"
+                  to={"/admin/register"}
+                >
+                  Registrer brukere
+                </NavLink>
+                <NavLink
+                  className="hover:text-red-400 transition"
+                  to={"/login"}
+                >
+                  Logg ut
+                </NavLink>
+                {/* Må legge til logg ut til denne */}
+              </div>
+            )}
+          </nav>
+        </div>
+      </div>
+      <Outlet />
+    </>
   );
 }
 

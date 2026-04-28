@@ -1,7 +1,5 @@
-function Infoscreen() {
-  return (
-    <div>Infoscreen</div>
-  )
+function InfoScreen() {
+  return <div>InfoScreen</div>;
 }
 
-export default Infoscreen
+export default InfoScreen;
