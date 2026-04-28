@@ -3,3 +3,6 @@ export { default as deleteEventsRouter } from "./DeleteEventsController.ts";
 export { default as getEventsRouter } from "./GetEventsController.ts";
 export { default as postEventsRouter } from "./PostEventsController.ts";
 export { default as WeatherForecastController } from "./WeatherForecastController.ts";
+export { default as WeatherController } from "./!WeatherController.ts";
+export { default as DatabaseController } from "./!DatabaseController.ts";
+export { default as BusController } from "./!BusController.ts";
