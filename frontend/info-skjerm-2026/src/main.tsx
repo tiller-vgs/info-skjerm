@@ -6,8 +6,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import InfoScreen from "./pages/InfoScreen";
-import "@fontsource-variable/inter";
-import Infoskjerm from "./pages/Infoskjerm";
+// import "@fontsource-variable/inter";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -20,6 +19,11 @@ createRoot(document.getElementById("root")!).render(
           </Route>
           <Route path="login">
             <Route index element={<Login />} />
+          </Route>
+          <Route path="admin">
+            {/* Temp */}
+            <Route path="dashboard" element={<div>Admin Dashboard</div>} />
+            <Route path="register" element={<div>Admin Register</div>} />
           </Route>
         </Route>
       </Routes>
