@@ -8,9 +8,10 @@ Authored by @Marcus-Aastum
 
 import { Router, Request, Response } from "express";
 import { BusStop, BusRoute, Businfo } from "@models";
-import { fetchWithRetry } from "@helpers";
+import { MakefetchWithRetry } from "@helpers";
 import NodeCache from "node-cache";
 
+const fetchWithRetry = MakefetchWithRetry("BusTimesController");
 const router = Router();
 const cache = new NodeCache();
 
@@ -36,7 +37,7 @@ router.get("/departures", async (req: Request, res: Response) => {
   };
 
   try {
-    const response = await fetch( // fetchWithRetry(
+    const response = await fetchWithRetry(
       "https://api.entur.io/journey-planner/v3/graphql",
       options,
     );

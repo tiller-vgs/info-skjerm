@@ -1,26 +1,30 @@
-export async function fetchWithRetry(
-    url: string,
-    fetchingWhat: string = "generell info",
-    allowedAttempts: number = 2,
-): Promise<globalThis.Response> {
-  for (let attempt = 0; attempt < allowedAttempts; attempt++) {
-    try {
-      console.log(`Fetching ${fetchingWhat} (attempt ${attempt + 1})`);
-      const response = await fetch(url);
+export function MakefetchWithRetry(fetchingWhat: string = "generell info") {
+  return async (url: string, options: any = undefined): Promise<globalThis.Response> => {
+    const allowedAttempts: number = 2;
+    for (let attempt = 0; attempt < allowedAttempts; attempt++) {
+      try {
+        console.log(`Fetching ${fetchingWhat} (attempt ${attempt + 1})`);
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
+        let response;
+        if (options) {
+          response = await fetch(url, options);
+        } else {
+          response = await fetch(url);
+        }
 
-      return response;
-    } catch (err) {
-      console.error(`Error on attempt ${attempt + 1}`, err);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
 
-      //   if (attempt === allowedAttempts - 1) throw err;
+        return response;
+      } catch (err) {
+        console.error(`Error on attempt ${attempt + 1}`, err);
 
-      await new Promise((res) => setTimeout(res, 500));
-    }
-  }
+        //   if (attempt === allowedAttempts - 1) throw err;
 
-  throw new Error("Unreachable");
-}
+        await new Promise((res) => setTimeout(res, 500));
+      };
+    };
+    throw new Error("Unreachable");
+  };
+};

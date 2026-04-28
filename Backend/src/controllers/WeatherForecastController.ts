@@ -4,15 +4,14 @@ import {
     TodayWeatherForcast,
     NextDaysWeatherForcast,
     WeatherForecastInfo,
-    TimeSeries,
 } from "@models";
-import { fetchWithRetry } from "@helpers";
+import { MakefetchWithRetry } from "@helpers";
 
+const fetchWithRetry = MakefetchWithRetry("WeatherForecastController");
 const router = Router();
 const cache = new NodeCache();
 
-const API_URL =
-  "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=63.21&lon=10.22";
+const API_URL = "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=63.21&lon=10.22";
 
 router.get("/Today", async (req: Request, res: Response) => {
   const cacheKey = "weather_today";
