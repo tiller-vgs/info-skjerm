@@ -6,6 +6,13 @@ import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
+import { loginSchema } from "../lib/schema";
+import { signIn } from "../lib/auth-client";
+
+
 function login() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -23,7 +30,7 @@ function login() {
 
     if (result.error) {
       toast.error("Login failed", {
-        description: result.error.message || "Unable to login",
+      description: result.error.message || "Unable to login",
       });
       return;
     }
