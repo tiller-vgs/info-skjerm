@@ -8,7 +8,9 @@ function Navbar() {
   return (
     <>
       <div className="group">
+        {/* Hitbox */}
         <div className="fixed top-0 left-0 w-full h-15 z-40"></div>
+        {/* Navigation bar */}
         <div
           className=" fixed top-0 left-0 w-full
       flex items-center justify-between px-6 py-4
