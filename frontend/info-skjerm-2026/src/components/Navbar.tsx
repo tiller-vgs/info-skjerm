@@ -1,10 +1,21 @@
+import type { PropsWithChildren } from "react";
 import { NavLink, Outlet } from "react-router";
+import { Navigate } from "react-router";
 
-function Navbar() {
-  const currentUser = {
-    isLoggedIn: true,
-  };
+export const currentUser = {
+  isLoggedIn: false,
+};
 
+
+export const Authorization = ({ children }: PropsWithChildren) => {
+  if (!currentUser.isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+};
+
+export function Navbar() {
   return (
     <>
       <div className="group">
