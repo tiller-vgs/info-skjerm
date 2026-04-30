@@ -25,7 +25,7 @@ export function Navbar() {
         <div
           className=" fixed top-0 left-0 w-full
       flex items-center justify-between px-6 py-4
-      bg-tqblue text-tqwhite shadow-md
+      bg-tqnavbar text-tqwhite shadow-md
 
       transform -translate-y-full opacity-0
       transition-all duration-300 ease-in-out 
