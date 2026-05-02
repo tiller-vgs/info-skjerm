@@ -1,8 +1,8 @@
+// type listefy makes an object, an object where each property becomes a list with the origanrl property in it
+
 import {Router, Request, Response} from "express";
-import {TodayWeatherForcast, NextDaysWeatherForcast, WeatherForecastInfo} from "@models";
+import {EntireWeather, DayOfWeatherObjects, FrontendWeatherObject, HelperWeatherObject, Listify} from "@models";
 import {MakefetchWithRetry} from "@helpers";
-import {EntireWeather} from "models/WeatherInputObjects";
-import {DayOfWeatherObjects, FrontendWeatherObject} from "models/WeatherOutputObjects copy";
 
 const fetchWithRetry = MakefetchWithRetry("WeatherForecastController");
 const router = Router();
@@ -14,71 +14,36 @@ router.get("/getWeather", async (req: Request, res: Response) => {
   const DayAmount = 4;
   const TimeSets = ["06:45-08:45", "11:00-12:00", "13:35-15:20", "15:20-17:00"];
   const TimeSetsHoures = TimeSets.map((t) => t.split("-").map((x) => x.slice(0, 2)));
-  let StartDay: string = req.body || "none";
-  const AllDays: DayOfWeatherObjects[] = [];
+  let StartDate: string = req.body || "none";
 
   const response = await fetchWithRetry(API_URL);
   const json = (await response.json()) as EntireWeather;
   const Timeseries = json.properties.timeseries;
-
-  const TimeSetData = {
-    witchTimeSetOn: 0,
-    isInTimeSet: false,
-    WeatherObject: <FrontendWeatherObject>{},
-  };
-
-  const FakeWeatherObject: FrontendWeatherObject = {
-    time: "",
-    symbol_code: "",
-    air_temperature: 0,
-    wind_speed: 0,
-    wind_from_direction: 0,
-  };
-
-  interface HelperWeatherObject {
-    time: string;
-    date: string;
-    TimeSetIndex: number;
-    symbol_code: string;
-    air_temperature: number;
-    wind_speed: number;
-    wind_from_direction: number;
-  }
-
-  // list of lists with each element in WeatherObject
-
-  type Listify<T> = {[K in keyof T]: T[K][]};
-  function makeEmptyListified<T extends Record<string, any>>(): Listify<T> {
-    const result: any = {};
-    return result;
-  }
-
-  // const ListOfListsOfWeatherObjectElements = Array.from(
-  //   { length: Object.keys(FakeWeatherObject).length },
-  //   () => [],
-  // );
-  const ListForEachTimeSet = Array.from({length: TimeSets.length}, () => []);
-
-  const WeatherObjectTimeSetsList: FrontendWeatherObject[][] = Array.from({length: TimeSets.length}, () => []);
 
   let FirstDay: string = "";
   let SavedDay: string = "";
   let SavedTimeSetIndex: number = -1;
 
   const ListsOfWeatherObjectAllDays: Listify<HelperWeatherObject>[][] = [];
-  // const ListsOfWeatherObjectInTimeSet: {TimeSet: string; ListsOfWeatherObject: Listify<FrontendWeatherObject>}[] = <any>{};
   const ListsOfWeatherObjectInTimeSet: Listify<HelperWeatherObject>[] = <any>{};
-  let ListsOfWeatherObject = makeEmptyListified<HelperWeatherObject>();
+  const ListsOfWeatherObject: Listify<HelperWeatherObject> = <any>{};
 
   // Timeserie is where all the the information for one hour is
   for (const Timeserie of Timeseries) {
     const FullDate = Timeserie.time.split("T")[0]!;
     const Date = FullDate.slice(5, FullDate.length);
     const FullTime = Timeserie.time.split("T")[1]!.split("Z")[0]!;
-    const time = FullTime.slice(FullTime.length - 3, FullTime.length)
+    const time = FullTime.slice(FullTime.length - 3, FullTime.length);
     const WeatherData = Timeserie.data.instant.details;
 
-    // se if the data have changed
+    // see if the date is after StartDate if not dont run any code under this
+    if (FirstDay === "") {
+      if (StartDate !== "none") {
+        if (Number(StartDate.split("-")[0]!) * 30 + Number(StartDate.split("-")[1]!) > Number(Date.split("-")[0]!) * 30 + Number(Date.split("-")[1]!)) continue;
+      }
+      FirstDay = Date;
+    }
+    // see if the date have changed if so add list of current day to the list with all days
     if (SavedDay !== Date) {
       if (SavedDay !== "") {
         if (SavedTimeSetIndex !== -1) {
@@ -90,85 +55,59 @@ router.get("/getWeather", async (req: Request, res: Response) => {
       ListsOfWeatherObjectInTimeSet.length = 0;
       SavedDay = Date;
     }
-    // se if the amount of days is more then needed
-    if (FirstDay === "") {
-      if (StartDay !== "none") {
-        if (Number(StartDay.split("-")[0]!) * 30 + Number(StartDay.split("-")[1]!) > Number(Date.split("-")[0]!) * 30 + Number(Date.split("-")[1]!)) continue;
-      }
-      FirstDay = Date;
-    }
+    // see if the current date is more than the DayAmount allows
     if (Number(FirstDay.split("-")[0]!) * 30 + Number(FirstDay.split("-")[1]!) + DayAmount <= Number(Date.split("-")[0]!) * 30 + Number(Date.split("-")[1]!)) {
       break;
     }
 
+    // get the index for with part of TimeSets this Timeserie is
     const Hour = Number(time.slice(0, 2));
     const TimeSetIndex = TimeSetsHoures.findIndex((TimeSet) => Hour >= Number(TimeSet[0]) && Hour <= Number(TimeSet[1]));
 
+    // if the current Timeserie is not in the same TimeSet as the last if so add list with current Timeset to the list for current day
     if (SavedTimeSetIndex !== TimeSetIndex) {
       if (SavedTimeSetIndex !== -1) {
         ListsOfWeatherObjectInTimeSet.push({...ListsOfWeatherObject});
       }
-      // Object.keys(ListsOfWeatherObject).forEach((key) => delete ListsOfWeatherObject[key]);
-      ListsOfWeatherObject = makeEmptyListified<HelperWeatherObject>();
+      Object.keys(ListsOfWeatherObject).forEach((key) => delete ListsOfWeatherObject[key as keyof typeof ListsOfWeatherObject]); // try to change the line under to this FIX // aks witch is best
+      // ListsOfWeatherObject = <any>{};
       SavedTimeSetIndex = TimeSetIndex;
     }
 
     if (TimeSetIndex != -1) {
       ListsOfWeatherObject.time.push(time);
       ListsOfWeatherObject.date.push(Date);
-      ListsOfWeatherObject.TimeSetIndex.push(TimeSetIndex);
       ListsOfWeatherObject.symbol_code.push(Timeserie.data.next_1_hours.summary.symbol_code);
       ListsOfWeatherObject.air_temperature.push(WeatherData.air_temperature);
       ListsOfWeatherObject.wind_speed.push(WeatherData.wind_speed);
       ListsOfWeatherObject.wind_from_direction.push(WeatherData.wind_from_direction);
     }
-
-    // const WeatherObject: FrontendWeatherObject = {
-    //   time: TimeSets[TimeSetIndex]!,
-    //   symbol_code,
-    //   air_temperature: WeatherData.air_temperature,
-    //   wind_speed: WeatherData.wind_speed,
-    //   wind_from_direction: WeatherData.wind_from_direction,
-    // };
-
-    // if (TimeSetIndex != -1) {
-    //   WeatherObjectTimeSetsList[TimeSetIndex]!.push(WeatherObject);
-    // }
   }
 
-  // let CurrentDay;
-  // for (let index = 0; index < ListsOfWeatherObject.date.length; index++) {
-  //   if (CurrentDay != ListsOfWeatherObject.date[index]) {
-  //     if (index !== 0) {
-  //     }
-  //     CurrentDay = ListsOfWeatherObject.date[index];
-  //   }
-
-  const ListOfDayOfWeatherObjects: DayOfWeatherObjects[] = <any>[]
+  // avrage the values for each timeset and put it in the right format
+  const ListOfDayOfWeatherObjects: DayOfWeatherObjects[] = <any>[];
   for (const ListsOfWeatherObjectInTimeSet of ListsOfWeatherObjectAllDays) {
-    const DayOfWeatherObjects: DayOfWeatherObjects = <any>{day: ListsOfWeatherObjectInTimeSet[0]!.date}
-    const ListOfFrontendWeatherObject: FrontendWeatherObject[] = <any>[]
+    const DayOfWeatherObjects: DayOfWeatherObjects = <any>{day: ListsOfWeatherObjectInTimeSet[0]!.date};
+    const ListOfFrontendWeatherObject: FrontendWeatherObject[] = <any>[];
+
     for (const ListOfWeatherObject of ListsOfWeatherObjectInTimeSet) {
       const FrontendWeatherObject: FrontendWeatherObject = <any>{};
 
       FrontendWeatherObject.time = ListOfWeatherObject.time[0]! + "-" + ListOfWeatherObject.time[ListOfWeatherObject.time.length - 1]!;
-      FrontendWeatherObject.symbol_code = ListOfWeatherObject.symbol_code[0]!; // NEEDS FIXING
+      FrontendWeatherObject.symbol_code = ListOfWeatherObject.symbol_code[0]!; // NEEDS FIXING // ask martin how he want theise to be shown
       FrontendWeatherObject.air_temperature = ListOfWeatherObject.air_temperature.reduce((a, b) => a + b, 0) / ListOfWeatherObject.air_temperature.length;
       FrontendWeatherObject.wind_speed = ListOfWeatherObject.wind_speed.reduce((a, b) => a + b, 0) / ListOfWeatherObject.air_temperature.length;
       FrontendWeatherObject.wind_from_direction = ListOfWeatherObject.wind_from_direction.reduce((a, b) => a + b, 0) / ListOfWeatherObject.wind_from_direction.length;
+
       ListOfFrontendWeatherObject.push({...FrontendWeatherObject});
     }
-    DayOfWeatherObjects.FrontendWeatherObject = [...ListOfFrontendWeatherObject]
-    ListOfDayOfWeatherObjects.push({...DayOfWeatherObjects})
+    DayOfWeatherObjects.FrontendWeatherObject = [...ListOfFrontendWeatherObject];
+    ListOfDayOfWeatherObjects.push({...DayOfWeatherObjects});
   }
-  return res.json(ListOfDayOfWeatherObjects)
 
+  return res.json(ListOfDayOfWeatherObjects);
 
-
-
-
-
-
+  // keep code i think i need this later
 
   //   const FrontendWeatherObjectList: FrontendWeatherObject[] = [];
   //   for (const WeatherObjectList of WeatherObjectTimeSetsList) {

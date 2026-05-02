@@ -1,11 +1,13 @@
 export * from "./Event.ts";
 export * from "./BusDepartureJsonResponse.ts";
 export * from "./BusDepartures.ts";
-export * from "./WeatherForecastObject.ts";
+// export * from "./WeatherForecastObject.ts";
 export * from "./WeatherJsonResponse.ts";
 export * from "./WeatherJsonResponseNextDays.ts";
 export * from "./WeatherJsonResponseToday.ts";
-export * from "./WeatherObjects.ts";
+export * from "./WeatherOutputObjects.ts";
+export * from "./WeatherInputObjects.ts";
+export * from "./Generell.ts";
 
 /*
 Oppsett av alle typer:
@@ -40,4 +42,7 @@ NextDaysWeatherForcast  | WeatherJsonResponseNextDays
 
 From WeatherJsonResponseToday:
 TodayWeatherForcast     | WeatherJsonResponseToday
+
+From WeatherOutputObjects:
+DayOfWeatherObjects     | FrontendWeatherObject
 */

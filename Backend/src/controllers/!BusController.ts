@@ -1,4 +1,6 @@
-import {Router, Request, Response} from "express";
+// need to discuss what the frontend will resive and what format
+
+import { Router, Request, Response } from "express";
 import {BusStop, BusRoute, Businfo} from "@models";
 import {MakefetchWithRetry} from "@helpers";
 
@@ -18,7 +20,7 @@ router.get("/departures", async (req: Request, res: Response) => {
   };
 
   try {
-    const response = await fetch("https://api.entur.io/journey-planner/v3/graphql", options);
+    const response = await fetchWithRetry("https://api.entur.io/journey-planner/v3/graphql", options);
     const json = (await response.json()) as Businfo;
 
     const northBound: BusRoute[] = [];

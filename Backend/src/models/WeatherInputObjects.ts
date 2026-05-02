@@ -1,5 +1,4 @@
 export interface EntireWeather {
-  day: string;
   properties: Properties;
 }
 

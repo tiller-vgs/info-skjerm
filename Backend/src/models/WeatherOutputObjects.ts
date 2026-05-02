@@ -10,3 +10,12 @@ export interface FrontendWeatherObject {
   wind_speed: number;
   wind_from_direction: number;
 }
+
+export interface HelperWeatherObject {
+  time: string;
+  date: string;
+  symbol_code: string;
+  air_temperature: number;
+  wind_speed: number;
+  wind_from_direction: number;
+}
