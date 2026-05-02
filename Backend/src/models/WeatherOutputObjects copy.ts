@@ -1,4 +1,4 @@
-export interface WeatherDay {
+export interface DayOfWeatherObjects {
   day: string;
   FrontendWeatherObject: FrontendWeatherObject[];
 }

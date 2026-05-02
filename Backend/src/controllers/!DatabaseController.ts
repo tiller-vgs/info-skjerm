@@ -1,16 +1,26 @@
 import { Router, Request, Response } from "express";
-import {
-    TodayWeatherForcast,
-    NextDaysWeatherForcast,
-    WeatherForecastInfo,
-} from "@models";
-import { MakefetchWithRetry } from "@helpers";
 
-const fetchWithRetry = MakefetchWithRetry("WeatherForecastController");
 const router = Router();
 
-
-router.get("/setDatabade", async (req: Request, res: Response) => {
-  // set timeSeries in adminTable
-  // set amount of days in adminTable
+router.post("/Databade", async (req: Request, res: Response) => {
+  const WhatToChange: string = "" // fill in from req however frontend wants to send waht to change
+  
+  if (WhatToChange == "DayAmount") {
+    const WhatToChangeTo: string = "" // fill in from req however frontend wants to send what to change with
+    // chech if its the right format ( xx-xx )
+    if (!/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/.test(WhatToChangeTo)) {
+      // return res.status(400).send("Bad Request"); // give better response
+    }
+    // UPDATE adminTable SET DayAmount = ? (WhatToChangeTo)
+  } else if (WhatToChange == "TimeSeries") {
+    const WhatToChangeTo: string[] = [""] // fill in from req however frontend wants to send what to change with
+    if (!WhatToChangeTo.every(item => /^(0[0-9]|1[0-9]|2[0-3]):00-(0[0-9]|1[0-9]|2[0-3]):00$/.test(item))) {
+      // return res.status(400).send("Bad Request"); // give better response
+    }
+    // UPDATE adminTable SET TimeSeries = ? (WhatToChangeTo)
+  } else {
+    // return res.status(400).send("Bad Request"); // give better response
+  }
 })
+
+export default router;
