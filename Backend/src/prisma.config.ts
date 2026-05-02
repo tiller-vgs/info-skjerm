@@ -7,7 +7,7 @@ let url;
 if (process.env["DATABASE_URL"]) {
   url = process.env["DATABASE_URL"];
 } else {
-  url = "";
+  throw 
 }
 export default defineConfig({
   schema: "prisma/schema.prisma",

@@ -5,6 +5,7 @@ export * from "./WeatherForecastObject.ts";
 export * from "./WeatherJsonResponse.ts";
 export * from "./WeatherJsonResponseNextDays.ts";
 export * from "./WeatherJsonResponseToday.ts";
+export * from "./WeatherObjects.ts";
 
 /*
 Oppsett av alle typer:
