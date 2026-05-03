@@ -54,5 +54,5 @@
     "skipLibCheck": true
   },
   "exclude": [], // "prisma.config.ts" // put if it gives an error for this file
-  "include": ["src"]
+  "include": ["src", "z_test"]
 }
