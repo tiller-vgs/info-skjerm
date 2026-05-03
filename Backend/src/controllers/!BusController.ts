@@ -8,7 +8,7 @@ const fetchWithRetry = MakefetchWithRetry("BusTimesController");
 const router = Router();
 
 
-router.get("/departures", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   const num = Number(req.query.num) || 20;
 
   var query = '{"query": "{ stopPlace( id: \"NSR:StopPlace:44029\" ) { id name estimatedCalls( numberOfDepartures: ' + num.toString() + ' ) { realtime aimedArrivalTime expectedArrivalTime destinationDisplay { frontText } quay { id } serviceJourney { journeyPattern { line { id name transportMode } } } } }}"}';

@@ -4,8 +4,10 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  // provider = "prisma-client"
+  provider = "prisma-client-js"
+  // output   = "../src/generated/prisma"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -13,12 +15,13 @@ datasource db {
 }
 
 model AdminTable {
-  id            String    @id  // shall only eist one table with id 1
+  id            Int    @id  // shall only eist one table with id 1
   StartDate     String
   DayAmount     String
-  TimeSeries    String[]
+  TimeSets    String[]
   
-  @@unique([id])  
+  @@unique([id])
+  @@map("AdminTable")
 }
 
 model User {
