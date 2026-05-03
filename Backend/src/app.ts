@@ -1,6 +1,5 @@
 import express from "express";
 import {BusTimesController, deleteEventsRouter, getEventsRouter, postEventsRouter, WeatherForecastController, BusController, WeatherController, DatabaseController} from "@controllers";
-import { prisma } from "./prisma.ts";
 
 const app = express();
 const port = 3000;

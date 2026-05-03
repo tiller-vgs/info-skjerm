@@ -3,7 +3,7 @@ import NodeCache from "node-cache";
 import {
     TodayWeatherForcast,
     NextDaysWeatherForcast,
-    WeatherForecastInfo,
+    WeatherForecastInfo, // error is ment to be
 } from "@models";
 import { MakefetchWithRetry } from "@helpers";
 

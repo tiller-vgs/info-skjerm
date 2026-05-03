@@ -10,7 +10,7 @@ npm-shrinkwrap.json
 .env
 
 /generated/prisma
-/prisma/generated/client
+/prisma/generated
 
 
 
