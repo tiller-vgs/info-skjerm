@@ -95,7 +95,7 @@ router.get("/", async (req: Request, res: Response) => {
   // avrage the values for each timeset and put it in the right format
   const ListOfDayOfWeatherObjects: DayOfWeatherObjects[] = <any>[];
   for (const ListsOfWeatherObjectInTimeSet of ListsOfWeatherObjectAllDays) {
-    const DayOfWeatherObjects: DayOfWeatherObjects = <any>{day: ListsOfWeatherObjectInTimeSet[0]!.date};
+    const DayOfWeatherObjects: DayOfWeatherObjects = <any>{day: ListsOfWeatherObjectInTimeSet[0]!.day}; // currently not set FIX
     const ListOfFrontendWeatherObject: FrontendWeatherObject[] = <any>[];
 
     for (const ListOfWeatherObject of ListsOfWeatherObjectInTimeSet) {
