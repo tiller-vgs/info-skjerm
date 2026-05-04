@@ -1,6 +1,7 @@
 import Bus from "../components/Bus";
 import Clock from "../components/Clock";
 import DateDisplay from "../components/DateDisplay";
+import WeatherDisplay from "../components/WeatherDisplay";
 
 function InfoScreen() {
   return (
@@ -17,6 +18,7 @@ function InfoScreen() {
               </td>
             </tr>
           </table>
+          <WeatherDisplay />
         </td>
         <td rowSpan={2} className="border-l-10 w-1/4 border-[#21252b]">
           <Bus />
