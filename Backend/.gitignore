@@ -8,9 +8,9 @@ npm-shrinkwrap.json
 
 # Keep environment variables out of version control
 .env
-
+/dist
 /generated/prisma
-/prisma/generated
+/prisma
 
 
 

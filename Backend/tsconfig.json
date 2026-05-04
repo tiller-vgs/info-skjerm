@@ -2,7 +2,7 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "./src",
+    // "rootDir": "./src",
     "outDir": "./dist",
 
     // Environment Settings
@@ -20,7 +20,8 @@
       "@models": ["./src/models/index.ts"],
       "@helpers": ["./src/utils/index.ts"],
       "@db": ["./src/db/context.ts"],
-      "@controllers": ["./src/controllers/index.ts"]
+      "@controllers": ["./src/controllers/index.ts"],
+      "@prismaclient": ["./src/prisma.ts"]
     },
 
     // For nodejs:
@@ -53,6 +54,7 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "exclude": [], // "prisma.config.ts" // put if it gives an error for this file
-  "include": ["src", "../../z_test"]
+  "exclude": [], // , "prisma/**/*.ts", "prisma.config.ts", "prisma.config.ts" // put if it gives an error for this file
+  "include": ["src", "prisma.config.ts"]
 }
+

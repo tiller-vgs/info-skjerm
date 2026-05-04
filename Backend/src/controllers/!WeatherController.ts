@@ -3,7 +3,7 @@
 import {Router, Request, Response} from "express";
 import {EntireWeather, DayOfWeatherObjects, FrontendWeatherObject, HelperWeatherObject, Listify} from "@models";
 import {MakefetchWithRetry} from "@helpers";
-import {prisma} from "../prisma";
+import {prisma} from "@prismaclient";
 
 
 const fetchWithRetry = MakefetchWithRetry("WeatherForecastController");
@@ -93,9 +93,10 @@ router.get("/", async (req: Request, res: Response) => {
   }
 
   // avrages the values for each timeset and put it in the right format
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const ListOfDayOfWeatherObjects: DayOfWeatherObjects[] = <any>[];
   for (const ListsOfWeatherObjectInTimeSet of ListsOfWeatherObjectAllDays) {
-    const DayOfWeatherObjects: DayOfWeatherObjects = <any>{day: ListsOfWeatherObjectInTimeSet[0]!.day}; // currently not set FIX
+    const DayOfWeatherObjects: DayOfWeatherObjects = <any>{day: days[new Date(ListsOfWeatherObjectInTimeSet[0]!.day[0]!).getDay()]};
     const ListOfFrontendWeatherObject: FrontendWeatherObject[] = <any>[];
 
     for (const ListOfWeatherObject of ListsOfWeatherObjectInTimeSet) {

@@ -8,6 +8,7 @@ generator client {
   provider = "prisma-client-js"
   // output   = "../src/generated/prisma"
   output   = "./generated/client"
+  config   = "../src/prisma/prisma.config.ts"
 }
 
 datasource db {
@@ -18,7 +19,8 @@ model AdminTable {
   id            Int    @id  // shall only eist one table with id 1
   StartDate     String
   DayAmount     String
-  TimeSets    String[]
+  DBDayAmount   String
+  TimeSets      String[]
   
   @@unique([id])
   @@map("AdminTable")
