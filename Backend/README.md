@@ -13,3 +13,11 @@ make an .env in ../backend/ with:
 - npx prisma generate
 - npm install --save-dev prisma dotenv
 
+## Go to gitbash and do this
+- Go to the project folder or Database folder
+- Write
+  - 
+  - docker exec -it <container_name> bash
+  - psql -U <POSTGRES_USER> -d <POSTGRES_DB>
+
+
