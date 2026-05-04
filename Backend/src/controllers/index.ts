@@ -6,3 +6,4 @@ export { default as WeatherForecastController } from "./WeatherForecastControlle
 export { default as WeatherController } from "./!WeatherController.ts";
 export { default as DatabaseController } from "./!DatabaseController.ts";
 export { default as BusController } from "./!BusController.ts";
+export { default as test } from "./test.ts";

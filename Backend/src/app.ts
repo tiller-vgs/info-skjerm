@@ -1,5 +1,8 @@
+import dotenv from "dotenv";
 import express from "express";
-import {BusTimesController, deleteEventsRouter, getEventsRouter, postEventsRouter, WeatherForecastController, BusController, WeatherController, DatabaseController} from "@controllers";
+import {test, BusTimesController, deleteEventsRouter, getEventsRouter, postEventsRouter, WeatherForecastController, BusController, WeatherController, DatabaseController} from "@controllers";
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,8 +20,7 @@ app.use(express.json());
 app.use("/weather", WeatherController);
 app.use("/databade", DatabaseController);
 app.use("/departures", BusController);
-
-
+app.use("/test", test);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

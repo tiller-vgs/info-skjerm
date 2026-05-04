@@ -2,20 +2,30 @@
 // npm install --save-dev prisma dotenv
 // import "dotenv/config";
 // import { defineConfig } from "prisma/config";
-import {defineConfig} from "@prisma/config";
+// import {defineConfig} from "@prisma/config";
+// import {My_env} from "./src/prisma.ts"
+// import {My_env} from "./src/controllers/test.ts"
+import "dotenv/config";
+import { defineConfig, env } from "prisma/config";
 
-// let url;
-// if (process.env.DATABASE_URL) {
-//   url = process.env.DATABASE_URL;
-// } else {
-//   throw
-// }
+const PrismaFolderPATH = "./prisma"
+
+const DATABASE_URL = process.env.DATABASE_URL;
+// const DATABASE_URL = My_env;
+
+let url;
+if (DATABASE_URL) {
+  url = DATABASE_URL;
+} else {
+  throw new Error("prisma.config, cant find .env but got:   " + process.env.DATABASE_URL + "  ||  " + DATABASE_URL + "  ||  " + env("DATABASE_URL"));
+}
 export default defineConfig({
-  schema: "prisma/schema.prisma",
+  schema: PrismaFolderPATH + "/schema.prisma",
   migrations: {
-    path: "prisma/migrations",
+    path: PrismaFolderPATH + "/migrations",
   },
   datasource: {
-    url: process.env.DATABASE_URL,
+    url: DATABASE_URL,
   },
 });
+
