@@ -19,10 +19,10 @@ const DateDisplay: React.FC = () => {
 
   return (
     <div>
-      <p className="text-center text-4xl">
+      <h1 className="text-center text-5xl">
         {dd}.{mm}.{yy}
-      </p>
-      <p className="text-center text-4xl">Uke {week}</p>
+      </h1>
+      <h1 className="text-center text-5xl">Uke {week}</h1>
     </div>
   );
 };
