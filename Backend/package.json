@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "type": "module",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js",
-    "prisma": "prisma"
+    "prisma": "prisma",
+    "dev": "tsx src/app.ts",
+    "setval": "npx prisma db execute --file ./prisma/fill.sql --schema prisma/schema.prisma",
+    "setmodel": "npx prisma generate && npx prisma db push",
+    "delfully": "npx prisma migrate reset"
   },
   "keywords": [],
   "author": "",
