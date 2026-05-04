@@ -2,6 +2,7 @@
 /node_modules
 .package-lock.json
 package-lock.json
+./package-lock.json
 npm-shrinkwrap.json
 *.log
 *.gz
@@ -10,7 +11,7 @@ npm-shrinkwrap.json
 .env
 /dist
 /generated/prisma
-/prisma
+/prisma/generated
 
 
 

@@ -67,6 +67,5 @@ router.get("/", async (req: Request, res: Response) => {
 
 
 
-
 // '{"query": "{ stopPlace( id: \"NSR:StopPlace:44029\" ) { id name estimatedCalls( numberOfDepartures: 10 ) { realtime aimedArrivalTime expectedArrivalTime destinationDisplay { frontText } quay { id } serviceJourney { journeyPattern { line { id name transportMode } } } } }}"}'
 export default router;

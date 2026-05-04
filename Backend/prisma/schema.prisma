@@ -16,14 +16,14 @@ datasource db {
 }
 
 model AdminTable {
-  id            Int    @id  // shall only eist one table with id 1
-  StartDate     String
-  DayAmount     String
-  DBDayAmount   String
-  TimeSets      String[]
+  id            Int    @id  // can only exist one table with id 1
+  startdate     String
+  dayamount     Int
+  dbdayamount   Int
+  timesets      String[]
   
   @@unique([id])
-  @@map("AdminTable")
+  @@map("admintable")
 }
 
 model User {
