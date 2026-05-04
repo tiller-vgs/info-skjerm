@@ -1,10 +1,20 @@
+import type { PropsWithChildren } from "react";
 import { NavLink, Outlet } from "react-router";
+import { Navigate } from "react-router";
 
-function Navbar() {
-  const currentUser = {
-    isLoggedIn: true,
-  };
+export const currentUser = {
+  isLoggedIn: true,
+};
 
+export const Authorization = ({ children }: PropsWithChildren) => {
+  if (!currentUser.isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+};
+
+export function Navbar() {
   return (
     <>
       <div className="group">
@@ -14,7 +24,7 @@ function Navbar() {
         <div
           className=" fixed top-0 left-0 w-full
       flex items-center justify-between px-6 py-4
-      bg-tqblue text-tqwhite shadow-md
+      bg-tqnavbar text-tqwhite shadow-md
 
       transform -translate-y-full opacity-0
       transition-all duration-300 ease-in-out 
@@ -28,18 +38,18 @@ function Navbar() {
             <NavLink to={"/"}>Infoskjerm</NavLink>
           </h1>
           <nav className="flex items-center gap-6">
-            <NavLink className="hover:text-blue-400 transition" to={"/"}>
+            <NavLink className="hover:text-tqpurple transition" to={"/"}>
               Hjem
             </NavLink>
             <NavLink
-              className="hover:text-blue-400 transition"
+              className="hover:text-tqpurple transition"
               to={"/info-screen"}
             >
               Infoskjerm
             </NavLink>
 
             {!currentUser?.isLoggedIn && (
-              <NavLink className="hover:text-blue-400 transition" to={"/login"}>
+              <NavLink className="hover:text-tqpurple transition" to={"/login"}>
                 Logg in
               </NavLink>
             )}
@@ -47,13 +57,13 @@ function Navbar() {
             {currentUser?.isLoggedIn && (
               <div className="flex items-center gap-6">
                 <NavLink
-                  className="hover:text-blue-400 transition"
+                  className="hover:text-tqpurple transition"
                   to={"/admin/dashboard"}
                 >
                   Adminpanel
                 </NavLink>
                 <NavLink
-                  className="hover:text-blue-400 transition"
+                  className="hover:text-tqpurple transition"
                   to={"/admin/register"}
                 >
                   Registrer brukere

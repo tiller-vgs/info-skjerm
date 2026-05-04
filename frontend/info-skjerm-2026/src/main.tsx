@@ -1,11 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { BrowserRouter, Route, Routes } from "react-router";
-import Navbar from "./components/Navbar";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router";
+import { Navbar, Authorization } from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import InfoScreen from "./pages/InfoScreen";
+import InfoScreen from "./pages/Infoscreen";
 // import "@fontsource-variable/inter";
 
 createRoot(document.getElementById("root")!).render(
@@ -20,8 +20,14 @@ createRoot(document.getElementById("root")!).render(
           <Route path="login">
             <Route index element={<Login />} />
           </Route>
-          <Route path="admin">
-            {/* Temp */}
+          <Route
+            path="admin"
+            element={
+              <Authorization>
+                <Outlet />
+              </Authorization>
+            }
+          >
             <Route path="dashboard" element={<div>Admin Dashboard</div>} />
             <Route path="register" element={<div>Admin Register</div>} />
           </Route>
