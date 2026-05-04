@@ -3,9 +3,8 @@ import { NavLink, Outlet } from "react-router";
 import { Navigate } from "react-router";
 
 export const currentUser = {
-  isLoggedIn: false,
+  isLoggedIn: true,
 };
-
 
 export const Authorization = ({ children }: PropsWithChildren) => {
   if (!currentUser.isLoggedIn) {
@@ -39,18 +38,18 @@ export function Navbar() {
             <NavLink to={"/"}>Infoskjerm</NavLink>
           </h1>
           <nav className="flex items-center gap-6">
-            <NavLink className="hover:text-blue-400 transition" to={"/"}>
+            <NavLink className="hover:text-tqpurple transition" to={"/"}>
               Hjem
             </NavLink>
             <NavLink
-              className="hover:text-blue-400 transition"
+              className="hover:text-tqpurple transition"
               to={"/info-screen"}
             >
               Infoskjerm
             </NavLink>
 
             {!currentUser?.isLoggedIn && (
-              <NavLink className="hover:text-blue-400 transition" to={"/login"}>
+              <NavLink className="hover:text-tqpurple transition" to={"/login"}>
                 Logg in
               </NavLink>
             )}
@@ -58,13 +57,13 @@ export function Navbar() {
             {currentUser?.isLoggedIn && (
               <div className="flex items-center gap-6">
                 <NavLink
-                  className="hover:text-blue-400 transition"
+                  className="hover:text-tqpurple transition"
                   to={"/admin/dashboard"}
                 >
                   Adminpanel
                 </NavLink>
                 <NavLink
-                  className="hover:text-blue-400 transition"
+                  className="hover:text-tqpurple transition"
                   to={"/admin/register"}
                 >
                   Registrer brukere
