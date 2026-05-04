@@ -92,7 +92,7 @@ router.get("/", async (req: Request, res: Response) => {
     }
   }
 
-  // avrage the values for each timeset and put it in the right format
+  // avrages the values for each timeset and put it in the right format
   const ListOfDayOfWeatherObjects: DayOfWeatherObjects[] = <any>[];
   for (const ListsOfWeatherObjectInTimeSet of ListsOfWeatherObjectAllDays) {
     const DayOfWeatherObjects: DayOfWeatherObjects = <any>{day: ListsOfWeatherObjectInTimeSet[0]!.day}; // currently not set FIX
@@ -114,32 +114,6 @@ router.get("/", async (req: Request, res: Response) => {
   }
 
   return res.json(ListOfDayOfWeatherObjects);
-
-  // keep code i think i need this later
-
-  //   const FrontendWeatherObjectList: FrontendWeatherObject[] = [];
-  //   for (const WeatherObjectList of WeatherObjectTimeSetsList) {
-  //     let FrontendWeatherObject: FrontendWeatherObject;
-  //     let madeWeatherObject: Boolean = false;
-  //     for (const WeatherObject of WeatherObjectList) {
-  //       if (!madeWeatherObject) {
-  //         FrontendWeatherObject = WeatherObject;
-  //         madeWeatherObject = true;
-  //       } else {
-  //         FrontendWeatherObject!.symbol_code += "|" + WeatherObject.symbol_code;
-  //         FrontendWeatherObject!.air_temperature += WeatherObject.air_temperature;
-  //         FrontendWeatherObject!.wind_speed += WeatherObject.wind_speed;
-  //         FrontendWeatherObject!.wind_from_direction += WeatherObject.wind_from_direction;
-  //       }
-  //     }
-  //     FrontendWeatherObject!.air_temperature /= WeatherObjectList.length;
-  //     FrontendWeatherObject!.wind_speed /= WeatherObjectList.length;
-  //     FrontendWeatherObject!.wind_from_direction /= WeatherObjectList.length;
-  //     FrontendWeatherObjectList.push(FrontendWeatherObject!);
-  //   }
-
-  //   AllDays.push({day: "", FrontendWeatherObject: FrontendWeatherObjectList});
-  // }
 });
 
 export default router;

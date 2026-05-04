@@ -2,7 +2,8 @@ import express from "express";
 import {BusTimesController, deleteEventsRouter, getEventsRouter, postEventsRouter, WeatherForecastController, BusController, WeatherController, DatabaseController} from "@controllers";
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
+// const PORT = 3000;
 
 app.use(express.json());
 
@@ -17,9 +18,8 @@ app.use("/weather", WeatherController);
 app.use("/databade", DatabaseController);
 app.use("/departures", BusController);
 
-// might need 
-// const PORT = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });

@@ -42,7 +42,7 @@ router.get("/", async (req: Request, res: Response) => {
         busLine,
       };
 
-      all.push(route);
+      // all.push(route);
 
       // idk FIX
       if (call.quay.id === "NSR:Quay:75606") {
@@ -55,7 +55,7 @@ router.get("/", async (req: Request, res: Response) => {
     const busStop: BusStop = {
       northBound,
       southBound,
-      all,
+      // all,
     };
 
     return res.json(busStop);

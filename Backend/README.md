@@ -13,6 +13,3 @@ make an .env in ../backend/ with:
 - npx prisma generate
 - npm install --save-dev prisma dotenv
 
-
-
-
