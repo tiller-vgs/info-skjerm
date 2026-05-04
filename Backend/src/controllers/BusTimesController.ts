@@ -46,7 +46,7 @@ router.get("/departures", async (req: Request, res: Response) => {
 
     const northBound: BusRoute[] = [];
     const southBound: BusRoute[] = [];
-    const all: BusRoute[] = [];
+    // const all: BusRoute[] = [];
 
     const calls = json.data.stopPlace.estimatedCalls;
     console.log("All calls:  -- ", calls)
@@ -63,7 +63,7 @@ router.get("/departures", async (req: Request, res: Response) => {
         busLine,
       };
 
-      all.push(route);
+      // all.push(route);
 
       if (call.quay.id === "NSR:Quay:75606") {
         northBound.push(route);
@@ -75,7 +75,7 @@ router.get("/departures", async (req: Request, res: Response) => {
     const busStop: BusStop = {
       northBound,
       southBound,
-      all,
+      // all,
     };
 
     cache.set(cacheKey, busStop, 60 * 2);
