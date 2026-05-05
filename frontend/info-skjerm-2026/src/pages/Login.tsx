@@ -11,6 +11,7 @@ import z from "zod";
 import { loginSchema } from "../lib/schema";
 import { authClient } from "../lib/auth-client";
 import { toast } from "react-toastify";
+import { redirect } from "react-router";
 
 function Login() {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -37,6 +38,7 @@ function Login() {
       return;
     }
     toast.success("Login successful!");
+    redirect("/admin/dashboard");
   }
   return (
     <div>
