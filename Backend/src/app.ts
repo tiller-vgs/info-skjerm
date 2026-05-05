@@ -4,6 +4,11 @@ import {test, test2, BusTimesController, deleteEventsRouter, getEventsRouter, po
 
 dotenv.config();
 
+declare global {
+	var test: string;
+}
+global.test = "test";
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 // const PORT = 3000;

@@ -17,11 +17,11 @@
 
     "paths": {
       "*": ["./src/*"],
-      "@models": ["./src/models/index.ts"],
-      "@helpers": ["./src/utils/index.ts"],
+      "@models": ["./src/models"],
+      "@helpers": ["./src/utils"],
       "@db": ["./src/db/context.ts"],
-      "@controllers": ["./src/controllers/index.ts"],
-      "@prismaclient": ["./src/prisma.ts"]
+      "@controllers": ["./src/controllers"],
+      "@prismaclient": ["./src/lib/prisma.ts"]
     },
 
     // For nodejs:
