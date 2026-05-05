@@ -15,8 +15,6 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// IDK how this works ask martin and group FIX
-
 // app.use("/BusTimesController", BusTimesController);
 // app.use("/deleteevents", deleteEventsRouter);
 // app.use("/getevents", getEventsRouter);
