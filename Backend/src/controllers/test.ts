@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { EntireWeather, DayOfWeatherObjects, FrontendWeatherObject, HelperWeatherObject, Listify } from "@models";
 import { MakefetchWithRetry } from "@helpers";
-
+import {AllValues} from "@controllers";
 
 const router = Router();
 
