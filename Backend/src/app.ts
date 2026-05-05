@@ -2,12 +2,13 @@ import dotenv from "dotenv";
 import express from "express";
 import {test, test2, BusTimesController, deleteEventsRouter, getEventsRouter, postEventsRouter, WeatherForecastController, BusController, WeatherController, DatabaseController} from "@controllers";
 
-dotenv.config();
+dotenv.config(); // {path: ../.env}
 
 declare global {
 	var test: string;
 }
 global.test = "test";
+console.log("Globel.test:  ", global.test)
 
 const app = express();
 const PORT = process.env.PORT || 3000;
