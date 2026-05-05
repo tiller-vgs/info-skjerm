@@ -2,7 +2,7 @@ import Bus from "../components/Bus";
 import Clock from "../components/Clock";
 import DateDisplay from "../components/DateDisplay";
 
-function Infoskjerm() {
+function InfoScreen() {
   return (
     <table className="w-screen h-screen bg-background">
       <tr>
@@ -29,4 +29,4 @@ function Infoskjerm() {
   );
 }
 
-export default Infoskjerm;
+export default InfoScreen;

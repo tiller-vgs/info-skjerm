@@ -1,18 +1,36 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import "@fontsource-variable/inter";
-import { BrowserRouter, Route, Routes } from "react-router";
-import Infoskjerm from "./pages/Infoskjerm";
-import Login from "./pages/login";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router";
+import { Navbar, Authorization } from "./components/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import InfoScreen from "./pages/Infoscreen";
+// import "@fontsource-variable/inter";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/">
-          <Route index element={<Infoskjerm />} />
-          <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Navbar />}>
+          <Route index element={<Home />} />
+          <Route path="info-screen">
+            <Route index element={<InfoScreen />} />
+          </Route>
+          <Route path="login">
+            <Route index element={<Login />} />
+          </Route>
+          <Route
+            path="admin"
+            element={
+              <Authorization>
+                <Outlet />
+              </Authorization>
+            }
+          >
+            <Route path="dashboard" element={<div>Admin Dashboard</div>} />
+            <Route path="register" element={<div>Admin Register</div>} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
