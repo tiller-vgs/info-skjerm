@@ -10,9 +10,13 @@
     from 180deg at 50% 50%,
     var(--tw-gradient-stops)
   );
-  --color-tqblue: #000240;
-  --color-tqwhite: #e2e2e2;
-  --color-background: #0d1117;
+  --color-tqbluenickname: #0078d7;
+  --color-tqgreenxp: #90ee90;
+  --color-tqwhitetext: #e2e2e2;
+  --color-tqpurple: #6e40c9;
+  --color-tqbackground: #191d23;
+  --color-tqboxes: #1e2227;
+  --color-tqnavbar: #0d1117;
 
   --color-common: #e5e7eb;
   --color-uncommon: #1eff00;
@@ -61,16 +65,18 @@
   } */
 
   body {
-    color: rgb(var(--foreground-rgb));
+    /* color: rgb(var(--foreground-rgb));
     background: linear-gradient(
         to bottom,
         transparent,
         rgb(var(--background-end-rgb))
       )
-      rgb(var(--background-start-rgb));
+      rgb(var(--background-start-rgb)); */
+    background-color: #191d23;
+    color: #e2e2e2;
   }
 }
-
+/* 
 html {
   font-family: var(--font-inter);
 }
@@ -83,7 +89,7 @@ h1 {
 #dice-canvas canvas {
   width: 100%;
   height: 100%;
-}
+} */
 
 @keyframes move-up-down {
   0%,
@@ -107,7 +113,7 @@ h1 {
       0 0 10px rgba(255, 128, 0, 0.6);
   }
 }
-
+/* HER ER RARITIES SHINING EFFEKT */
 @keyframes shine {
   0% {
     background-position: 100% 0;
