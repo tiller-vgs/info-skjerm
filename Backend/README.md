@@ -29,15 +29,18 @@ You can do whats under in gitbash or make the database directly in docker if you
 - Then run these:  
   - npx prisma generate
   - npx prisma db push
+- or
+  - npm run setmodel
 
 ### Setup done  
 ## After setup
 Run each of these  
 - run this each time you change .env  
   - npm run dev  
-- run this and under each time you change schema.prisma
-  - npx prisma generate
-  - npx prisma db push  
+- run this each time you change schema.prisma
+  -  npm run setmodel
+- run this to reset the db
+  - npm run resetdb
 ### Commands for backend (that i know works and might be accualy usefull)
 - Starts backend (any changes to anything exept the database you'll need to re run this command)  
   - npm run dev &nbsp; &nbsp; &nbsp; &nbsp; # runs command: "tsx src/app.ts"  

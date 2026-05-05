@@ -4,6 +4,8 @@ export { default as getEventsRouter } from "./GetEventsController.ts";
 export { default as postEventsRouter } from "./PostEventsController.ts";
 export { default as WeatherForecastController } from "./WeatherForecastController.ts";
 export { default as WeatherController } from "./!WeatherController.ts";
+export { GetWeatherAPI } from "./!WeatherController2.ts";
 export { default as DatabaseController } from "./!DatabaseController.ts";
 export { default as BusController } from "./!BusController.ts";
 export { default as test } from "./test.ts";
+export { default as test2 } from "./test2.ts";

@@ -1,13 +1,20 @@
-import {Router, Request, Response} from "express";
-import {EntireWeather, DayOfWeatherObjects, FrontendWeatherObject, HelperWeatherObject, Listify} from "@models";
-import {MakefetchWithRetry} from "@helpers";
+// import {GetWeatherAPI} from "@controllers";
+// import { DayOfWeatherObjects } from "@models";
+// import {prisma} from "prisma";
 
+// async function setDatabase() {
+// 	const Weatherapi = await GetWeatherAPI(false);
+// 	if (typeof Weatherapi[0] == "number") {
+// 		return; // move every day in the database one day forward
+//     } else {
+//         const Weather = Weatherapi as DayOfWeatherObjects[]
+//         for(const WeatherDay of Weather)
+//             await prisma.earlyerweatherdays.create({
+//                 day: WeatherDay.day
+//                 data: [WeatherDay.FrontendWeatherObject.map(x => { return [{...x}] })]
+//             });
+// 		// return Weather; // set this in database
+// 	}
+// }
 
-const fetchWithRetry = MakefetchWithRetry("WeatherForecastController");
-
-
-async function setDatabase() {
-    const WeekOfWeather = await fetchWithRetry("http://localhost:3000/weather");
-}
-
-// make setDatabase run 24:00 each day FIX
+// // make setDatabase run 24:00 each day FIX

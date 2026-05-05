@@ -28,3 +28,11 @@ export function MakefetchWithRetry(fetchingWhat: string = "generell info") {
     throw new Error("Unreachable");
   };
 };
+import { Listify } from "@models"
+export function makeEmptyListified<T>(obj: T): Listify<T> {
+  const result = {} as Listify<T>;
+  for (const key in obj) {
+		result[key] = [];
+	}
+  return result;
+}

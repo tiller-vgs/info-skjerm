@@ -45,4 +45,7 @@ TodayWeatherForcast     | WeatherJsonResponseToday
 
 From WeatherOutputObjects:
 DayOfWeatherObjects     | FrontendWeatherObject
+
+From Generell:
+Listify
 */
