@@ -6,6 +6,7 @@ import { Navbar, Authorization } from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import InfoScreen from "./pages/Infoscreen";
+import AdminDashboard from "./pages/AdminDashboard";
 // import "@fontsource-variable/inter";
 
 createRoot(document.getElementById("root")!).render(
@@ -28,7 +29,9 @@ createRoot(document.getElementById("root")!).render(
               </Authorization>
             }
           >
-            <Route path="dashboard" element={<div>Admin Dashboard</div>} />
+            <Route path="dashboard">
+              <Route index element={<AdminDashboard />} />
+            </Route>
             <Route path="register" element={<div>Admin Register</div>} />
           </Route>
         </Route>

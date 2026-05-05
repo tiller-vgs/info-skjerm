@@ -4,6 +4,13 @@
   font-family: "Inter Variable", sans-serif;
 }
 
+
+.contentBox {
+  background-color: #1e2227;
+  color: #e2e2e2;
+  border-radius: 10px;
+}
+
 @theme {
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
   --background-image-gradient-conic: conic-gradient(
