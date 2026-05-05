@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
-import {test, BusTimesController, deleteEventsRouter, getEventsRouter, postEventsRouter, WeatherForecastController, BusController, WeatherController, DatabaseController} from "@controllers";
+import {test, test2, BusTimesController, deleteEventsRouter, getEventsRouter, postEventsRouter, WeatherForecastController, BusController, WeatherController, DatabaseController} from "@controllers";
 
 dotenv.config();
 
@@ -21,6 +21,7 @@ app.use("/weather", WeatherController);
 app.use("/databade", DatabaseController);
 app.use("/departures", BusController);
 app.use("/test", test);
+app.use("/test2", test2);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

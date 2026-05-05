@@ -26,6 +26,14 @@ model AdminTable {
   @@map("admintable")
 }
 
+model earlyerweatherdays {
+  dayname       String
+  data          Json[]
+
+  @@unique([data])
+  @@map("earlyerweatherdays")
+}
+
 model User {
   id            String    @id
   name          String

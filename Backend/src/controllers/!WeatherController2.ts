@@ -1,4 +1,3 @@
-import {Request, Response} from "express";
 import {EntireWeather, DayOfWeatherObjects, FrontendWeatherObject, HelperWeatherObject, Listify} from "@models";
 import {MakefetchWithRetry} from "@helpers";
 import {prisma} from "@prismaclient";
@@ -8,24 +7,26 @@ const fetchWithRetry = MakefetchWithRetry("WeatherForecastController");
 
 const API_URL = "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=63.21&lon=10.22";
 
-export async function GetWeatherAPI(req: Request, res: Response, dbDayAmount: boolean) {
+export async function GetWeatherAPI(dbDayAmount: boolean) {
   // check database for time sets and day amount
-  const AdminTable = await prisma.adminTable.findUnique({where: {id: 1}});
-  if (AdminTable === null) {
-    console.error("Can't get adminTable from database");
-    return res.status(0).send("Error"); // give better message FIX
-  }
+//   const AdminTable = await prisma.adminTable.findUnique({where: {id: 1}});
+//   if (AdminTable === null) {
+//     console.error("Can't get adminTable from database");
+//     return [0, "Error"] // res.status(0).send("Error"); // give better message FIX
+//   }
 
-  let DayAmount: number;
+  let DayAmount: number = 3;
   if (dbDayAmount) {
-    DayAmount = AdminTable.dayamount;
+    // DayAmount = AdminTable.dayamount;
   } else {
-    DayAmount = AdminTable.dbdayamount;
+    // DayAmount = AdminTable.dbdayamount;
   };
 
-  const TimeSets: string[] = AdminTable.timesets || ["06:00-08:00", "11:00-12:00", "13:00-15:00", "15:00-17:00"];
+//   const TimeSets: string[] = AdminTable.timesets || ["06:00-08:00", "11:00-12:00", "13:00-15:00", "15:00-17:00"];
+  const TimeSets: string[] = ["00:00-23:00"];
   const TimeSetsHoures: string[][] = TimeSets.map((t) => t.split("-").map((x) => x.slice(0, 2)));
-  const StartDate: string = AdminTable.startdate || "none";
+//   const StartDate: string = AdminTable.startdate || "none";
+  const StartDate: string = "none";
 
   const response = await fetchWithRetry(API_URL);
   const json = (await response.json()) as EntireWeather;
@@ -118,5 +119,5 @@ export async function GetWeatherAPI(req: Request, res: Response, dbDayAmount: bo
     ListOfDayOfWeatherObjects.push({...DayOfWeatherObjects});
   }
 
-  return res.json(ListOfDayOfWeatherObjects);
+  return ListOfDayOfWeatherObjects;
 }
