@@ -4,15 +4,15 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { loginSchema } from "../lib/schema";
 import { authClient } from "../lib/auth-client";
+import { toast } from "react-toastify";
 
-function login() {
+function Login() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -29,14 +29,17 @@ function login() {
 
     if (result.error) {
       toast.error("Login failed", {
-        description: result.error.message || "Unable to login",
+        data: {
+          title: "Login failed",
+          content: result.error.message || "Unable to login",
+        },
       });
       return;
     }
     toast.success("Login successful!");
   }
   return (
-    <Box display="flex" justifyContent="center">
+    <div>
       <Card sx={{ width: "100%", mt: 10, maxWidth: { sm: "md" } }}>
         <CardContent>
           <Typography variant="h5" component="div" gutterBottom>
@@ -46,15 +49,7 @@ function login() {
             Login to an existing user
           </Typography>
 
-          <Box
-            component="form"
-            id="login"
-            onSubmit={form.handleSubmit(onSubmit)}
-            display="flex"
-            flexDirection="column"
-            gap={2}
-            mt={2}
-          >
+          <form id="login" onSubmit={form.handleSubmit(onSubmit)}>
             <Controller
               name="username"
               control={form.control}
@@ -89,7 +84,7 @@ function login() {
                 />
               )}
             />
-          </Box>
+          </form>
         </CardContent>
 
         <CardActions sx={{ px: 2, pb: 2, flexWrap: "wrap", gap: 1 }}>
@@ -98,8 +93,8 @@ function login() {
           </Button>
         </CardActions>
       </Card>
-    </Box>
+    </div>
   );
 }
 
-export default login;
+export default Login;

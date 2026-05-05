@@ -11,7 +11,6 @@ export const registerSchema = z.object({
     .min(2, "Username must be at least 2 characters long")
     .max(64, "Username must be at most 64 characters long"),
   password: z.string().min(8, "Password must be at least 8 characters long"),
-  admin: z.boolean(),
 });
 
 export const loginSchema = z.object({
