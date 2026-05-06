@@ -8,7 +8,7 @@ declare global {
 	var test: string;
 }
 global.test = "test";
-console.log("Globel.test:  ", global.test)
+console.log("Global.test:  ", global.test)
 
 const app = express();
 const PORT = process.env.PORT || 3000;
