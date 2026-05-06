@@ -1,43 +1,32 @@
 // import Bus from "../components/Bus";
-import Clock from "../components/Clock";
+// import Clock from "../components/Clock";
 import { BusRotator, AnnouncmentRotator } from "../components/ContentRotator";
-import DateDisplay from "../components/DateDisplay";
+// import DateDisplay from "../components/DateDisplay";
 import WeatherDisplay from "../components/WeatherDisplay";
 import busIcon from "../Icon/bus.png";
+import DateAndTimeDisplay from "../components/DateAndTimeDisplay";
 
 function InfoScreen() {
   return (
     <table className="bg-tqboxes border-10 w-screen h-screen border-tqbackground">
       <tr>
-        <td
-          rowSpan={2}
-          className="bg-tqboxes border-r-10 w-1/4 border-tqbackground"
-        >
-          <BusRotator />
-        </td>
+        {/* Weather & Time */}
         <td className="bg-tqboxes border-b-10 border-l-10 h-1/4 border-tqbackground">
-          <table className="w-full h-full">
-            <tr>
-              <td className="w-1/2">
-                <Clock />
-              </td>
-              <td className="w-1/2">
-                <DateDisplay />
-              </td>
-            </tr>
-          </table>
+          <DateAndTimeDisplay />
           <WeatherDisplay />
         </td>
+        {/* Busses */}
         <td
           rowSpan={2}
-          className="border-l-10 w-1/4 border-[#21252b] align-top text-center p-4"
+          className="border-l-10 w-1/4 border-tqbackground align-top text-center p-4"
         >
           <img src={busIcon} alt="bus" width={150} className="inline-block" />
           <BusRotator />
         </td>
       </tr>
+      {/* TillerQuest & Announcements */}
       <tr>
-        <td className="border-t-10 border-l-10 border-[#21252b]">
+        <td className="border-t-10 border-l-10 border-tqbackground">
           <AnnouncmentRotator />
         </td>
       </tr>

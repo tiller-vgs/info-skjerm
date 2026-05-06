@@ -9,13 +9,13 @@ function WeatherDisplay() {
       {days?.slice(0, 2).map((day: WeatherDay, i: number) => (
         <div
           key={i}
-          className="rounded-xl border-5 border-tqboxes p-2 text-center m-2 inline-block"
+          className="rounded-xl border-5 border-tqpurple p-2 text-center m-2 inline-block"
         >
           <p className="text-4xl">{day.day}</p>
           <div className="flex gap-2 mt-2 justify-center">
             {day.WeatherObjects.map(
               (weatherPeriod: WeatherObject, j: number) => (
-                <div key={j} className="border-4 border-tqboxes p-2 w-32 h-32">
+                <div key={j} className="p-2 w-32 h-32">
                   {weatherPeriod.time}
                 </div>
               ),
