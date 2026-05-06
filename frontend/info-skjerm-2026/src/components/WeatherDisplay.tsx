@@ -15,7 +15,7 @@ function WeatherDisplay() {
           <div className="flex gap-2 mt-2 justify-center">
             {day.WeatherObjects.map(
               (weatherPeriod: WeatherObject, j: number) => (
-                <div key={j} className="border-4 border-tqboxes p-2 w-32 h-40">
+                <div key={j} className="border-4 border-tqboxes p-2 w-32 h-32">
                   {weatherPeriod.time}
                 </div>
               ),
