@@ -8,57 +8,62 @@ import TextField from "@mui/material/TextField";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { loginSchema } from "../lib/schema";
 import { authClient } from "../lib/auth-client";
 import { toast } from "react-toastify";
 import { redirect } from "react-router";
+import { registerSchema } from "../lib/schema";
 
-function Login() {
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+function Registrer() {
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
+      email: "",
+      name: "",
       username: "",
       password: "",
     },
   });
 
-  async function onSubmit(data: z.infer<typeof loginSchema>) {
-    const result = await authClient.signIn.username({
+  async function onSubmit(data: z.infer<typeof registerSchema>) {
+    const result = await authClient.signUp.email({
+      email: data.email,
       username: data.username,
+      name: data.name,
       password: data.password,
     });
 
     if (result.error) {
-      toast.error("Login failed", {
+      toast.error("Registration failed", {
         data: {
-          title: "Login failed",
-          content: result.error.message || "Unable to login",
+          title: "Registration failed",
+          content: result.error.message || "Unable to register",
         },
       });
       return;
     }
-    toast.success("Login successful!");
-    redirect("/admin/dashboard");
+    toast.success("Registration successful!");
+    form.reset();
+    redirect("/dashboard");
   }
   return (
     <div>
-      <Card sx={{ width: "100%", mt: 10, maxWidth: { sm: "md" } }}>
+      <Card sx={{ width: "100%", maxWidth: { sm: "md" } }}>
         <CardContent>
           <Typography variant="h5" component="div" gutterBottom>
-            Login
+            Register
           </Typography>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            Login to an existing user
+            Create a new account
           </Typography>
 
-          <form id="login" onSubmit={form.handleSubmit(onSubmit)}>
+          <form id="register" onSubmit={form.handleSubmit(onSubmit)}>
             <Controller
               name="username"
               control={form.control}
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  id="login-username"
+                  id="register-username"
                   sx={{ marginBottom: 1 }}
                   label="Username"
                   placeholder="Ola123"
@@ -71,12 +76,46 @@ function Login() {
             />
 
             <Controller
+              name="name"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  {...field}
+                  id="register-name"
+                  sx={{ marginBottom: 1 }}
+                  label="Name"
+                  placeholder="Ola Nordmann"
+                  autoComplete="off"
+                  error={fieldState.invalid}
+                  helperText={fieldState.error?.message}
+                  fullWidth
+                />
+              )}
+            />
+            <Controller
+              name="email"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  {...field}
+                  id="register-email"
+                  sx={{ marginBottom: 1 }}
+                  label="Email"
+                  placeholder="ola@eksempel.no"
+                  autoComplete="off"
+                  error={fieldState.invalid}
+                  helperText={fieldState.error?.message}
+                  fullWidth
+                />
+              )}
+            />
+            <Controller
               name="password"
               control={form.control}
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  id="login-password"
+                  id="register-password"
                   sx={{ marginBottom: 1 }}
                   label="Password"
                   type="password"
@@ -92,8 +131,8 @@ function Login() {
         </CardContent>
 
         <CardActions sx={{ px: 2, pb: 2, flexWrap: "wrap", gap: 1 }}>
-          <Button type="submit" form="login" variant="contained">
-            Login
+          <Button type="submit" form="register" variant="contained">
+            Register
           </Button>
         </CardActions>
       </Card>
@@ -101,4 +140,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Registrer;
