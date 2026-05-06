@@ -63,12 +63,6 @@ export function Navbar() {
                   Adminpanel
                 </NavLink>
                 <NavLink
-                  className="hover:text-tqpurple transition"
-                  to={"/admin/register"}
-                >
-                  Registrer brukere
-                </NavLink>
-                <NavLink
                   className="hover:text-red-400 transition"
                   to={"/login"}
                 >
