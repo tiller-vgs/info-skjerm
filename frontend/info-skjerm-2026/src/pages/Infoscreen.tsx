@@ -1,6 +1,8 @@
 import Bus from "../components/Bus";
 import Clock from "../components/Clock";
 import DateDisplay from "../components/DateDisplay";
+import WeatherDisplay from "../components/WeatherDisplay";
+import busIcon from "../Icon/bus.png";
 
 function InfoScreen() {
   return (
@@ -20,10 +22,18 @@ function InfoScreen() {
               </td>
             </tr>
           </table>
+          <WeatherDisplay />
+        </td>
+        <td
+          rowSpan={2}
+          className="border-l-10 w-1/4 border-[#21252b] align-top text-center p-4"
+        >
+          <img src={busIcon} alt="bus" width={150} className="inline-block" />
+          <Bus />
         </td>
       </tr>
       <tr>
-        <td className="border-t-10 border-l-10 border-[#21252b]"></td>
+        <td className="border-t-10 border-r-10 border-[#21252b]"></td>
       </tr>
     </table>
   );
