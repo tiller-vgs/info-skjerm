@@ -3,18 +3,26 @@
 import {Router, Request, Response} from "express";
 import {EntireWeather, DayOfWeatherObjects, FrontendWeatherObject, HelperWeatherObject, Listify} from "@models";
 import {MakefetchWithRetry} from "@helpers";
+import {prisma} from "../prisma";
+
 
 const fetchWithRetry = MakefetchWithRetry("WeatherForecastController");
 const router = Router();
 
 const API_URL = "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=63.21&lon=10.22";
 
-router.get("/getWeather", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   // check database for time sets and day amount
-  const DayAmount = 4;
-  const TimeSets = ["06:45-08:45", "11:00-12:00", "13:35-15:20", "15:20-17:00"];
-  const TimeSetsHoures = TimeSets.map((t) => t.split("-").map((x) => x.slice(0, 2)));
-  let StartDate: string = req.body || "none";
+  const AdminTable = await prisma.adminTable.findUnique({ where: { id: 1 }, });
+  if (AdminTable === null) {
+    console.error("Can't get adminTable from database");
+    return res.status(0).send("Error"); // give better message FIX
+  }
+  
+  const DayAmount: number = Number(AdminTable.DayAmount) || 3;
+  const TimeSets: string[] = AdminTable.TimeSets || ["06:00-08:00", "11:00-12:00", "13:00-15:00", "15:00-17:00"];
+  const TimeSetsHoures: string[][] = TimeSets.map((t) => t.split("-").map((x) => x.slice(0, 2)));
+  const StartDate: string = req.body || "none";
 
   const response = await fetchWithRetry(API_URL);
   const json = (await response.json()) as EntireWeather;
@@ -84,10 +92,10 @@ router.get("/getWeather", async (req: Request, res: Response) => {
     }
   }
 
-  // avrage the values for each timeset and put it in the right format
+  // avrages the values for each timeset and put it in the right format
   const ListOfDayOfWeatherObjects: DayOfWeatherObjects[] = <any>[];
   for (const ListsOfWeatherObjectInTimeSet of ListsOfWeatherObjectAllDays) {
-    const DayOfWeatherObjects: DayOfWeatherObjects = <any>{day: ListsOfWeatherObjectInTimeSet[0]!.date};
+    const DayOfWeatherObjects: DayOfWeatherObjects = <any>{day: ListsOfWeatherObjectInTimeSet[0]!.day}; // currently not set FIX
     const ListOfFrontendWeatherObject: FrontendWeatherObject[] = <any>[];
 
     for (const ListOfWeatherObject of ListsOfWeatherObjectInTimeSet) {
@@ -106,32 +114,6 @@ router.get("/getWeather", async (req: Request, res: Response) => {
   }
 
   return res.json(ListOfDayOfWeatherObjects);
-
-  // keep code i think i need this later
-
-  //   const FrontendWeatherObjectList: FrontendWeatherObject[] = [];
-  //   for (const WeatherObjectList of WeatherObjectTimeSetsList) {
-  //     let FrontendWeatherObject: FrontendWeatherObject;
-  //     let madeWeatherObject: Boolean = false;
-  //     for (const WeatherObject of WeatherObjectList) {
-  //       if (!madeWeatherObject) {
-  //         FrontendWeatherObject = WeatherObject;
-  //         madeWeatherObject = true;
-  //       } else {
-  //         FrontendWeatherObject!.symbol_code += "|" + WeatherObject.symbol_code;
-  //         FrontendWeatherObject!.air_temperature += WeatherObject.air_temperature;
-  //         FrontendWeatherObject!.wind_speed += WeatherObject.wind_speed;
-  //         FrontendWeatherObject!.wind_from_direction += WeatherObject.wind_from_direction;
-  //       }
-  //     }
-  //     FrontendWeatherObject!.air_temperature /= WeatherObjectList.length;
-  //     FrontendWeatherObject!.wind_speed /= WeatherObjectList.length;
-  //     FrontendWeatherObject!.wind_from_direction /= WeatherObjectList.length;
-  //     FrontendWeatherObjectList.push(FrontendWeatherObject!);
-  //   }
-
-  //   AllDays.push({day: "", FrontendWeatherObject: FrontendWeatherObjectList});
-  // }
 });
 
 export default router;

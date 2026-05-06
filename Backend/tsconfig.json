@@ -9,9 +9,9 @@
     // See also https://aka.ms/tsconfig/module
     "module": "ESNext",
     "target": "ES2020",
-    "types": [],
+    "types": ["node"],
     "moduleResolution": "bundler",
-    // "esModuleInterop": true,
+    "esModuleInterop": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
 
@@ -52,5 +52,7 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
-  }
+  },
+  "exclude": [], // "prisma.config.ts" // put if it gives an error for this file
+  "include": ["src"]
 }

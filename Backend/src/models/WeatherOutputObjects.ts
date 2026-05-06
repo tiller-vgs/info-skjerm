@@ -14,6 +14,7 @@ export interface FrontendWeatherObject {
 export interface HelperWeatherObject {
   time: string;
   date: string;
+  day: string;
   symbol_code: string;
   air_temperature: number;
   wind_speed: number;
