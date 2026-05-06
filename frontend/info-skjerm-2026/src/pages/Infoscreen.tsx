@@ -1,5 +1,6 @@
-import Bus from "../components/Bus";
+// import Bus from "../components/Bus";
 import Clock from "../components/Clock";
+import { BusRotator, AnnouncmentRotator } from "../components/ContentRotator";
 import DateDisplay from "../components/DateDisplay";
 
 function InfoScreen() {
@@ -7,7 +8,7 @@ function InfoScreen() {
     <table className="bg-tqboxes border-10 w-screen h-screen border-tqbackground">
       <tr>
         <td rowSpan={2} className="bg-tqboxes border-r-10 w-1/4 border-tqbackground">
-          <Bus />
+          <BusRotator/>
         </td>
         <td className="bg-tqboxes border-b-10 border-l-10 h-1/4 border-tqbackground">
           <table className="w-full h-full">
@@ -23,7 +24,9 @@ function InfoScreen() {
         </td>
       </tr>
       <tr>
-        <td className="border-t-10 border-l-10 border-[#21252b]"></td>
+        <td className="border-t-10 border-l-10 border-[#21252b]">
+          <AnnouncmentRotator/>
+        </td>
       </tr>
     </table>
   );
