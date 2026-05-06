@@ -1,8 +1,8 @@
 # npm
-/node_modules
-.package-lock.json
+/node_modules/
+# .package-lock.json
 package-lock.json
-./package-lock.json
+# ./package-lock.json
 npm-shrinkwrap.json
 *.log
 *.gz
@@ -28,3 +28,6 @@ benchmarks/graphs
 
 # ignore additional files using core.excludesFile
 # https://git-scm.com/docs/gitignore
+
+pgdata/
+docker-compose.yml
