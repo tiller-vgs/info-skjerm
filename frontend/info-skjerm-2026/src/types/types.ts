@@ -8,5 +8,5 @@ export interface WeatherObject {
   symbol_code: string;
   air_temperature: number;
   wind_speed: number;
-  wind_from_direction: number;
+  wind_from_direction: string;
 }

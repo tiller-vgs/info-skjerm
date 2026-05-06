@@ -25,7 +25,7 @@ function InfoScreen() {
           rowSpan={2}
           className="border-l-10 w-1/4 border-[#21252b] align-top text-center p-4"
         >
-          <img src={busIcon} alt="bus" width={100} className="inline-block" />
+          <img src={busIcon} alt="bus" width={150} className="inline-block" />
           <Bus />
         </td>
       </tr>

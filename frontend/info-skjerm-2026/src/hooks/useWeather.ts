@@ -137,5 +137,38 @@ export const useWeather = () => {
         },
       ],
     },
+    {
+      day: "test",
+      WeatherObjects: [
+        {
+          time: "00:00 - 00:00",
+          symbol_code: "cloudy",
+          air_temperature: 15,
+          wind_speed: 3.3,
+          wind_from_direction: "S",
+        },
+        {
+          time: "00:00 - 00:00",
+          symbol_code: "cloudy",
+          air_temperature: 15,
+          wind_speed: 3.3,
+          wind_from_direction: "S",
+        },
+        {
+          time: "00:00 - 00:00",
+          symbol_code: "cloudy",
+          air_temperature: 15,
+          wind_speed: 3.3,
+          wind_from_direction: "S",
+        },
+        {
+          time: "00:00 - 00:00",
+          symbol_code: "cloudy",
+          air_temperature: 15,
+          wind_speed: 3.3,
+          wind_from_direction: "S",
+        },
+      ],
+    },
   ];
 };
