@@ -21,7 +21,9 @@
       "@helpers": ["./src/utils"],
       "@db": ["./src/db/context.ts"],
       "@controllers": ["./src/controllers"],
-      "@prismaclient": ["./src/lib/prisma.ts"]
+      "@prismaclient": ["./src/lib/prisma.ts"],
+      "@lib/*": ["./src/lib/*"],
+      "@generated/*": ["./prisma/generated/*"]
     },
 
     // For nodejs:

@@ -1,4 +1,4 @@
-import { auth } from "../server.ts"; // path to your Better Auth server instance
+import { auth } from "@lib/auth.ts"; // path to your Better Auth server instance
 
 const response = await auth.api.signInEmail({
   body: {

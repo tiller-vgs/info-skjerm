@@ -8,11 +8,14 @@
 		"build": "tsc",
 		"start": "node dist/app.js",
 		"prisma": "prisma",
+
 		"dev": "tsx src/app.ts",
+		"authdev": "tsx src/server.ts",
+
+		"setdb": "npx prisma generate && npx prisma db push",
 		"resetdb": "npx prisma generate && npx prisma db push && npx prisma db execute --file ./prisma/fill.sql",
-		"setval": "npx prisma db execute --file ./prisma/fill.sql",
-		"setmodel": "npx prisma generate && npx prisma db push",
-		"delfully": "npx prisma migrate reset"
+		"filldb": "npx prisma db execute --file ./prisma/fill.sql",
+		"delfullydb": "npx prisma migrate reset"
 	},
 	"keywords": [],
 	"author": "",

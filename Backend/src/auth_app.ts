@@ -1,5 +1,5 @@
 import express from "express";
-import { auth } from "./auth";
+import { auth } from "@lib/auth";
 import cors from "cors"; // Import the CORS middleware
 import { toNodeHandler, fromNodeHeaders } from "better-auth/node";
 
@@ -15,7 +15,7 @@ app.all("/api/auth/*splat", toNodeHandler(auth)); // For ExpressJS v4
 // Configure CORS middleware
 app.use(
   cors({
-    origin: "http://your-frontend-domain.com", // Replace with your frontend's origin
+    origin: "http://locathost:3000", // Replace with your frontend's origin
     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   }),

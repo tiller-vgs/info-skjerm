@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import express from "express";
-import {test, test2, BusTimesController, deleteEventsRouter, getEventsRouter, postEventsRouter, WeatherForecastController, BusController, WeatherController, DatabaseController} from "@controllers";
+import * as controller from "@controllers";
 
-dotenv.config(); // {path: ../.env}
+dotenv.config({ path: "./.env", override: true, debug: true }); // {path: ../.env}
 
 declare global {
 	var test: string;
@@ -21,11 +21,11 @@ app.use(express.json());
 // app.use("/getevents", getEventsRouter);
 // app.use("/postevents", postEventsRouter);
 // app.use("/WeatherForecastController", WeatherForecastController);
-app.use("/weather", WeatherController);
-app.use("/databade", DatabaseController);
-app.use("/departures", BusController);
-app.use("/test", test);
-app.use("/test2", test2);
+app.use("/weather", controller.WeatherController);
+app.use("/databade", controller.DatabaseController);
+app.use("/departures", controller.BusController);
+app.use("/test", controller.test);
+app.use("/test2", controller.test2);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

@@ -16,7 +16,7 @@ datasource db {
 }
 
 model AdminTable {
-  id            Int    @id  // can only exist one table with id 1
+  id            Int      // can only exist one table with id 1
   startdate     String
   dayamount     Int
   dbdayamount   Int
