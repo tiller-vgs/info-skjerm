@@ -8,5 +8,4 @@ export interface BusRoute {
 export interface BusStop {
   northBound: BusRoute[];
   southBound: BusRoute[];
-  // all: BusRoute[];
 }

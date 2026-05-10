@@ -1,3 +1,7 @@
+/*
+This script shuld run every day at 00:00 from the server pc if we are allowed
+*/
+
 // import {GetWeatherAPI} from "@controllers";
 // import { DayOfWeatherObjects } from "@models";
 // import {prisma} from "prisma";

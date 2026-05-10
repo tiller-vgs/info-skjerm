@@ -2,20 +2,55 @@
 
 
 # Fixed verion
-## Setup
-### Make a postgreSQL database
-You can do whats under in gitbash or make the database directly in docker if you know how  
-- Go to the the folder you want to have the postgresql database  
-- Write but change what's inside <> with your info  
+# Setup
+## Make a postgreSQL database
+### Change what's inside <> with your info  
+### Either do whats under in gitbash or make the database directly in docker if you know how  
+- Go to the the folder you want the postgreSQL database to be 
+
+- #### Do one of these:  
+- Either write  
   - docker pull postgres  
-  - docker run --name <container_name> -e POSTGRES_PASSWORD=<POSTGRES_PASSWORD> -p <DB_PORT>:<DB_PORT> -d  postgres # not dure if -d postgres shuld be something  from your info
-- This is only if you want to see if the database is set up right or have other acces to the SQL
+  - docker run --name <container_name> -e POSTGRES_PASSWORD=<POSTGRES_PASSWORD> -p <DB_PORT>:<DB_PORT> -d  postgres
+- Or make a <yml_FILENAME>.yml file and fill it with:   
+    ```yml
+    services:  
+      db:  
+        image: postgres:16-alpine  
+        container_name: Infoskjerm_contaner  
+        restart: always  
+        environment:  
+          POSTGRES_USER: <POSTGRES_USER>  
+          POSTGRES_PASSWORD: <POSTGRES_PASSWORD>  
+          POSTGRES_DB: <POSTGRES_DB>  
+        ports:  
+          - "<PORT>:<PORT>"  
+        volumes:  
+          - ./pgdata:/var/lib/postgresql/data  
+    volumes:  
+      pgdata:
+    ```  
+
+  - #### Then write: "docker compose up -d" in the same folder the yml file is
+
+
+- You only need to do this if you want to have acces to the SQL in the database
   - docker exec -it <container_name> psql -U <POSTGRES_USER> -d <POSTGRES_DB>
 
 ### Make these files
--make an .env as in /backend/.env with whats under but but change what's inside <> with your info
-  - DATABASE_URL=string ex. "postgresql://<POSTGRES_USER>:<POSTGRES_PASSWORD>@localhost:<DB_PORT>/<POSTGRES_DB>?schema=public"
-  - PORT=number ex. 3000
+- Make an .env as in /backend/.env with whats under but but change what's inside <> with your info  
+  - For <AUTH_SECRET> Go to https://better-auth.com/docs/installation#set-environment-variables and click generate
+```env
+DATABASE_URL="postgresql://<POSTGRES_USER>:<POSTGRES_PASSWORD>@localhost:<DB_PORT>/<POSTGRES_DB>"
+PORT=<PORT>
+BETTER_AUTH_SECRET=<AUTH_SECRET>
+BETTER_AUTH_URL=<BackendURL>
+ex.
+PORT="3000"
+DATABASE_URL="postgresql://My_USER50:mysecretpassword@localhost:5432/MY_DATABASE"
+BETTER_AUTH_SECRET="UtsN4O7K7gItoIRDSLhGZfZ3f1pHuLoO"
+BETTER_AUTH_URL="http://localhost:3000"
+```
 
 ### Run some commands
 - Open a terminal and go into backend
@@ -24,13 +59,13 @@ You can do whats under in gitbash or make the database directly in docker if you
 - I don't think you need to run these but maybe, if not remove these points  
   - npm install --save-dev @types/node  
   - npm install --save-dev prisma dotenv  
-- Then run this in it's own terminal  
-  - npm run dev  
 - Then run these:  
   - npx prisma generate
   - npx prisma db push
 - or
   - npm run setmodel
+- Then run this in it's own terminal  
+  - npm run dev  
 
 ### Setup done  
 ## After setup

@@ -10,7 +10,7 @@
 		"prisma": "prisma",
 
 		"dev": "tsx src/app.ts",
-		"authdev": "tsx src/server.ts",
+		"authdev": "tsx src/auth_app.ts",
 
 		"setdb": "npx prisma generate && npx prisma db push",
 		"resetdb": "npx prisma generate && npx prisma db push && npx prisma db execute --file ./prisma/fill.sql",

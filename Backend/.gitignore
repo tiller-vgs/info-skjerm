@@ -9,6 +9,7 @@ npm-shrinkwrap.json
 
 # Keep environment variables out of version control
 .env
+package-lock.json
 /dist
 /generated/prisma
 /prisma/generated
