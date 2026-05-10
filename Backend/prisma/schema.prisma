@@ -8,7 +8,7 @@ generator client {
   provider = "prisma-client-js"
   // output   = "../src/generated/prisma"
   output   = "./generated/client"
-  config   = "../src/prisma/prisma.config.ts"
+  // config   = "../prisma.config.ts" // "../src/prisma/prisma.config.ts"
 }
 
 datasource db {
