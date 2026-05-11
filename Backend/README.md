@@ -11,7 +11,7 @@
 - #### Do one of these:  
 - Either write  
   - docker pull postgres  
-  - docker run --name <container_name> -e POSTGRES_PASSWORD=<POSTGRES_PASSWORD> -p <DB_PORT>:<DB_PORT> -d  postgres
+  - docker run --name <container_name> -e POSTGRES_PASSWORD=<POSTGRES_PASSWORD> -p <DB_PORT>:<DB_PORT> -d   postgres
 - Or make a <yml_FILENAME>.yml file and fill it with:   
     ```yml
     services:  
@@ -46,20 +46,20 @@ PORT=<PORT>
 BETTER_AUTH_SECRET=<AUTH_SECRET>
 BETTER_AUTH_URL=<BackendURL>
 ex.
-PORT="3000"
+PORT="3001"
 DATABASE_URL="postgresql://My_USER50:mysecretpassword@localhost:5432/MY_DATABASE"
 BETTER_AUTH_SECRET="UtsN4O7K7gItoIRDSLhGZfZ3f1pHuLoO"
-BETTER_AUTH_URL="http://localhost:3000"
+BETTER_AUTH_URL="http://localhost:${PORT}"
 ```
 
 ### Run some commands
 - Open a terminal and go into backend
 - Run these:
   - npm i
-- I don't think you need to run these but maybe, if not remove these points  
+<!-- - I don't think you need to run these but maybe, if not remove these points  
   - npm install --save-dev @types/node  
-  - npm install --save-dev prisma dotenv  
-- Then run these:  
+  - npm install --save-dev prisma dotenv   -->
+- Then run either these:  
   - npx prisma generate
   - npx prisma db push
 - or

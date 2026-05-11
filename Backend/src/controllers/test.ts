@@ -17,11 +17,11 @@ router.get("/", async (req: Request, res: Response) => {
     }
     const Weather = Weatherapi as DayOfWeatherObjects[];
     return res.json([
-			// [Weather.map(x => {return x.FrontendWeatherObject.map(x => { return [{...x}] })})],
-            Weatherapi,
-            dayName,
-			process.env.DATABASE_URL + "  ||  " + myenv + "  ||  " + process.env.test + "  ||  " + process.env.PORT + "  ||  " + process.env,
-		]);
+        // [Weather.map(x => {return x.FrontendWeatherObject.map(x => { return [{...x}] })})],
+        Weatherapi,
+        dayName,
+        process.env.DATABASE_URL + "  ||  " + myenv + "  ||  " + process.env.test + "  ||  " + process.env.PORT + "  ||  " + process.env,
+    ]);
 });
 
 
