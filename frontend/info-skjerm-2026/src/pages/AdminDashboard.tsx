@@ -3,6 +3,7 @@ import { Card, CardContent } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import AdminPreferences from "../components/AdminPreferences";
+import Registrer from "../components/Registrer";
 
 export function AdminDashboard() {
   const [alignment, setAlignment] = React.useState<string | null>("left");
@@ -18,7 +19,7 @@ export function AdminDashboard() {
 
   return (
     <div className="flex justify-center p-30">
-      <Card sx={{ minWidth: 500, maxWidth: 1250, bgcolor: "transparent" } }>
+      <Card sx={{ minWidth: 500, maxWidth: 1250, bgcolor: "transparent" }}>
         <CardContent className="contentBox flex flex-col items-center gap-6">
           <ToggleButtonGroup
             className="bg-tqpurple "
@@ -44,7 +45,7 @@ export function AdminDashboard() {
             {alignment === "left" && "Kunngjør melding"}
             {alignment === "mid-left" && "Slett kunngjøring"}
             {alignment === "mid-right" && <AdminPreferences />}
-            {alignment === "right" && "Registrer Adminbrukere"}
+            {alignment === "right" && <Registrer />}
           </div>
         </CardContent>
       </Card>
