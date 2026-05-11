@@ -8,34 +8,39 @@ import Login from "./pages/Login";
 import InfoScreen from "./pages/Infoscreen";
 import AdminDashboard from "./pages/AdminDashboard";
 // import "@fontsource-variable/inter";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navbar />}>
-          <Route index element={<Home />} />
-          <Route path="info-screen">
-            <Route index element={<InfoScreen />} />
-          </Route>
-          <Route path="login">
-            <Route index element={<Login />} />
-          </Route>
-          <Route
-            path="admin"
-            element={
-              <Authorization>
-                <Outlet />
-              </Authorization>
-            }
-          >
-            <Route path="dashboard">
-              <Route index element={<AdminDashboard />} />
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navbar />}>
+            <Route index element={<Home />} />
+            <Route path="info-screen">
+              <Route index element={<InfoScreen />} />
             </Route>
-            <Route path="register" element={<div>Admin Register</div>} />
+            <Route path="login">
+              <Route index element={<Login />} />
+            </Route>
+            <Route
+              path="admin"
+              element={
+                <Authorization>
+                  <Outlet />
+                </Authorization>
+              }
+            >
+              <Route path="dashboard">
+                <Route index element={<AdminDashboard />} />
+              </Route>
+              <Route path="register" element={<div>Admin Register</div>} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   </StrictMode>,
 );
