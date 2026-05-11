@@ -60,28 +60,31 @@ import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
 import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+// import Card from "@mui/material/Card";
+// import CardContent from "@mui/material/CardContent";
 import AdminPreferences from "../components/AdminPreferences";
+import Paper from "@mui/material/Paper";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   gap: "2rem",
+
   [`& .${toggleButtonClasses.root}`]: {
     backgroundColor: "#fade29",
     color: "black",
     fontWeight: "bold",
+    transition: "all 0.2s ease",
 
     "&:hover": {
-      backgroundColor: "#eab308",
+      backgroundColor: "#eacb00",
     },
 
     "&.Mui-selected": {
-      backgroundColor: "#ca8a04",
+      backgroundColor: "#9a7a00",
       color: "#fff",
     },
 
     "&.Mui-selected:hover": {
-      backgroundColor: "#a16207",
+      backgroundColor: "#7a6100",
     },
   },
 
@@ -106,7 +109,7 @@ export default function HorizontalSpacingToggleButton() {
   const [alignment, setAlignment] = React.useState<string | null>("left");
 
   const handleAlignment = (
-    event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     newAlignment: string | null,
   ) => {
     setAlignment(newAlignment);
@@ -114,10 +117,18 @@ export default function HorizontalSpacingToggleButton() {
 
   return (
     <div className="flex justify-center p-30">
-      {" "}
-      <Card sx={{ minWidth: 500, maxWidth: 1250, bgcolor: "transparent" }}>
-        {" "}
-        <CardContent className="contentBox flex flex-col items-center gap-6">
+      <Paper
+        sx={{
+          backgroundColor: "#1e2227",
+          minWidth: 500,
+          maxWidth: 1250,
+          padding: "20px",
+        }}
+        variant="elevation"
+        elevation={24}
+        square={false}
+      >
+        <div className="flex flex-col text-tqwhitetext items-center gap-6">
           <StyledToggleButtonGroup
             value={alignment}
             exclusive
@@ -141,10 +152,10 @@ export default function HorizontalSpacingToggleButton() {
             {alignment === "left" && "Kunngjør melding"}
             {alignment === "mid-left" && "Slett kunngjøring"}
             {alignment === "mid-right" && <AdminPreferences />}
-            {alignment === "right" && "Registrer Adminbrukere"}{" "}
-          </div>{" "}
-        </CardContent>{" "}
-      </Card>{" "}
+            {alignment === "right" && "Registrer Adminbrukere"}
+          </div>
+        </div>
+      </Paper>
     </div>
   );
 }

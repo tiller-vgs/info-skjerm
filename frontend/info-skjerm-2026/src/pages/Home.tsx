@@ -1,20 +1,4 @@
-// import Footer from "../components/Footer";
-
-// function Home() {
-//   return (
-//     <div className="pt-40">
-//       <h2>Velkommen!</h2>
-//       <p>Denne siden viser viktig informasjon for elever på Tiller VGS</p>
-//       <p>
-//         Er du en godkjent lærer? Venligst logg inn med gitt
-//         påloggingsinformasjon for flere valg
-//       </p>
-//       <Footer />
-//     </div>
-//   );
-// }
-
-// export default Home;
+import Paper from "@mui/material/Paper";
 import Footer from "../components/Footer";
 import { Navigate } from "react-router";
 
@@ -34,9 +18,13 @@ function Home() {
       </section>
       {/* Info */}
       <section className="grid md:grid-cols-2 gap-6 px-6 md:px-60 pb-20">
-        <div
+        <Paper
+          sx={{ backgroundColor: "#1e2227" }}
+          variant="elevation"
+          elevation={24}
+          square={false}
           onClick={() => <Navigate to="/info-screen" />}
-          className="bg-tqboxes p-6 rounded-2xl shadow-lg hover:scale-105 hover:brightness-120 transition"
+          className="p-6 hover:scale-105 hover:brightness-120 transition"
         >
           <h3 className="text-xl font-semibold mb-3 text-tkyellow">
             Infoskjerm
@@ -45,9 +33,13 @@ function Home() {
             I Infoskjermen får elevene tilgang til klokka, dato, busstider,
             værmeldinger, TillerQuest leaderboard og kunngjøringer fra lærere.
           </p>
-        </div>
+        </Paper>
 
-        <div
+        <Paper
+          sx={{ backgroundColor: "#1e2227" }}
+          variant="elevation"
+          elevation={24}
+          square={false}
           onClick={() => <Navigate to="/login" />}
           className="bg-tqboxes p-6 rounded-2xl shadow-lg hover:scale-105 hover:brightness-120 transition"
         >
@@ -59,7 +51,7 @@ function Home() {
             påloggingsinformasjon for tilgang til endring av innstilinger og
             sendeing av kunngjøringer.
           </p>
-        </div>
+        </Paper>
       </section>
       <Footer />
     </div>
