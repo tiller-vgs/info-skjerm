@@ -24,7 +24,7 @@ const ClockDisplay = () => {
 
   return (
     <div id="clock">
-      <h1 className="text-5xl text-center">{formattedTime}</h1>
+      <h1 className="text-4xl text-center">{formattedTime}</h1>
     </div>
   );
 };
@@ -48,12 +48,12 @@ const DateAndTimeDisplay: React.FC = () => {
 
   return (
     <div className="flex align-middle justify-around p-2">
-      
-      <h1 className="text-center text-5xl">
+      <ClockDisplay />
+      <h1 className="text-center text-4xl">
         {dd}.{mm}.{yy}
       </h1>
-      <h1 className="text-center text-5xl">Uke {week}</h1>
-      <ClockDisplay />
+      <h1 className="text-center text-4xl">Uke {week}</h1>
+      
     </div>
   );
 };

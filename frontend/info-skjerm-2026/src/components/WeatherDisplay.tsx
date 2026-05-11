@@ -9,7 +9,7 @@ function WeatherDisplay() {
       {days?.slice(0, 2).map((day: WeatherDay, i: number) => (
         <div
           key={i}
-          className="rounded-xl border-5 border-tqpurple p-2 text-center m-2 inline-block"
+          className="rounded-xl border-5 border-tkyellow p-2 text-center m-2 inline-block"
         >
           <p className="text-4xl">{day.day}</p>
           <div className="flex gap-2 mt-2 justify-center">

@@ -4,7 +4,6 @@
   font-family: "Inter Variable", sans-serif;
 }
 
-
 .contentBox {
   background-color: #1e2227;
   color: #e2e2e2;
@@ -24,6 +23,8 @@
   --color-tqbackground: #191d23;
   --color-tqboxes: #1e2227;
   --color-tqnavbar: #0d1117;
+
+  --color-tkyellow: #fade29;
 
   --color-common: #e5e7eb;
   --color-uncommon: #1eff00;

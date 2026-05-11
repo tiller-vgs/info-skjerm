@@ -1,6 +1,5 @@
 import type { PropsWithChildren } from "react";
-import { NavLink, Outlet } from "react-router";
-import { Navigate } from "react-router";
+import { NavLink, Outlet, Navigate } from "react-router";
 
 export const currentUser = {
   isLoggedIn: true,
@@ -34,22 +33,22 @@ export function Navbar() {
 
       z-50"
         >
-          <h1 className="text-5xl font-bold">
+          <h1 className="text-5xl font-bold text-tkyellow">
             <NavLink to={"/"}>Infoskjerm</NavLink>
           </h1>
           <nav className="flex items-center gap-6">
-            <NavLink className="hover:text-tqpurple transition" to={"/"}>
+            <NavLink className="hover:text-tkyellow transition" to={"/"}>
               Hjem
             </NavLink>
             <NavLink
-              className="hover:text-tqpurple transition"
+              className="hover:text-tkyellow transition"
               to={"/info-screen"}
             >
               Infoskjerm
             </NavLink>
 
             {!currentUser?.isLoggedIn && (
-              <NavLink className="hover:text-tqpurple transition" to={"/login"}>
+              <NavLink className="hover:text-tkyellow transition" to={"/login"}>
                 Logg in
               </NavLink>
             )}
@@ -57,7 +56,7 @@ export function Navbar() {
             {currentUser?.isLoggedIn && (
               <div className="flex items-center gap-6">
                 <NavLink
-                  className="hover:text-tqpurple transition"
+                  className="hover:text-tkyellow transition"
                   to={"/admin/dashboard"}
                 >
                   Adminpanel
