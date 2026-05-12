@@ -1,7 +1,10 @@
 import Paper from "@mui/material/Paper";
-import { Navigate } from "react-router";
+
+import { useNavigate } from "react-router";
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <div className="text-tqwhitetext flex flex-col">
       {/* Overskrift og brøktekst */}
@@ -22,8 +25,8 @@ function Home() {
           variant="elevation"
           elevation={24}
           square={false}
-          onClick={() => <Navigate to="/info-screen" />}
-          className="p-6 hover:scale-105 hover:brightness-120 transition"
+          onClick={() => navigate("/info-screen")}
+          className="p-6 hover:scale-105 hover:brightness-120 hover:cursor-pointer transition"
         >
           <h3 className="text-xl font-semibold mb-3 text-tkyellow">
             Infoskjerm
@@ -39,8 +42,8 @@ function Home() {
           variant="elevation"
           elevation={24}
           square={false}
-          onClick={() => <Navigate to="/login" />}
-          className="bg-tqboxes p-6 rounded-2xl shadow-lg hover:scale-105 hover:brightness-120 transition"
+          onClick={() => navigate("/login")}
+          className="bg-tqboxes p-6 rounded-2xl shadow-lg hover:scale-105 hover:brightness-120 hover:cursor-pointer transition"
         >
           <h3 className="text-xl font-semibold mb-3 text-tkyellow">
             For lærere

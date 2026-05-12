@@ -1,16 +1,17 @@
-// import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 // import type { WeatherDay } from "../types/types";
+import { type BusStop } from "@types";
 
-// export const useWeatherFetch = () => {
+export const useBusFetch = () => {
 
-//   return useQuery({
-//     queryKey: ["weatherList"],
-//     queryFn: async () => {
-//       const response = await fetch(
-//         "http://localhost:3001/weather"
-//       );
-//       return response.json();
-//     },
-//     staleTime: 1000 * 60 * 5, // 5 minutes
-//   });
-// };
+  return useQuery({
+    queryKey: ["BusStopsBotWays"],
+    queryFn: async () => {
+      const response = await fetch(
+        "http://localhost:3001/api/busdepatures", 
+      );
+      return await response.json() as BusStop;
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+};
