@@ -1,5 +1,4 @@
 import Paper from "@mui/material/Paper";
-import Footer from "../components/Footer";
 import { Navigate } from "react-router";
 
 function Home() {
@@ -53,7 +52,6 @@ function Home() {
           </p>
         </Paper>
       </section>
-      <Footer />
     </div>
   );
 }
