@@ -8,6 +8,7 @@ import { styled } from "@mui/material/styles";
 // import CardContent from "@mui/material/CardContent";
 import AdminPreferences from "../components/AdminPreferences";
 import Paper from "@mui/material/Paper";
+import Registrer from "../components/Registrer";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   gap: "2rem",
