@@ -13,6 +13,7 @@
 		"authdev": "tsx src/auth_app.ts",
 
 		"setdb": "npx prisma generate && npx prisma db push",
+		"dbsetup": "setdb",
 		"resetdb": "npx prisma generate && npx prisma db push && npx prisma db execute --file ./prisma/fill.sql",
 		"filldb": "npx prisma db execute --file ./prisma/fill.sql",
 		"delfullydb": "npx prisma migrate reset"

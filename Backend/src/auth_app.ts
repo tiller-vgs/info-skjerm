@@ -2,6 +2,7 @@ import express from "express";
 import { auth } from "@lib/auth";
 import cors from "cors"; // Import the CORS middleware
 import { toNodeHandler, fromNodeHeaders } from "better-auth/node";
+import * as controller from "@controllers";
 
 const app = express();
 const port = 3005;
@@ -15,20 +16,48 @@ app.all("/api/auth/*splat", toNodeHandler(auth)); // For ExpressJS v4
 // Configure CORS middleware
 app.use(
   cors({
-    origin: "http://localhost:3000", // Replace with your frontend's origin
+    origin: "http://localhost:5174", // Replace with your frontend's origin
     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   }),
 );
 
-app.get("/api/session", async (req, res) => {
+app.get("/api/auth", async (req, res) => {
   const session = await auth.api.getSession({
     headers: fromNodeHeaders(req.headers),
   });
   return res.json(session);
 });
 
-app.get("/api/database", async (req, res) => {
+app.get("/api/const first = useRef(second)", async (req, res) => {});
+
+// app.get("/api/database", async (req, res) => {
+//   const ControllerResponse = controller.DatabaseController;
+// 	return res.json(ControllerResponse);
+// });
+app.get("/api/AdminTable", async (req, res) => {
+  // Sjekker session før vi returnerer database-svar
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+  });
+
+  if (!session) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  const ControllerResponse = controller.DatabaseController;
+  return res.json(ControllerResponse);
+});
+app.post("/api/AdminTable", async (req, res) => {
+  // Sjekker session før vi returnerer database-svar
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+  });
+
+  if (!session) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
   const ControllerResponse = controller.DatabaseController;
   return res.json(ControllerResponse);
 });
