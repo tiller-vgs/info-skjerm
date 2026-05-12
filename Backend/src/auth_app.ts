@@ -15,17 +15,22 @@ app.all("/api/auth/*splat", toNodeHandler(auth)); // For ExpressJS v4
 // Configure CORS middleware
 app.use(
   cors({
-    origin: "http://locathost:3000", // Replace with your frontend's origin
+    origin: "http://localhost:3000", // Replace with your frontend's origin
     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   }),
 );
 
-app.get("/api/me", async (req, res) => {
+app.get("/api/session", async (req, res) => {
   const session = await auth.api.getSession({
     headers: fromNodeHeaders(req.headers),
   });
   return res.json(session);
+});
+
+app.get("/api/database", async (req, res) => {
+  const ControllerResponse = controller.DatabaseController;
+  return res.json(ControllerResponse);
 });
 
 app.listen(port, () => {
