@@ -11,13 +11,40 @@ const router = Router();
 router.get("/", async (req: Request, res: Response) => {
   const num = Number(req.query.num) || 20;
 
-  var query = '{"query": "{ stopPlace( id: \"NSR:StopPlace:44029\" ) { id name estimatedCalls( numberOfDepartures: ' + num.toString() + ' ) { realtime aimedArrivalTime expectedArrivalTime destinationDisplay { frontText } quay { id } serviceJourney { journeyPattern { line { id name transportMode } } } } }}"}';
+  var query = `
+    {
+      stopPlace( id: \"NSR:StopPlace:44029\" ) {
+        id
+        name
+        estimatedCalls( numberOfDepartures: ` + num.toString() + ` ) {
+          realtime
+          aimedArrivalTime
+          expectedArrivalTime
+          destinationDisplay {
+            frontText
+          }
+          quay {
+            id
+          }
+          serviceJourney {
+            journeyPattern {
+              line {
+                id
+                name
+                transportMode
+              }
+            }
+          }
+        }
+      }
+    }     
+  `;
 
   const options: RequestInit = {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: query,
-  };
+		method: "POST",
+		headers: { "Content-Type": "application/json", "ET-Client-Name": "your-app-name" },
+		body: JSON.stringify({ query }), // query
+	};
 
   try {
     const response = await fetchWithRetry("https://api.entur.io/journey-planner/v3/graphql", options);
@@ -28,7 +55,7 @@ router.get("/", async (req: Request, res: Response) => {
     const all: BusRoute[] = [];
 
     const calls = json.data.stopPlace.estimatedCalls;
-    console.log("All calls:  -- ", calls);
+    // console.log("All calls:  -- ", calls);
 
     for (const call of calls) {
       const id = call.serviceJourney.journeyPattern.line.id;
@@ -58,6 +85,7 @@ router.get("/", async (req: Request, res: Response) => {
       // all,
     };
 
+    // console.log("res:  -- ", busStop);
     return res.json(busStop);
   } catch (err) {
     console.error("Bus API failed", err);

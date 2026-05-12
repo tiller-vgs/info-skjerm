@@ -23,7 +23,7 @@ app.use(express.json());
 // app.use("/WeatherForecastController", WeatherForecastController);
 app.use("/weather", controller.WeatherController);
 app.use("/databade", controller.DatabaseController);
-app.use("/departures", controller.BusController);
+app.use("/busdepartures", controller.BusController);
 app.use("/test", controller.test);
 app.use("/test2", controller.test2);
 

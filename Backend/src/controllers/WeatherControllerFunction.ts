@@ -214,8 +214,14 @@ export async function GetWeatherAPI(dbDayAmount: boolean) {
 		// print("TestForCombiningWeatherObjects", days[new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay()], new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay(), AllTimeSetOfWeatherObject[0]![0]!.date, AllTimeSetOfWeatherObject[0]![0], AllTimeSetOfWeatherObject);
     
     // FIX idk if needed
-		const DayOfWeatherObjects: DayOfWeatherObjects = { day: days[new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay()] || "idk", date: AllTimeSetOfWeatherObject[0]![0]!.date, FrontendWeatherObject: [] };
-		// const DayOfWeatherObjects: DayOfWeatherObjects = { day: days[new Date(ListsOfWeatherObjectInTimeSet[0]!.date[0]!).getDay()] || "idk", FrontendWeatherObject: [] };
+    // const DayOfWeatherObjects: DayOfWeatherObjects = { day: days[new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay()] || "idk", date: AllTimeSetOfWeatherObject[0]![0]!.date || "idk", FrontendWeatherObject: [] };
+    let DayOfWeatherObjects: DayOfWeatherObjects = { day: "idk", date: "idk", FrontendWeatherObject: [] };
+    try {
+      DayOfWeatherObjects = { day: days[new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay()] || "idk", date: AllTimeSetOfWeatherObject[0]![0]!.date || "idk", FrontendWeatherObject: [] };
+    } catch (err) {
+			print("Error for WeatherFunction:   ", err, "  |");
+    }
+      // const DayOfWeatherObjects: DayOfWeatherObjects = { day: days[new Date(ListsOfWeatherObjectInTimeSet[0]!.date[0]!).getDay()] || "idk", FrontendWeatherObject: [] };
 		// const DayOfWeatherObjects: DayOfWeatherObjects = { day: "idk", FrontendWeatherObject: [] };
 
 

@@ -11,7 +11,7 @@
 - #### Do one of these:  
 - Either write  
   - docker pull postgres  
-  - docker run --name <container_name> -e POSTGRES_PASSWORD=<POSTGRES_PASSWORD> -p <DB_PORT>:<DB_PORT> -d   postgres
+  - docker run --name <container_name> -e POSTGRES_PASSWORD=<POSTGRES_PASSWORD> -p <DB_PORT>:<DB_PORT> -d postgres
 - Or make a <yml_FILENAME>.yml file and fill it with:   
     ```yml
     services:  
@@ -31,7 +31,8 @@
       pgdata:
     ```  
 
-  - #### Then write: "docker compose up -d" in the same folder the yml file is
+  - #### Then write: 
+    `docker compose up -d` in the same folder the yml file is
 
 
 - You only need to do this if you want to have acces to the SQL in the database

@@ -1,43 +1,67 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "@prismaclient";
+import { codes } from "@helpers"
 
 const router = Router();
 
-router.post("/", async (req: Request, res: Response) => {
-  const WhatToChange: string = "" // fill in from req however frontend wants to send waht to change
+router.put("/", async (req: Request, res: Response) => {
+  // fill in from req however frontend wants to send what to change
+  let WhatToChange: string;
   let WhatToChangeTo: string | string[];
-  
-  if (WhatToChange == "DayAmount") {
-    WhatToChangeTo = ""; // fill in from req however frontend wants to send what to change with
+  try{
+    WhatToChange = req.body.WhatToChange;
+    WhatToChangeTo = req.body.WhatToChangeTo;
+  } catch (err) {
+    console.log("DatabaseController -- Error with setting varibles from request", err);
+    return res.status(400).send(codes.type);
+  }
+
+  if (WhatToChange === "DayAmount") {
     // check if its the right format ( x 1-9 )
-    if (!/^[1-9]$/.test(WhatToChangeTo)) {
-      return res.status(400).send("Bad Request"); // give better response FIX
+    try {
+      if (!/^[1-9]$/.test(WhatToChangeTo as string)) {
+        return res.status(400).send("DayAmount" + codes.format); // give better response FIX
+      }
+    } catch (err) {
+      console.log("DatabaseController -- Error with checking format", err);
+      return res.status(400).send(codes.format_type);
     }
+
     // UPDATE AdminTable SET DayAmount = ? (WhatToChangeTo)
   }
   
-  else if (WhatToChange == "TimeSeries") {
-    WhatToChangeTo = [""]; // fill in from req however frontend wants to send what to change with
+  else if (WhatToChange === "TimeSeries") {
     // check if its the right format [ xx-xx 00|23-00|59, ... ]
-    if (!WhatToChangeTo.every((item) => /^(0[0-9]|1[0-9]|2[0-3]):00-([0-5][0-9]):00$ /.test(item))) {
-      return res.status(400).send("Bad Request"); // give better response FIX
-    }
+    try {
+      if (!(WhatToChangeTo as string[]).every(item => /^(0[0-9]|1[0-9]|2[0-3]):00-([0-5][0-9]):00$ /.test(item))) {
+        return res.status(400).send("TimeSeries" + codes.format);
+      }
+		} catch (err) {
+			console.log("DatabaseController -- Error with checking format", err);
+      return res.status(400).send(codes.format_type);
+		}
     // UPDATE AdminTable SET TimeSeries = ? (WhatToChangeTo)
   }
   
-  else if (WhatToChange == "StartDate") {
-    WhatToChangeTo = ""; // fill in from req however frontend wants to send what to change with
+  else if (WhatToChange === "StartDate") {
     // check if its the right format ( xx-xx 00|12-00|31 )
-    if (!/^(0[1-9]|1[0-2])-([1-2][1-9]|3[0-1])$/.test(WhatToChangeTo)) {
-      return res.status(400).send("Bad Request"); // give better response FIX
+    try {
+      if (!/^(0[1-9]|1[0-2])-([1-2][1-9]|3[0-1])$/.test(WhatToChangeTo as string)) {
+        return res.status(400).send("StartDate" + codes.format); // give better response FIX
+      }
+    } catch (err) {
+      console.log("DatabaseController -- Error with checking format", err);
+      return res.status(400).send(codes.format_type);
     }
     // UPDATE AdminTable SET StartDate = ? (WhatToChangeTo)
   }
   else {
-    return res.status(400).send("Bad Request"); // give better response FIX
+    return res.status(400).send("What you want to change dosen't exist or can't be changed"); // give better response FIX
   }
   
   await prisma.adminTable.update({ where: { id: 1 }, data: { [WhatToChange]: WhatToChangeTo } });
+  console.log("Changed AdminTable");
+  res.json("Changed AdminTable");
 })
 
 export default router;
