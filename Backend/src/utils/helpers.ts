@@ -28,3 +28,18 @@ export function MakefetchWithRetry(fetchingWhat: string = "generell info") {
     throw new Error("Unreachable");
   };
 };
+import { Listify } from "@models"
+export function makeEmptyListified<T>(obj: T): Listify<T> {
+  const result = {} as Listify<T>;
+  for (const key in obj) {
+		result[key] = [];
+	}
+  return result;
+}
+export const codes = {
+	format: " can't accept the format of this value",
+	format_type: "You either sent the wrong type or sent the value in the wrong format",
+	type: "We can't accept the request, they're not the right types",
+	402: "can't accept the format of this value",
+	403: "can't accept the format of this value",
+};
