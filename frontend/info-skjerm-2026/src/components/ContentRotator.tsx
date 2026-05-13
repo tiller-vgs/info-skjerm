@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import BusRouteList from "./BusRouteList";
 const busStops: string[] = ["Tiller VGS", "Tillerterminalen", "City Syd"];
 
 export const BusRotator: React.FC = () => {
@@ -14,7 +15,7 @@ export const BusRotator: React.FC = () => {
 
   return (
     <div>
-      <h2>{busStops[index]}</h2>
+      <h2>{busStops.map(BusStopName => <BusRouteList BusStopName={BusStopName} />)}</h2>
     </div>
   );
 };

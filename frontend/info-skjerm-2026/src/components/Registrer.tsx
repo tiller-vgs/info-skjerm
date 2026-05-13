@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
-import { createTheme, ThemeProvider, CssBaseline, Paper } from "@mui/material";
 
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,12 +12,6 @@ import { authClient } from "../lib/auth-client";
 import { toast } from "react-toastify";
 import { redirect } from "react-router";
 import { registerSchema } from "../lib/schema";
-
-// const darkTheme = createTheme({
-//   palette: {
-//     mode: "dark",
-//   },
-// });
 
 function Registrer() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -54,8 +47,6 @@ function Registrer() {
   }
 
   return (
-    // <ThemeProvider theme={darkTheme}>
-    //   <CssBaseline />
     <div>
       <Card
         sx={{
@@ -214,7 +205,6 @@ function Registrer() {
         </CardActions>
       </Card>
     </div>
-    // </ThemeProvider>
   );
 }
 

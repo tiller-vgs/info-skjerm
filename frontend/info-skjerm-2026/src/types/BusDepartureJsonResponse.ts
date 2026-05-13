@@ -1,4 +1,4 @@
-export interface BusRoute {
+export interface BusRouteType {
   busLine: number;
   destination: string;
   time: string;
@@ -6,6 +6,6 @@ export interface BusRoute {
 }
 
 export interface BusStop {
-  northBound: BusRoute[];
-  southBound: BusRoute[];
+  northBound: BusRouteType[];
+  southBound: BusRouteType[];
 }
