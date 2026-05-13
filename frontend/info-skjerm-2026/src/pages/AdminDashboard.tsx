@@ -4,6 +4,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import AdminPreferences from "../components/AdminPreferences";
 import Registrer from "../components/Registrer";
+import AnnouncementForm from "../components/AnnouncementForm";
 
 export function AdminDashboard() {
   const [alignment, setAlignment] = React.useState<string | null>("left");
@@ -42,7 +43,7 @@ export function AdminDashboard() {
             </ToggleButton>
           </ToggleButtonGroup>
           <div className="w-full">
-            {alignment === "left" && "Kunngjør melding"}
+            {alignment === "left" && <AnnouncementForm />}
             {alignment === "mid-left" && "Slett kunngjøring"}
             {alignment === "mid-right" && <AdminPreferences />}
             {alignment === "right" && <Registrer />}
