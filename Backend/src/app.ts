@@ -1,16 +1,19 @@
 import dotenv from "dotenv";
 import express from "express";
 import * as controller from "@controllers";
+import cors from "cors";
 
 dotenv.config({ path: "./.env", override: true, debug: true }); // {path: ../.env}
 
 declare global {
-	var test: string;
+  var test: string;
 }
 global.test = "test";
-console.log("Global.test:  ", global.test)
+console.log("Global.test:  ", global.test);
 
 const app = express();
+
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 // const PORT = 3000;
 

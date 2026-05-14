@@ -8,11 +8,13 @@
 ### Either do whats under in gitbash or make the database directly in docker if you know how  
 - Go to the the folder you want the postgreSQL database to be 
 
+
+
 - #### Do one of these:  
 - Either write  
   - docker pull postgres  
-  - docker run --name <container_name> -e POSTGRES_PASSWORD=<POSTGRES_PASSWORD> -p <DB_PORT>:<DB_PORT> -d postgres
-- Or make a <yml_FILENAME>.yml file and fill it with:   
+  - docker run --name Infoskjerm_contaner -e POSTGRES_PASSWORD=<POSTGRES_PASSWORD> -p 5432:5432 -d postgres
+- Or make a docker-compose.yml file and fill it with:   
     ```yml
     services:  
       db:  
@@ -46,9 +48,11 @@ DATABASE_URL="postgresql://<POSTGRES_USER>:<POSTGRES_PASSWORD>@localhost:<DB_POR
 PORT=<PORT>
 BETTER_AUTH_SECRET=<AUTH_SECRET>
 BETTER_AUTH_URL=<BackendURL>
+```
 ex.
-PORT="3001"
+```env
 DATABASE_URL="postgresql://My_USER50:mysecretpassword@localhost:5432/MY_DATABASE"
+PORT="3001"
 BETTER_AUTH_SECRET="UtsN4O7K7gItoIRDSLhGZfZ3f1pHuLoO"
 BETTER_AUTH_URL="http://localhost:${PORT}"
 ```
