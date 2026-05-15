@@ -14,25 +14,25 @@ function AdminPreferences() {
     <div className="w-full">
       <div className="flex justify-center gap-5 items-center w=full">
         <p className="text-tqwhitetext">Klokke: </p>
-      <FormControl
-        variant="filled"
-        className="bg-tqwhitetext rounded"
-        sx={{ m: 0, minWidth: 120 }}
-      >
-        <InputLabel id="demo-simple-select-standard-label">
-          Tidsformat
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={age}
-          onChange={handleChange}
-          label="Age"
+        <FormControl
+          variant="filled"
+          className="bg-tqwhitetext rounded"
+          sx={{ m: 0, minWidth: 120 }}
         >
-          <MenuItem value={10}>12 timer</MenuItem>
-          <MenuItem value={20}>24 timer</MenuItem>
-        </Select>
-      </FormControl>
+          <InputLabel id="demo-simple-select-standard-label">
+            Tidsformat
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={age}
+            onChange={handleChange}
+            label="Age"
+          >
+            <MenuItem value={10}>12 timer</MenuItem>
+            <MenuItem value={20}>24 timer</MenuItem>
+          </Select>
+        </FormControl>
       </div>
     </div>
   );
