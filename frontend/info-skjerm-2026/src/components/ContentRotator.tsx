@@ -1,5 +1,6 @@
 import React, { useState, useEffect, type JSX } from "react";
 import AnnouncementsGrid from "./AnnouncementsGrid";
+import TQLeaderboard from "./TQLeaderboard";
 const busStops: string[] = ["Tiller VGS", "Tillerterminalen", "City Syd"];
 
 export const BusRotator: React.FC = () => {
@@ -22,7 +23,7 @@ export const BusRotator: React.FC = () => {
 
 const announcments: (string | JSX.Element)[] = [
   <AnnouncementsGrid />,
-  "TillerQuest",
+  <TQLeaderboard />,
 ];
 
 export const AnnouncmentRotator: React.FC = () => {
