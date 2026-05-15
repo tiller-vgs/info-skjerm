@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, type JSX } from "react";
+import AnnouncementsGrid from "./AnnouncementsGrid";
 const busStops: string[] = ["Tiller VGS", "Tillerterminalen", "City Syd"];
 
 export const BusRotator: React.FC = () => {
@@ -19,8 +20,10 @@ export const BusRotator: React.FC = () => {
   );
 };
 
-
-const announcments: string[] = ["Announcments", "TillerQuest"];
+const announcments: (string | JSX.Element)[] = [
+  <AnnouncementsGrid />,
+  "TillerQuest",
+];
 
 export const AnnouncmentRotator: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
@@ -33,11 +36,7 @@ export const AnnouncmentRotator: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <div>
-      <h2>{announcments[index]}</h2>
-    </div>
-  );
+  return <div className="h-full w-full">{announcments[index]}</div>;
 };
 
 // export function AnnouncementRotator() {
