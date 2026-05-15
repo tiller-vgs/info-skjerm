@@ -8,10 +8,7 @@
 		"build": "tsc",
 		"start": "node dist/app.js",
 		"prisma": "prisma",
-
 		"dev": "tsx src/app.ts",
-		"authdev": "tsx src/auth_app.ts",
-
 		"setdb": "npx prisma generate && npx prisma db push",
 		"dbsetup": "setdb",
 		"resetdb": "npx prisma generate && npx prisma db push && npx prisma db execute --file ./prisma/fill.sql",
@@ -26,7 +23,6 @@
 		"@prisma/adapter-pg": "^7.8.0",
 		"@prisma/client": "^7.8.0",
 		"better-auth": "^1.6.9",
-		"cors": "^2.8.6",
 		"dotenv": "^17.4.2",
 		"express": "^5.2.1",
 		"node-cache": "^5.1.2",
@@ -34,7 +30,6 @@
 		"prisma": "^7.8.0"
 	},
 	"devDependencies": {
-		"@types/cors": "^2.8.19",
 		"@types/express": "^5.0.6",
 		"@types/node": "^25.6.0",
 		"@types/pg": "^8.20.0",
@@ -43,7 +38,7 @@
 		"typescript": "^6.0.3"
 	},
 	"overrides": {
-    "hono": "^4.12.18",
-	"@hono/node-server": "^2.0.2"
-  }
+		"hono": "^4.12.18",
+		"@hono/node-server": "^2.0.2"
+	}
 }
