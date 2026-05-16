@@ -22,7 +22,7 @@ export const BusRotator: React.FC = () => {
 };
 
 const announcments: (string | JSX.Element)[] = [
-  <TQLeaderboard />,
+  <AnnouncementsGrid />,
   <TQLeaderboard />,
 ];
 
@@ -32,7 +32,7 @@ export const AnnouncmentRotator: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % announcments.length);
-    }, 5000);
+    }, 12000);
 
     return () => clearInterval(interval);
   }, []);
