@@ -19,11 +19,11 @@ function TQLeaderboard() {
   const { data: years, isError, isLoading, isPending } = useTQLeaderboard();
 
   if (isError) {
-    return <div>Feil ved lasting av kunngjøringer.</div>;
+    return <div>Feil ved lasting av TQLeaderboard.</div>;
   }
 
   if (isLoading || isPending) {
-    return <div>Laster in kunngjøringer...</div>;
+    return <div>Laster in TQLeaderboard...</div>;
   }
 
   return (
