@@ -20,11 +20,11 @@ app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use(express.json());
 
-app.use("/weather", controller.WeatherController);
-app.use("/database", controller.DatabaseController);
-app.use("/busdepartures", controller.BusController);
-app.use("/test", controller.test);
-app.use("/test2", controller.test2);
+app.use("/api/weather", controller.WeatherController);
+app.use("/api/database", controller.DatabaseController);
+app.use("/api/busdepartures", controller.BusController);
+app.use("/api/test", controller.test);
+app.use("/api/test2", controller.test2);
 
 app.get("/api/auth", async (req, res) => {
   const session = await auth.api.getSession({
