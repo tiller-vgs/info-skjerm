@@ -22,7 +22,7 @@ export const BusRotator: React.FC = () => {
 };
 
 const announcments: (string | JSX.Element)[] = [
-  <AnnouncementsGrid />,
+  <TQLeaderboard />,
   <TQLeaderboard />,
 ];
 
