@@ -22,18 +22,36 @@ function BusRouteList({ BusStopName }: { BusStopName: string }) {
 
   return (
     <>
-      <div>
-        <p>Northbound</p>
-        {busData.northBound.map((bus) => {
-          return <BusRoute RouteData={bus} />;
-        })}
+      <div className="bg-tqbackground rounded-2xl shadow-2xl p-3 mt-5 border border-zinc-800">
+        <p className="text-tqwhitetext text-sm mb-2">Northbound</p>
+
+        <div
+          className="space-y-1.5 max-h-68 overflow-y-auto"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {busData.northBound.map((bus) => {
+            return <BusRoute RouteData={bus} />;
+          })}
+        </div>
       </div>
 
-      <div>
-        <p>Southbound</p>
-        {busData.southBound.map((bus) => {
-          return <BusRoute RouteData={bus} />;
-        })}
+      <div className="bg-tqbackground rounded-2xl p-3 mt-5 border border-zinc-800">
+        <p className="text-tqwhitetext text-sm mb-2">Southbound</p>
+
+        <div
+          className="space-y-1.5 max-h-68 overflow-y-scroll "
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {busData.southBound.map((bus) => {
+            return <BusRoute RouteData={bus} />;
+          })}
+        </div>
       </div>
     </>
   );

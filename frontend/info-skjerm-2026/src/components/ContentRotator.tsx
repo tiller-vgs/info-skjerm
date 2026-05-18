@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
 import BusRouteList from "./BusRouteList";
-const busStops: string[] = ["Tiller VGS", "Tillerterminalen", "City Syd"];
+
+const busStops: string[] = [
+  "Tiller VGS",
+  "Tillerterminalen",
+  "City Syd",
+];
 
 export const BusRotator: React.FC = () => {
-  // const [index, setIndex] = useState<number>(0);
+  const [index, setIndex] = useState<number>(0);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setIndex((prev) => (prev + 1) % busStops.length);
-  //   }, 5000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % busStops.length);
+    }, 5000);
 
-  //   return () => clearInterval(interval);
-  // }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div>
-      {/* <h2>{busStops[index]}</h2> */}
-      <h2>
-        {busStops.map((BusStopName) => (
-          <BusRouteList key={BusStopName} BusStopName={BusStopName} />
-        ))}
-      </h2>
+      <h2>{busStops[index]}</h2>
+
+      <BusRouteList
+        key={busStops[index]}
+        BusStopName={busStops[index]}
+      />
     </div>
   );
 };
