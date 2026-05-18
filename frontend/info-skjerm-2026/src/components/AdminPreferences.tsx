@@ -39,7 +39,6 @@ function AdminPreferences() {
           </Select>
         </FormControl>
       </div>
-      <p>Skrevet i desisekund. (1/10) av et sekund</p>
       {/* Nytt */}
       <div className="flex justify-center gap-5 items-center w=full">
         <p className="text-tqwhitetext w-48 text-right">
@@ -48,9 +47,9 @@ function AdminPreferences() {
         <Box sx={{ width: 300 }}>
           <Slider
             min={0}
-            max={20.0}
+            max={20}
             size="small"
-            defaultValue={12.0}
+            defaultValue={12}
             aria-label="Small"
             valueLabelDisplay="auto"
           />
@@ -61,7 +60,7 @@ function AdminPreferences() {
         <Box sx={{ width: 300 }}>
           <Slider
             min={0}
-            max={20.0}
+            max={20}
             size="small"
             defaultValue={12.0}
             aria-label="Small"
