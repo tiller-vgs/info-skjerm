@@ -21,8 +21,21 @@ app.use(
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   }),
 );
+async function requireLogin(req, res, next) {
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+  });
 
-app.get("/api/auth", async (req, res) => {
+  if (!session) {
+    return res.status(401).json({ message: "Logg inn, hmph." });
+  }
+
+  req.session = session;
+
+  next();
+}
+
+app.get("/api/auth", requireLogin, async (req, res) => {
   const session = await auth.api.getSession({
     headers: fromNodeHeaders(req.headers),
   });
@@ -35,7 +48,7 @@ app.get("/api/const first = useRef(second)", async (req, res) => {});
 //   const ControllerResponse = controller.DatabaseController;
 // 	return res.json(ControllerResponse);
 // });
-app.get("/api/AdminTable", async (req, res) => {
+app.get("/api/AdminTable", requireLogin, async (req, res) => {
   // Sjekker session før vi returnerer database-svar
   const session = await auth.api.getSession({
     headers: fromNodeHeaders(req.headers),
@@ -48,7 +61,7 @@ app.get("/api/AdminTable", async (req, res) => {
   const ControllerResponse = controller.DatabaseController;
   return res.json(ControllerResponse);
 });
-app.post("/api/AdminTable", async (req, res) => {
+app.post("/api/AdminTable", requireLogin, async (req, res) => {
   // Sjekker session før vi returnerer database-svar
   const session = await auth.api.getSession({
     headers: fromNodeHeaders(req.headers),

@@ -41,4 +41,6 @@ export interface Line {
   id: string;
   name: string;
   transportMode: string;
+  publicCode: string;
+  // direction: number;
 }

@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3000;
 // const PORT = 3000;
 
 app.use(express.json());
-
+// app.use()
 // app.use("/BusTimesController", BusTimesController);
 // app.use("/deleteevents", deleteEventsRouter);
 // app.use("/getevents", getEventsRouter);
@@ -26,7 +26,7 @@ app.use(express.json());
 // app.use("/WeatherForecastController", WeatherForecastController);
 app.use("/weather", controller.WeatherController);
 app.use("/database", controller.DatabaseController);
-app.use("/busdepartures", controller.BusController);
+app.use("/api/busdepartures", controller.BusController);
 app.use("/test", controller.test);
 app.use("/test2", controller.test2);
 

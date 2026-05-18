@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import BusRouteList from "./BusRouteList";
+import { StaleTime } from "../hooks/useBus";
 
 const busStops: string[] = [
-  "Tiller VGS",
-  "Tillerterminalen",
+  "Tiller VGS.",
   "City Syd",
+  "Tillerterminalen",
 ];
 
 export const BusRotator: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
+  const NumberOfBusses = 30;
+  const AccualNumberOfBusses = 10;
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % busStops.length);
-    }, 5000);
+    }, StaleTime);
 
     return () => clearInterval(interval);
   }, []);
@@ -24,6 +27,8 @@ export const BusRotator: React.FC = () => {
 
       <BusRouteList
         key={busStops[index]}
+        NumberOfBusses={NumberOfBusses}
+        AccualNumberOfBusses={AccualNumberOfBusses}
         BusStopName={busStops[index]}
       />
     </div>

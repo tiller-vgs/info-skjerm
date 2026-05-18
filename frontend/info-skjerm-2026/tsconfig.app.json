@@ -22,7 +22,8 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@types": ["./src/types"]
+      "@types": ["./src/types"],
+      "@helpers": ["../../Backend/src/utils/index.ts"]
     },
   },
   "include": ["src"]
