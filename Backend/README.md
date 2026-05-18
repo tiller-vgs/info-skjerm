@@ -91,6 +91,7 @@ Run each of these
 - Deletes both tables and values  
   - npm run delfully &nbsp; &nbsp; # runs command: "npx prisma migrate reset"  
 
+
 .  
 .  
 .  
