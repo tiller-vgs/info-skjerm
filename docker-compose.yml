@@ -33,23 +33,13 @@ services:
   nginx:
     image: nginx:alpine
     restart: unless-stopped
+    ports:
+      - "80:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - backend
       - frontend
-
-  # Cloudflare tunnel — routes site.example.com → nginx:80
-  # Configure the public hostname in the Cloudflare Zero Trust dashboard:
-  #   Public hostname: site.example.com  →  Service: http://nginx:80
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    restart: unless-stopped
-    command: tunnel --no-autoupdate run
-    environment:
-      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN}
-    depends_on:
-      - nginx
 
 volumes:
   db_data:
