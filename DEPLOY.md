@@ -62,49 +62,21 @@ cp .env.example .env
 nano .env
 ```
 
-| Variable | Description |
-|---|---|
-| `POSTGRES_DB` | Database name (e.g. `infoskjerm`) |
-| `POSTGRES_USER` | PostgreSQL username |
-| `POSTGRES_PASSWORD` | A strong password |
-| `BETTER_AUTH_SECRET` | Long random string — run `openssl rand -hex 32` |
-| `BETTER_AUTH_URL` | Your public URL, e.g. `https://site.example.com` |
-| `CLOUDFLARE_TUNNEL_TOKEN` | From the Cloudflare dashboard (see Step 4) |
+| Variable             | Description                                      |
+| -------------------- | ------------------------------------------------ |
+| `POSTGRES_DB`        | Database name (e.g. `infoskjerm`)                |
+| `POSTGRES_USER`      | PostgreSQL username                              |
+| `POSTGRES_PASSWORD`  | A strong password                                |
+| `BETTER_AUTH_SECRET` | Long random string — run `openssl rand -hex 32`  |
+| `BETTER_AUTH_URL`    | Your public URL, e.g. `https://site.example.com` |
 
 > The `.env` file is only needed for the first manual deploy. After that the GitHub Actions workflow writes it from repository secrets on every deploy.
 
----
-
-## Step 4 — Set up the Cloudflare Tunnel
-
-### 4a. Create the tunnel
-
-1. Go to [Cloudflare Zero Trust](https://one.dash.cloudflare.com) → **Networks → Tunnels**
-2. Click **Create a tunnel** → choose **Cloudflared**
-3. Give it a name (e.g. `info-skjerm`)
-4. Copy the tunnel token — you will need it in Steps 3 and 6
-
-### 4b. Configure the public hostname
-
-Still in the tunnel settings, go to the **Public Hostnames** tab and add:
-
-| Field | Value |
-|---|---|
-| Subdomain / Domain | `site.example.com` (your actual domain) |
-| Service type | `HTTP` |
-| URL | `nginx:80` |
-
-This routes all traffic for your domain to the nginx reverse proxy inside Docker, which then splits `/api/*` to the backend and `/*` to the frontend.
-
-Save the tunnel. You do **not** need to install `cloudflared` manually — the Docker Compose file runs it as a container.
-
----
-
-## Step 5 — Set up the GitHub Actions self-hosted runner
+## Step 4 — Set up the GitHub Actions self-hosted runner
 
 The runner connects outbound to GitHub and triggers redeploys when `main` is pushed. No inbound ports are needed.
 
-### 5a. Download and configure the runner
+### 4a. Download and configure the runner
 
 Go to your GitHub repository → **Settings → Actions → Runners → New self-hosted runner**
 
@@ -119,7 +91,7 @@ tar xzf ./actions-runner-linux-x64.tar.gz
 
 Use the defaults for every prompt.
 
-### 5b. Install it as a system service
+### 4b. Install it as a system service
 
 ```bash
 sudo ./svc.sh install
@@ -129,32 +101,32 @@ sudo ./svc.sh status   # should show "active (running)"
 
 The runner now starts automatically on boot.
 
-### 5c. Verify
+### 4c. Verify
 
 Go to **Settings → Actions → Runners** in GitHub. The runner should appear with a green **Idle** status.
 
 ---
 
-## Step 6 — Add GitHub Actions secrets
+## Step 5 — Add GitHub Actions secrets
 
 Go to your repository → **Settings → Secrets and variables → Actions → New repository secret**
 
 Add one secret for each variable:
 
-| Secret name | Value |
-|---|---|
-| `POSTGRES_DB` | Same as in your `.env` |
-| `POSTGRES_USER` | Same as in your `.env` |
-| `POSTGRES_PASSWORD` | Same as in your `.env` |
-| `BETTER_AUTH_SECRET` | Same as in your `.env` |
-| `BETTER_AUTH_URL` | Same as in your `.env` |
-| `CLOUDFLARE_TUNNEL_TOKEN` | The token from Step 4 |
+| Secret name               | Value                  |
+| ------------------------- | ---------------------- |
+| `POSTGRES_DB`             | Same as in your `.env` |
+| `POSTGRES_USER`           | Same as in your `.env` |
+| `POSTGRES_PASSWORD`       | Same as in your `.env` |
+| `BETTER_AUTH_SECRET`      | Same as in your `.env` |
+| `BETTER_AUTH_URL`         | Same as in your `.env` |
+| `CLOUDFLARE_TUNNEL_TOKEN` | The token from Step 4  |
 
 These are injected into the `.env` file by the deploy workflow on every run.
 
 ---
 
-## Step 7 — First deploy
+## Step 6 — First deploy
 
 From the cloned repository directory on the LXC, run:
 
