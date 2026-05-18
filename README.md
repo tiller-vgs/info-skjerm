@@ -89,8 +89,7 @@ npm run dev      # start Vite dev server
 | Script               | Description                              |
 | -------------------- | ---------------------------------------- |
 | `npm run dev`        | Dev server via `tsx`                     |
-| `npm run build`      | Compile TypeScript                       |
-| `npm run start`      | Run compiled output                      |
+| `npm run start`      | Run server via `tsx`                     |
 | `npm run setdb`      | `prisma generate` + `prisma db push`     |
 | `npm run resetdb`    | `setdb` + seed SQL                       |
 | `npm run filldb`     | Run seed SQL only                        |
