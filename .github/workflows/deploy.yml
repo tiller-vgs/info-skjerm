@@ -1,0 +1,44 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    # Prevent concurrent deploys from queuing up
+    concurrency:
+      group: production
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Write the root .env consumed by docker compose
+      # Secrets are injected as env vars first to handle special characters safely
+      - name: Write .env
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          BETTER_AUTH_URL: ${{ secrets.BETTER_AUTH_URL }}
+          CLOUDFLARE_TUNNEL_TOKEN: ${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }}
+        run: |
+          printf "POSTGRES_DB=%s\n"            "$POSTGRES_DB"            >  .env
+          printf "POSTGRES_USER=%s\n"          "$POSTGRES_USER"          >> .env
+          printf "POSTGRES_PASSWORD=%s\n"      "$POSTGRES_PASSWORD"      >> .env
+          printf "BETTER_AUTH_SECRET=%s\n"     "$BETTER_AUTH_SECRET"     >> .env
+          printf "BETTER_AUTH_URL=%s\n"        "$BETTER_AUTH_URL"        >> .env
+          printf "CLOUDFLARE_TUNNEL_TOKEN=%s\n" "$CLOUDFLARE_TUNNEL_TOKEN" >> .env
+
+      - name: Build and deploy
+        run: docker compose up --build -d
+
+      - name: Sync database schema
+        # Give the backend a moment to finish its own db push before we check
+        run: |
+          sleep 10
+          docker compose exec -T backend npx prisma db push --skip-generate
