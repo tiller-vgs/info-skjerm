@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, type JSX } from "react";
 import BusRouteList from "./BusRouteList";
 import { StaleTime } from "../hooks/useBus";
+import AnnouncementsGrid from "./AnnouncementsGrid";
+import TQLeaderboard from "./TQLeaderboard";
 
-const busStops: string[] = [
-  "Tiller VGS.",
-  "City Syd",
-  "Tillerterminalen",
-];
+const busStops: string[] = ["Tiller VGS.", "City Syd", "Tillerterminalen"];
 
 export const BusRotator: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
@@ -35,7 +33,10 @@ export const BusRotator: React.FC = () => {
   );
 };
 
-const announcments: string[] = ["Announcments", "TillerQuest"];
+const announcments: (string | JSX.Element)[] = [
+  <AnnouncementsGrid />,
+  <TQLeaderboard />,
+];
 
 export const AnnouncmentRotator: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
@@ -43,7 +44,7 @@ export const AnnouncmentRotator: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % announcments.length);
-    }, 5000);
+    }, 12000);
 
     return () => clearInterval(interval);
   }, []);
