@@ -17,8 +17,9 @@ lerna-debug.log*
 docker-compose.yml
 # package-lock.json
 /dist
-/generated/prisma
+/pgdata
 /prisma/generated
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
