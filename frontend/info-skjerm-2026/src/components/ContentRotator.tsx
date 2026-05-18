@@ -4,12 +4,16 @@ import { StaleTime } from "../hooks/useBus";
 import AnnouncementsGrid from "./AnnouncementsGrid";
 import TQLeaderboard from "./TQLeaderboard";
 
-const busStops: string[] = ["Tiller VGS.", "City Syd", "Tillerterminalen"];
+const busStops: string[] = [
+  "Tiller VGS.",
+  "City Syd",
+  "Tillerterminalen",
+];
 
 export const BusRotator: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
   const NumberOfBusses = 30;
-  const AccualNumberOfBusses = 10;
+  const AccualNumberOfBusses = 5;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,7 +25,7 @@ export const BusRotator: React.FC = () => {
 
   return (
     <div>
-      <h2>{busStops[index]}</h2>
+      <h2 className="text-2xl">{busStops[index]}</h2>
 
       <BusRouteList
         key={busStops[index]}
