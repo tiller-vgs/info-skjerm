@@ -22,7 +22,7 @@ app.use(express.json());
 // app.use("/postevents", postEventsRouter);
 // app.use("/WeatherForecastController", WeatherForecastController);
 app.use("/weather", controller.WeatherController);
-app.use("/databade", controller.DatabaseController);
+app.use("/database", controller.DatabaseController);
 app.use("/busdepartures", controller.BusController);
 app.use("/test", controller.test);
 app.use("/test2", controller.test2);
