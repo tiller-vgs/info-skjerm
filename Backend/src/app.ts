@@ -25,6 +25,7 @@ app.use("/api/database", controller.DatabaseController);
 app.use("/api/busdepartures", controller.BusController);
 app.use("/api/test", controller.test);
 app.use("/api/test2", controller.test2);
+app.use("/api/tqleaderboard", controller.TQLeaderboardController);
 
 app.get("/api/auth", async (req, res) => {
   const session = await auth.api.getSession({
