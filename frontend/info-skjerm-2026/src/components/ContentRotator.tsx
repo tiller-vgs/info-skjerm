@@ -43,9 +43,5 @@ export const AnnouncmentRotator: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <div>
-      <h2>{announcments[index]}</h2>
-    </div>
-  );
+  return <div className="h-full w-full">{announcments[index]}</div>;
 };

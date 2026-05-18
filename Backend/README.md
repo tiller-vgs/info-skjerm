@@ -68,7 +68,7 @@ BETTER_AUTH_URL="http://localhost:${PORT}"
   - npx prisma generate
   - npx prisma db push
 - or
-  - npm run setmodel
+  - npm run setdb
 - Then run this in it's own terminal  
   - npm run dev  
 

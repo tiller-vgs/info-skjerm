@@ -10,3 +10,11 @@ export interface WeatherObject {
   wind_speed: number;
   wind_from_direction: string;
 }
+
+export interface Announcement {
+  id: number;
+  title: string;
+  content: string;
+  dateStart: string;
+  dateEnd: string;
+}
