@@ -2,7 +2,7 @@ FROM node:22-alpine
 WORKDIR /app
 
 # Copy manifests and schema first for layer caching
-COPY package*.json tsconfig.json ./
+COPY package*.json tsconfig.json prisma.config.ts ./
 COPY prisma ./prisma/
 
 # Install all deps (including devDeps — tsx is required at runtime)
