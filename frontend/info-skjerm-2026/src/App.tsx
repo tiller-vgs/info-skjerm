@@ -3,6 +3,7 @@ import "./index.css";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import { Navbar, Authorization } from "./components/Navbar";
 
+
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const InfoScreen = lazy(() => import("./pages/Infoscreen"));
