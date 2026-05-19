@@ -31,10 +31,9 @@ router.put("/", async (req: Request, res: Response) => {
 
 router.delete("/", async (req: Request, res: Response) => {
     try {
-        return res.status(500).send("Delete announcements router under construction");
-        const DeleteKey = req.body.DeleteKey;
+        const id = req.body.id;
         await prisma.announcements.delete({
-            where: { DeleteKey: DeleteKey }, // FIX change deleteKey with values or properties when the type is sat up
+            where: { id: id },
         });
         return res.json("Deleted element from announcements");
 

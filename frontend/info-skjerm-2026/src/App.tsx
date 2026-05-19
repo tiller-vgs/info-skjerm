@@ -3,6 +3,7 @@ import "./index.css";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import { Navbar, Authorization } from "./components/Navbar";
 
+export const StaleTime = 1000 * 6// 0 * 5; // 5 minutes
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));

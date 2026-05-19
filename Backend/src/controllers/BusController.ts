@@ -53,7 +53,7 @@ router.get("/", async (req: Request, res: Response) => {
 	};
 
   try {
-    // Fetches the BusAPI
+		// Fetches the BusAPI
 		const response = await fetchWithRetry("https://api.entur.io/journey-planner/v3/graphql", options);
 		const json = (await response.json()) as Businfo;
 
@@ -61,9 +61,9 @@ router.get("/", async (req: Request, res: Response) => {
 		const southBound: BusRoute[] = [];
 
 		const calls = json.data.stopPlace.estimatedCalls;
-		const LowestQuay = Math.min(...calls.map((call) => Number(call.quay.id.slice(9))))
+		const LowestQuay = Math.min(...calls.map(call => Number(call.quay.id.slice(9))));
 
-    // Each call is one bus taking one route
+		// Each call is one bus taking one route
 		for (const call of calls) {
 			const id = call.serviceJourney.journeyPattern.line.id;
 			const parts = id.split(":")[2]?.split("_")[1];
@@ -87,7 +87,8 @@ router.get("/", async (req: Request, res: Response) => {
 			northBound,
 			southBound,
 		};
-    return res.json([busStop, BussID, query, `https://api.entur.io/geocoder/v1/search?text=${(BusStop + ", Trondheim").replace(" ", "%20")}`]);
+		// , BussID, query, `https://api.entur.io/geocoder/v1/search?text=${(BusStop + ", Trondheim").replace(" ", "%20")}`]
+		return res.json(busStop);
 	} catch (err) {
 		console.error("Bus API failed", err);
 		return res.status(503).send("Get BusRoutes router unavailable");
