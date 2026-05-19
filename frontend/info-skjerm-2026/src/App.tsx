@@ -2,6 +2,8 @@ import { lazy, Suspense } from "react";
 import "./index.css";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import { Navbar, Authorization } from "./components/Navbar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -10,6 +12,7 @@ const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 
 function App() {
   return (
+    <>
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
@@ -38,6 +41,8 @@ function App() {
         </Routes>
       </Suspense>
     </BrowserRouter>
+    <ToastContainer position="bottom-right" />
+    </>
   );
 }
 
