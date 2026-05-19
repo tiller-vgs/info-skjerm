@@ -43,7 +43,7 @@ app.get("/api/auth", requireLogin, async (req, res) => {
 	return res.json(session);
 });
 
-app.get("/api/const first = useRef(second)", async (req, res) => {});
+app.get("/api/const first = useRef(second)", async (req, res) => {}); // What is this
 
 app.use("/api/database", requireLogin, controller.DatabaseController);
 // app.put("/api/AdminTable", requireLogin, async (req, res) => {
