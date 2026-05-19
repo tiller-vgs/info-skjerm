@@ -11,17 +11,17 @@ dotenv.config({ path: "./.env", override: true, debug: true });
 
 const PORT = process.env.PORT || "3000";
 const app = express();
-const allowedOrigins = ["http://localhost:5174", "http://localhost:" + PORT];
+const allowedOrigins = ["http://localhost:5174", "http://localhost:3001"];
 
 app.use(
 	cors({
-		origin: (origin, callback) => { // Only allaw requests from some adresses
-			if (!origin || allowedOrigins.includes(origin)) {
-				callback(null, true);
-			} else {
-				callback(new Error("CORS blocked"));
-			}
-		},
+		// origin: (origin, callback) => { // Only allaw requests from some adresses
+		// 	if (!origin || allowedOrigins.includes(origin)) {
+		// 		callback(null, true);
+		// 	} else {
+		// 		callback(new Error("CORS blocked"));
+		// 	}
+		// },
 		methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
 	}),
 );

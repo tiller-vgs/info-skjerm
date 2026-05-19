@@ -1,4 +1,4 @@
 export interface AnnouncementType {
-	overskrift: string;
+	title: string;
 	text: string;
 }

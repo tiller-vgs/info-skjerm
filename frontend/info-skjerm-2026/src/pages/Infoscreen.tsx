@@ -3,6 +3,7 @@ import { BusRotator, AnnouncmentRotator } from "../components/ContentRotator";
 // import WeatherDisplay from "../components/WeatherDisplay";
 import DateAndTimeDisplay from "../components/DateAndTimeDisplay";
 import Paper from "@mui/material/Paper";
+import WeatherBoxBox from "../components/WeatherBoxBox";
 
 function InfoScreen() {
   return (
@@ -24,6 +25,7 @@ function InfoScreen() {
         >
           <DateAndTimeDisplay />
           <p>Weather</p>
+          <WeatherBoxBox />
           {/* <WeatherDisplay /> */}
         </Paper>
         {/* TillerQuest & Announcements */}

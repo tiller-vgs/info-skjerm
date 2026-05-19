@@ -1,6 +1,5 @@
 import React, { useState, useEffect, type JSX } from "react";
 import BusRouteList from "./BusRouteList";
-import { StaleTime } from "../hooks/useBus";
 import AnnouncementsGrid from "./AnnouncementsGrid";
 import TQLeaderboard from "./TQLeaderboard";
 
@@ -9,6 +8,8 @@ const busStops: string[] = [
   "City Syd",
   "Tillerterminalen",
 ];
+
+const StaleTime = 1000 * 60;
 
 export const BusRotator: React.FC = () => {
   const [index, setIndex] = useState<number>(0);

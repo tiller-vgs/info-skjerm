@@ -10,7 +10,11 @@ function BusRouteList({ BusStopName, NumberOfBusses, AccualNumberOfBusses }: { B
   let busData: BusStop = {} as BusStop;
   const directions: Array<keyof BusStop> = ["northBound", "southBound"]
   try {
-    busData = BusResponse.data![0];
+    const data = BusResponse.data!;;
+    if (typeof data == "string") {
+      return <p>{data}</p>;
+    }
+    busData = BusResponse.data! as BusStop;
   } catch (err) {
     console.log("Error accessing bus data", err);
     return <div key={"tryerror"}>Error accessing bus data</div>;
@@ -31,20 +35,23 @@ function BusRouteList({ BusStopName, NumberOfBusses, AccualNumberOfBusses }: { B
   return (
     <>
     {/* Map viser begge borderne rundt bussene som ankommer */}
-      {directions.map((direction, index) =>
-        <div className="bg-tqbackground  rounded-2xl shadow-2xl p-3 mt-5 border border-zinc-800" key={"direction" + direction}>
-          <p className="text-tqwhitetext text-sm mb-2">Retning {index+1}</p>
+      {directions.map((direction, index) => {
+        return (
+          <div className="bg-tqbackground  rounded-2xl shadow-2xl p-3 mt-5 border border-zinc-800" key={"direction" + direction}>
+            <p className="text-tqwhitetext text-sm mb-2">Retning {index + 1}</p>
 
-          <div
-            className="space-y-1.5"
-          >
-          {
-            busData[direction].slice(0, AccualNumberOfBusses).map((bus) => (
-              <BusRoute key={bus.time + bus.busLine} RouteData={bus} />
-            ))
-          }
-        </div>
-      </div>
+            <div
+              className="space-y-1.5"
+            >
+              {
+                busData[direction].slice(0, AccualNumberOfBusses).map((bus) => (
+                  <BusRoute key={bus.time + bus.busLine} RouteData={bus} />
+                ))
+              }
+            </div>
+          </div>
+        )
+      }
       )}
     </>
   );

@@ -7,10 +7,10 @@ export const getAnnouncements = () => {
 		queryKey: ["getAnnouncements"],
 		queryFn: async () => {
             const response = await fetch(`http://localhost:3001/api/announcements`);
-            if (response.status) {
-                console.log(response.statusText);
-                return;
-            }
+      		if (response.statusText !== "OK") {
+				console.log(response.status, response.statusText);
+				return response.statusText;
+			}
 			const AnnouncementList = (await response.json()) as AnnouncementType[];
 			return AnnouncementList;
 		},
@@ -27,9 +27,9 @@ export const putAnnouncements = (text: string, overskrift: string) => {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ text, overskrift }),
 			});
-			if (response.status) {
-				console.log(response.statusText);
-				return;
+      		if (response.statusText !== "OK") {
+				console.log(response.status, response.statusText);
+				return response.statusText;
 			}
 			const PutAnnouncementConfirm = (await response.json()) as string;
 			return PutAnnouncementConfirm;
@@ -47,10 +47,10 @@ export const deleteAnnouncements = (id: number) => {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ id }),
             });
-            if (response.status) {
-                console.log(response.statusText);
-                return;
-            }
+      		if (response.statusText !== "OK") {
+				console.log(response.status, response.statusText);
+				return response.statusText;
+			}
 			const DeleteAnnouncementConfirm = (await response.json()) as string;
 			return DeleteAnnouncementConfirm;
 		},

@@ -36,7 +36,7 @@ model earlyerWeatherdays { // can only exist one table with id 1
 
 model Announcements {
   id            Int       @id @default(autoincrement())
-  overskrift    String
+  title         String
   text          String
 
   @@unique([id])

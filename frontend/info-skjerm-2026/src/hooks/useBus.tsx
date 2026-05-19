@@ -9,9 +9,9 @@ export const useBus = (_BusStopName: string, _NumberOfBusses: number) => {
     queryKey: ["BusStopsBothWays", _BusStopName],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3001/api/busdepartures?BusStop=${_BusStopName.replace(" ", "%20")}&num=${_NumberOfBusses.toString()}`);
-      if (response.status) {
-        console.log(response.statusText);
-        return;
+      if (response.statusText !== "OK") {
+        console.log(response.status, response.statusText);
+        return response.statusText;
       }
       const BusStop = (await response.json()) as BusStop;
       print("BusStop", BusStop);

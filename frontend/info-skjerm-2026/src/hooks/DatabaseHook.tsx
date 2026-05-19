@@ -11,10 +11,10 @@ export const useDatabaseHook = (WhatToChange: string, WhatToChangeTo: string | s
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ WhatToChange: WhatToChange, WhatToChangeTo: WhatToChangeTo }),
             });
-            if (response.status) {
-                console.log(response.statusText);
-                return;
-            }
+      		if (response.statusText !== "OK") {
+				console.log(response.status, response.statusText);
+				return response.statusText;
+			}
 			const PutDatabaseConfirm = await response.json() as string;
 			return PutDatabaseConfirm;
 		},
