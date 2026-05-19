@@ -5,6 +5,7 @@ import { Navbar, Authorization } from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const InfoScreen = lazy(() => import("./pages/Infoscreen"));

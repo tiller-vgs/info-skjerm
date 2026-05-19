@@ -219,7 +219,7 @@ export async function GetWeatherAPI(dbDayAmount: boolean) {
     try {
       DayOfWeatherObjects = { day: days[new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay()] || "idk", date: AllTimeSetOfWeatherObject[0]![0]!.date || "idk", FrontendWeatherObject: [] };
     } catch (err) {
-			print("Error for WeatherFunction:   ", err, "  |");
+			print("Error for WeatherFunction:   ", err);
     }
       // const DayOfWeatherObjects: DayOfWeatherObjects = { day: days[new Date(ListsOfWeatherObjectInTimeSet[0]!.date[0]!).getDay()] || "idk", FrontendWeatherObject: [] };
 		// const DayOfWeatherObjects: DayOfWeatherObjects = { day: "idk", FrontendWeatherObject: [] };
@@ -230,13 +230,31 @@ export async function GetWeatherAPI(dbDayAmount: boolean) {
     for (const ATimeSetOfWeatherObject of AllTimeSetOfWeatherObject) {
       const ListifyFrontendWeatherObject: Listify<FrontendWeatherObject> = makeEmptyListified(EmptyHelperWeatherObject) as Listify<FrontendWeatherObject>;
 
-      for (const WeatherObject of ATimeSetOfWeatherObject) {
+		for (let index = 0; index < ATimeSetOfWeatherObject.length; index++) {
+
+			const WeatherObject = ATimeSetOfWeatherObject[index]!;
+			if (WeatherObject.time != "") {
 				ListifyFrontendWeatherObject.time.push(WeatherObject.time);
 				ListifyFrontendWeatherObject.symbol_code.push(WeatherObject.symbol_code);
 				ListifyFrontendWeatherObject.air_temperature.push(WeatherObject.air_temperature);
 				ListifyFrontendWeatherObject.wind_speed.push(WeatherObject.wind_speed);
 				ListifyFrontendWeatherObject.wind_from_direction.push(WeatherObject.wind_from_direction);
-      }
+			}
+			if (index == ATimeSetOfWeatherObject.length - 1 && ListifyFrontendWeatherObject.time.length == 0) {
+				ListifyFrontendWeatherObject.time.push("--:--");
+				ListifyFrontendWeatherObject.symbol_code.push("");
+				ListifyFrontendWeatherObject.air_temperature.push(NaN);
+				ListifyFrontendWeatherObject.wind_speed.push(NaN);
+				ListifyFrontendWeatherObject.wind_from_direction.push(NaN);
+			}
+		}
+	// 	for (const WeatherObject of ATimeSetOfWeatherObject) {
+	// 			ListifyFrontendWeatherObject.time.push(WeatherObject.time);
+	// 			ListifyFrontendWeatherObject.symbol_code.push(WeatherObject.symbol_code);
+	// 			ListifyFrontendWeatherObject.air_temperature.push(WeatherObject.air_temperature);
+	// 			ListifyFrontendWeatherObject.wind_speed.push(WeatherObject.wind_speed);
+	// 			ListifyFrontendWeatherObject.wind_from_direction.push(WeatherObject.wind_from_direction);
+    //   }
 
       const ATimeSetOfFrontendWeatherObject: FrontendWeatherObject = {} as FrontendWeatherObject;
       // for (const WeatherObject of ATimeSetOfWeatherObject) {

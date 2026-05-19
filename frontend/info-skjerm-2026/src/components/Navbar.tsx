@@ -24,7 +24,7 @@ export function Navbar() {
   return (
     <>
       <div className="group">
-        {/* Hitbox */}
+        {/* Hitbox, if touched; Navbar shows  */}
         <div className="fixed top-0 left-0 w-full h-15 z-40"></div>
         {/* Navigation bar */}
         <div
@@ -40,9 +40,11 @@ export function Navbar() {
 
       z-50"
         >
+          {/* Tittel */}
           <h1 className="text-5xl font-bold text-tkyellow">
             <NavLink to={"/"}>Infoskjerm</NavLink>
           </h1>
+          {/* Valg alle har */}
           <nav className="flex items-center gap-6">
             <NavLink className="hover:text-tkyellow transition" to={"/"}>
               Hjem

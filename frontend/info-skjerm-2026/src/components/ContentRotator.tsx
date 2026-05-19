@@ -1,22 +1,38 @@
 import React, { useState, useEffect, type JSX } from "react";
+import BusRouteList from "./BusRouteList";
+import { StaleTime } from "../hooks/useBus";
 import AnnouncementsGrid from "./AnnouncementsGrid";
 import TQLeaderboard from "./TQLeaderboard";
-const busStops: string[] = ["Tiller VGS", "Tillerterminalen", "City Syd"];
+
+const busStops: string[] = [
+  "Tiller VGS.",
+  "City Syd",
+  "Tillerterminalen",
+];
 
 export const BusRotator: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
+  const NumberOfBusses = 30;
+  const AccualNumberOfBusses = 5;
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % busStops.length);
-    }, 5000);
+    }, StaleTime);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div>
-      <h2>{busStops[index]}</h2>
+      <h2 className="text-2xl">{busStops[index]}</h2>
+
+      <BusRouteList
+        key={busStops[index]}
+        NumberOfBusses={NumberOfBusses}
+        AccualNumberOfBusses={AccualNumberOfBusses}
+        BusStopName={busStops[index]}
+      />
     </div>
   );
 };
@@ -39,7 +55,3 @@ export const AnnouncmentRotator: React.FC = () => {
 
   return <div className="h-full w-full">{announcments[index]}</div>;
 };
-
-// export function AnnouncementRotator() {
-//   return <div>t</div>;
-// }

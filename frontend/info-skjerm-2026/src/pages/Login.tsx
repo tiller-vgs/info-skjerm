@@ -1,10 +1,9 @@
-import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
-import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
+import { Paper } from "@mui/material";
 
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,12 +12,6 @@ import { loginSchema } from "../lib/schema";
 import { authClient } from "../lib/auth-client";
 import { toast } from "react-toastify";
 import { redirect } from "react-router";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
 
 function Login() {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -49,64 +42,104 @@ function Login() {
   }
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <div>
-        <Card sx={{ width: "100%", mt: 10, maxWidth: { sm: "md" } }}>
-          <CardContent>
-            <Typography variant="h5" component="div" gutterBottom>
-              Login
-            </Typography>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
-              Login to an existing user
-            </Typography>
+    <div className="flex items-center justify-center">
+      <Paper
+        sx={{
+          color: "#e2e2e2",
+          backgroundColor: "#1e2227",
+          width: "100%",
+          mt: 10,
+          maxWidth: { sm: "md" },
+        }}
+        variant="elevation"
+        elevation={24}
+        square={false}
+      >
+        <CardContent>
+          <Typography variant="h5" component="div" gutterBottom>
+            Login
+          </Typography>
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            Login to an existing user
+          </Typography>
 
-            <form id="login" onSubmit={form.handleSubmit(onSubmit)}>
-              <Controller
-                name="username"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    {...field}
-                    id="login-username"
-                    label="Username"
-                    placeholder="Ola123"
-                    autoComplete="off"
-                    error={fieldState.invalid}
-                    helperText={fieldState.error?.message}
-                    fullWidth
-                  />
-                )}
-              />
+          <form id="login" onSubmit={form.handleSubmit(onSubmit)}>
+            <Controller
+              name="username"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  sx={{
+                    input: {
+                      color: "#e2e2e2",
+                    },
 
-              <Controller
-                name="password"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    {...field}
-                    id="login-password"
-                    label="Password"
-                    type="password"
-                    placeholder="********"
-                    autoComplete="off"
-                    error={fieldState.invalid}
-                    helperText={fieldState.error?.message}
-                    fullWidth
-                  />
-                )}
-              />
-            </form>
-          </CardContent>
+                    label: {
+                      color: "#e2e2e2",
+                    },
 
-          <CardActions sx={{ px: 2, pb: 2, flexWrap: "wrap", gap: 1 }}>
-            <Button type="submit" form="login" variant="contained">
-              Login
-            </Button>
-          </CardActions>
-        </Card>
-      </div>
-    </ThemeProvider>
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "#e2e2e2",
+                      },
+                    },
+                    paddingBottom: "1rem",
+                    paddingTop: "0.1rem",
+                  }}
+                  {...field}
+                  id="login-username"
+                  label="Username"
+                  placeholder="Ola123"
+                  autoComplete="off"
+                  error={fieldState.invalid}
+                  helperText={fieldState.error?.message}
+                  fullWidth
+                />
+              )}
+            />
+
+            <Controller
+              name="password"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  sx={{
+                    input: {
+                      color: "#e2e2e2",
+                    },
+
+                    label: {
+                      color: "#e2e2e2",
+                    },
+
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "#e2e2e2",
+                      },
+                    },
+                  }}
+                  {...field}
+                  id="login-password"
+                  label="Password"
+                  type="password"
+                  placeholder="********"
+                  autoComplete="off"
+                  error={fieldState.invalid}
+                  helperText={fieldState.error?.message}
+                  fullWidth
+                />
+              )}
+            />
+          </form>
+        </CardContent>
+
+        <CardActions sx={{ px: 2, pb: 2, flexWrap: "wrap", gap: 1 }}>
+          <Button type="submit" form="login" variant="contained">
+            Login
+          </Button>
+        </CardActions>
+      </Paper>
+    </div>
   );
 }
 
