@@ -17,3 +17,14 @@ export const loginSchema = z.object({
   username: z.string().min(1, "Username cannot be empty!"),
   password: z.string().min(8, "Password must be at least 8 characters long"),
 });
+
+export const announcementSchema = z.object({
+  title: z
+    .string()
+    .min(2, "Title must be at least 2 characters long")
+    .max(128, "Title must be at most 128 characters long"),
+  content: z
+    .string()
+    .min(2, "Description must be at least 2 characters long")
+    .max(256, "Description must be at most 256 characters long"),
+});

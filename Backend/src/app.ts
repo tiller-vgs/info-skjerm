@@ -5,13 +5,7 @@ import cors from "cors";
 import { auth } from "@lib/auth";
 import { toNodeHandler, fromNodeHeaders } from "better-auth/node";
 
-dotenv.config({ path: "./.env", override: true, debug: true });
-
-declare global {
-  var test: string;
-}
-global.test = "test";
-console.log("Global.test:  ", global.test);
+// dotenv.config({ path: "./.env", override: true, debug: true });
 
 const app = express();
 
@@ -21,6 +15,10 @@ const PORT = process.env.PORT || 3000;
 // Better Auth handler must be mounted before express.json()
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
+app.get("/api/health", async (req, res) => {
+  res.json({ message: "Server is running!" });
+});
+
 app.use(express.json());
 
 app.use("/api/weather", controller.WeatherController);
@@ -28,6 +26,7 @@ app.use("/api/database", controller.DatabaseController);
 app.use("/api/busdepartures", controller.BusController);
 app.use("/api/test", controller.test);
 app.use("/api/test2", controller.test2);
+app.use("/api/tqleaderboard", controller.TQLeaderboardController);
 
 app.get("/api/auth", async (req, res) => {
   const session = await auth.api.getSession({
