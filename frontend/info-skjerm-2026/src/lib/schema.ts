@@ -1,5 +1,6 @@
 import z from "zod";
 
+// Skjema for registrering av ny bruker
 export const registerSchema = z.object({
   email: z.email("invalid email address!"),
   name: z
@@ -13,11 +14,13 @@ export const registerSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters long"),
 });
 
+// Skjema for innlogging
 export const loginSchema = z.object({
   username: z.string().min(1, "Username cannot be empty!"),
   password: z.string().min(8, "Password must be at least 8 characters long"),
 });
 
+// Skjema for opprettelse av kunngjøring
 export const announcementSchema = z.object({
   title: z
     .string()
