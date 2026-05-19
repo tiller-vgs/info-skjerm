@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { AnnouncementType } from "@models";
 import { prisma } from "@prismaclient";
+import { print } from "utils";
 
 const router = Router();
 
@@ -16,7 +17,9 @@ router.get("/", async (req: Request, res: Response) => {
 })
 
 router.put("/", async (req: Request, res: Response) => {
+    print("req", req);
     try {
+        print("req", req);
         const Body = req.body as AnnouncementType;
         await prisma.announcements.create({
             data: Body

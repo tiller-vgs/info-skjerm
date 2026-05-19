@@ -7,7 +7,7 @@
 
 
 - #### Do one of these:  
-- Either write  
+- Go to a folder thats not in the git project and either write  
   - docker pull postgres  
   - docker run --name Infoskjerm_contaner -e POSTGRES_PASSWORD=<POSTGRES_PASSWORD> -p 5432:5432 -d postgres
 - Or make a docker-compose.yml file and fill it with:   

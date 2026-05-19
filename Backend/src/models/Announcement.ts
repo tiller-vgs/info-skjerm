@@ -1,4 +1,6 @@
 export interface AnnouncementType {
 	title: string;
-	text: string;
+	content: string;
+	dateStart: string;
+	dateEnd: string;
 }

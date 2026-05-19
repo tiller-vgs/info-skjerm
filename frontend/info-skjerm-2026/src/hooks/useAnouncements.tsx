@@ -17,17 +17,19 @@ export const getAnnouncements = () => {
 		staleTime: StaleTime,
 	});
 };
+
 // Change text to everything needed to make a anouncement object
-export const putAnnouncements = (text: string, overskrift: string) => {
+export const putAnnouncements = (AnnouncementObject: AnnouncementType) => {
 	return useQuery({
-		queryKey: ["putAnnouncements"],
+		queryKey: ["putAnnouncements", AnnouncementObject],
 		queryFn: async () => {
 			const response = await fetch(`http://localhost:3001/api/announcements`, {
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ text, overskrift }),
-			});
-      		if (response.statusText !== "OK") {
+				body: JSON.stringify(AnnouncementObject),
+			});		
+			console.log(response);
+			if (!response.ok) {
 				console.log(response.status, response.statusText);
 				return response.statusText;
 			}
