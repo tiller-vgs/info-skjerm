@@ -6,7 +6,11 @@ export const getWeather = (DayAmount: number) => {
 	return useQuery({
 		queryKey: ["weather", DayAmount],
 		queryFn: async () => {
-			const response = await fetch(`http://localhost:3001/api/weather?DayAmount=${DayAmount}`);
+            const response = await fetch(`http://localhost:3001/api/weather?DayAmount=${DayAmount}`);
+            if (response.status) {
+                console.log(response.statusText);
+                return;
+            }
 			const DayOfWeatherObjectList = (await response.json()) as DayOfWeatherObjects[];
 			return DayOfWeatherObjectList;
 		},

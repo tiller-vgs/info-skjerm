@@ -6,7 +6,11 @@ export const getAnnouncements = () => {
 	return useQuery({
 		queryKey: ["getAnnouncements"],
 		queryFn: async () => {
-			const response = await fetch(`http://localhost:3001/api/announcements`);
+            const response = await fetch(`http://localhost:3001/api/announcements`);
+            if (response.status) {
+                console.log(response.statusText);
+                return;
+            }
 			const AnnouncementList = (await response.json()) as AnnouncementType[];
 			return AnnouncementList;
 		},
@@ -22,9 +26,13 @@ export const putAnnouncements = (text: string) => {
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ text }),
-			});
-			const PutAnnouncementConfirmt = (await response.json()) as string;
-			return PutAnnouncementConfirmt;
+            });
+            if (response.status) {
+                console.log(response.statusText);
+                return;
+            }
+			const PutAnnouncementConfirm = (await response.json()) as string;
+            return PutAnnouncementConfirm;
 		},
 		staleTime: StaleTime,
 	});
@@ -38,9 +46,13 @@ export const deleteAnnouncements = (id: number) => {
 				method: "DELETE",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ id }),
-			});
-			const DeleteAnnouncementConfirmt = (await response.json()) as string;
-			return DeleteAnnouncementConfirmt;
+            });
+            if (response.status) {
+                console.log(response.statusText);
+                return;
+            }
+			const DeleteAnnouncementConfirm = (await response.json()) as string;
+			return DeleteAnnouncementConfirm;
 		},
 		staleTime: StaleTime,
 	});
