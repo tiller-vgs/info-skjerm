@@ -1,8 +1,10 @@
+// Representerer én dag med tilhørende værobjekter
 export interface WeatherDay {
   day: string;
   WeatherObjects: WeatherObject[];
 }
 
+// Representerer én værperiode med værdata
 export interface WeatherObject {
   time: string;
   symbol_code: string;

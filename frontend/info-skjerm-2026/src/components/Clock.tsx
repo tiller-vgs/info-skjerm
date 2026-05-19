@@ -4,22 +4,22 @@ const Clock = () => {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
-    // Update the time state every 1000 milliseconds (1 second)
+    // Oppdaterer tiden hvert 1000 millisekund (1 sekund)
     const timerId = setInterval(() => {
       setTime(new Date());
     }, 1000);
 
-    // Cleanup function to clear the interval when the component unmounts
+    // Rydder opp intervallet når komponenten unmountes
     return () => clearInterval(timerId);
-  }, []); // The empty dependency array ensures the effect runs only once on mount
+  }, []); // Tom avhengighetsarray gjør at effekten kun kjører én gang ved montering
 
-  // Format the time to include hours, minutes, and seconds
-  // The options object ensures two-digit formatting for all time units
+  // Formaterer tiden med timer, minutter og sekunder
+  // Options-objektet sikrer tosiffer-formatering for alle tidsenheter
   const formattedTime = time.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-    hour12: false, // Use 24-hour format
+    hour12: false, // Bruker 24-timers format
   });
 
   return (

@@ -1,5 +1,6 @@
 import React from "react";
 
+// Beregner ukenummer etter ISO 8601-standarden
 function getWeekNumber(date: Date): number {
   const d = new Date(
     Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
@@ -11,6 +12,7 @@ function getWeekNumber(date: Date): number {
 }
 
 const DateDisplay: React.FC = () => {
+  // Henter dagens dato og formaterer den
   const now = new Date();
   const dd = String(now.getDate()).padStart(2, "0");
   const mm = String(now.getMonth() + 1).padStart(2, "0");
@@ -19,6 +21,7 @@ const DateDisplay: React.FC = () => {
 
   return (
     <div>
+      {/* Viser dato og ukenummer */}
       <h1 className="text-center text-5xl">
         {dd}.{mm}.{yy}
       </h1>
