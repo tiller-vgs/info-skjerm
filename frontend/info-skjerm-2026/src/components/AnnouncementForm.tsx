@@ -8,6 +8,7 @@ import z from "zod";
 import { toast } from "react-toastify";
 import { announcementSchema } from "../lib/schema";
 
+// Definerer mørkt tema med MUI
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -15,6 +16,7 @@ const darkTheme = createTheme({
 });
 
 function AnnouncementForm() {
+  // Setter opp skjema med validering via zod
   const form = useForm<z.infer<typeof announcementSchema>>({
     resolver: zodResolver(announcementSchema),
     defaultValues: {
@@ -23,16 +25,19 @@ function AnnouncementForm() {
     },
   });
 
+  // Kjøres når skjemaet sendes inn
   async function onSubmit(data: z.infer<typeof announcementSchema>) {
     console.log(data);
     toast.success("Kunngjøring opprettet!");
   }
 
   return (
+    // Bruker mørkt tema på hele komponenten
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Paper>
         <form id="announcement" onSubmit={form.handleSubmit(onSubmit)}>
+          {/* Tittel-felt */}
           <Controller
             name="title"
             control={form.control}
@@ -52,6 +57,7 @@ function AnnouncementForm() {
             )}
           />
 
+          {/* Innhold-felt */}
           <Controller
             name="content"
             control={form.control}
@@ -71,6 +77,8 @@ function AnnouncementForm() {
             )}
           />
         </form>
+
+        {/* Send-inn knapp */}
         <Button type="submit" form="announcement" variant="contained">
           Lag ny kunngjøring
         </Button>
