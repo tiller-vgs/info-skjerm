@@ -3,11 +3,8 @@
 
 // Get a free hosted Postgres database in seconds: `npx create-db`
 generator client {
-  // provider = "prisma-client"
-  provider = "prisma-client-js"
-  // output   = "../src/generated/prisma"
-  output   = "./generated/client"
-  // config   = "../prisma.config.ts" // "../src/prisma/prisma.config.ts"
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -47,17 +44,20 @@ model Announcements {
 
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id              String    @id
+  name            String
+  email           String
+  emailVerified   Boolean   @default(false)
+  image           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  username        String
+  displayUsername String?
+  sessions        Session[]
+  accounts        Account[]
 
   @@unique([email])
+  @@unique([username])
   @@map("user")
 }
 

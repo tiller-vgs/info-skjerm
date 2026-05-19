@@ -1,6 +1,7 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     // File Layout
     // "rootDir": "./src",
     "outDir": "./dist",
@@ -8,7 +9,7 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "ESNext",
-    "target": "ES2020",
+    "target": "ES2023",
     "types": ["node"],
     "moduleResolution": "bundler",
     "esModuleInterop": true,
@@ -23,7 +24,7 @@
       "@controllers": ["./src/controllers"],
       "@prismaclient": ["./src/lib/prisma.ts"],
       "@lib/*": ["./src/lib/*"],
-      "@generated/*": ["./prisma/generated/*"]
+      "@generated/*": ["./generated/prisma/*"]
     },
 
     // For nodejs:
@@ -59,4 +60,3 @@
   "exclude": [], // , "prisma/**/*.ts", "prisma.config.ts", "prisma.config.ts" // put if it gives an error for this file
   "include": ["src", "prisma.config.ts"]
 }
-

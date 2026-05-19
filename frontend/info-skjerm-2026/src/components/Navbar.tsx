@@ -1,19 +1,26 @@
 import type { PropsWithChildren } from "react";
-import { NavLink, Outlet, Navigate } from "react-router";
-
-export const currentUser = {
-  isLoggedIn: true,
-};
+import { NavLink, Outlet, Navigate, useNavigate } from "react-router";
+import { authClient } from "../lib/auth-client";
 
 export const Authorization = ({ children }: PropsWithChildren) => {
-  if (!currentUser.isLoggedIn) {
-    return <Navigate to="/login" />;
-  }
+  const { data: session, isPending } = authClient.useSession();
+
+  if (isPending) return null;
+  if (!session?.user) return <Navigate to="/login" />;
 
   return children;
 };
 
 export function Navbar() {
+  const { data: session } = authClient.useSession();
+  const navigate = useNavigate();
+  const isLoggedIn = !!session?.user;
+
+  async function handleSignOut() {
+    await authClient.signOut();
+    navigate("/login");
+  }
+
   return (
     <>
       <div className="group">
@@ -26,7 +33,7 @@ export function Navbar() {
       bg-tqnavbar text-tqwhite shadow-md
 
       transform -translate-y-full opacity-0
-      transition-all duration-300 ease-in-out 
+      transition-all duration-300 ease-in-out
 
       group-hover:translate-y-0 group-hover:opacity-100
       hover:translate-y-0 hover:opacity-100
@@ -48,14 +55,14 @@ export function Navbar() {
             >
               Infoskjerm
             </NavLink>
-            {/* Valg hvis ikke logged inn */}
-            {!currentUser?.isLoggedIn && (
+
+            {!isLoggedIn && (
               <NavLink className="hover:text-tkyellow transition" to={"/login"}>
                 Logg in
               </NavLink>
             )}
-            {/* Valg hvis logged inn (som admin) */}
-            {currentUser?.isLoggedIn && (
+
+            {isLoggedIn && (
               <div className="flex items-center gap-6">
                 <NavLink
                   className="hover:text-tkyellow transition"
@@ -63,13 +70,12 @@ export function Navbar() {
                 >
                   Adminpanel
                 </NavLink>
-                <NavLink
-                  className="hover:text-red-400 transition"
-                  to={"/login"}
+                <button
+                  className="hover:text-red-400 transition cursor-pointer"
+                  onClick={handleSignOut}
                 >
                   Logg ut
-                </NavLink>
-                {/* Må legge til logg ut til denne */}
+                </button>
               </div>
             )}
           </nav>

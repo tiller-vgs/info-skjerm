@@ -9,6 +9,7 @@ import { styled } from "@mui/material/styles";
 import AdminPreferences from "../components/AdminPreferences";
 import Paper from "@mui/material/Paper";
 import Registrer from "../components/Registrer";
+import AnnouncementForm from "../components/AnnouncementForm";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   gap: "2rem",
@@ -117,7 +118,7 @@ export default function HorizontalSpacingToggleButton() {
             ))}
           </StyledToggleButtonGroup>
           <div className="w-full">
-            {alignment === "left" && "Kunngjør melding"}
+            {alignment === "left" && <AnnouncementForm />}
             {alignment === "mid-left" && "Slett kunngjøring"}
             {alignment === "mid-right" && <AdminPreferences />}
             {alignment === "right" && <Registrer />}

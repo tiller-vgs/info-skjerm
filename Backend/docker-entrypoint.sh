@@ -2,7 +2,7 @@
 set -e
 
 echo "Syncing database schema..."
-npx prisma db push --skip-generate
+npx prisma db push
 
 echo "Starting server..."
 exec npx tsx src/app.ts
