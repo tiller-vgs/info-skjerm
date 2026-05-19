@@ -1,4 +1,7 @@
 import React from "react";
+{
+  /* Henter ferdige bokser og knapper fra Material UI-biblioteket */
+}
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -9,6 +12,9 @@ import Slider from "@mui/material/Slider";
 function AdminPreferences() {
   const [age, setAge] = React.useState("");
 
+  {
+    /* Denne funksjonen kjører når noen bytter tidsformat i menyen */
+  }
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value);
   };
@@ -16,28 +22,31 @@ function AdminPreferences() {
     <div className="w-full">
       {/* Klokke */}
       <div className="flex justify-center gap-5 items-center w-full">
-        <div className="w-48 flex justify-end">
-          <p className="text-tqwhitetext w-48 text-right">Klokke: </p>
-        </div>
-        <FormControl
-          variant="filled"
-          className="bg-tqwhitetext rounded"
-          sx={{ m: 0, minWidth: 120 }}
-        >
-          <InputLabel id="demo-simple-select-standard-label">
-            Tidsformat
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={age}
-            onChange={handleChange}
-            label="Age"
+        <p className="text-tqwhitetext w-48 text-right">Klokke: </p>
+
+        {/* Denne div-en passer på at dropdown-menyen starter på nøyaktig samme
+        sted slider */}
+        <div className="w-[300px] flex justify-start">
+          <FormControl
+            variant="filled"
+            className="bg-tqwhitetext rounded"
+            sx={{ m: 0, minWidth: 120 }}
           >
-            <MenuItem value={10}>12 timer</MenuItem>
-            <MenuItem value={20}>24 timer</MenuItem>
-          </Select>
-        </FormControl>
+            <InputLabel id="demo-simple-select-standard-label">
+              Tidsformat
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={age}
+              onChange={handleChange}
+              label="Age"
+            >
+              <MenuItem value={10}>12 timer</MenuItem>
+              <MenuItem value={20}>24 timer</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
       </div>
       {/* Nytt */}
       <div className="flex justify-center gap-5 items-center w=full">
@@ -63,6 +72,24 @@ function AdminPreferences() {
             max={20}
             size="small"
             defaultValue={12.0}
+            aria-label="Small"
+            valueLabelDisplay="auto"
+          />
+        </Box>
+      </div>
+
+      {/*Antall busser per stopp*/}
+      <div className="flex justify-center gap-5 items-center w-full">
+        <p className="text-tqwhitetext w-48 text-right">
+          {" "}
+          Antall busser per stopp:{" "}
+        </p>
+        <Box sx={{ width: 300 }}>
+          <Slider
+            min={0}
+            max={15}
+            size="small"
+            defaultValue={5}
             aria-label="Small"
             valueLabelDisplay="auto"
           />
