@@ -9,7 +9,9 @@ COPY prisma ./prisma/
 RUN npm ci
 
 # Generate Prisma client into prisma/generated/client
-RUN npx prisma generate
+# DATABASE_URL is not used during generate, but prisma.config.ts's env() helper
+# throws at config-load time if the var is absent — supply a placeholder.
+RUN DATABASE_URL=postgresql://placeholder npx prisma generate
 
 # Copy source after dependencies to maximise cache hits
 COPY src ./src
