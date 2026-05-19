@@ -1,28 +1,26 @@
 import { Router, Request, Response } from "express";
 import {BusStop, BusRoute, Businfo} from "@models";
-import { MakefetchWithRetry, print } from "@helpers";
+import { MakefetchWithRetry } from "@helpers";
 
 const fetchWithRetry = MakefetchWithRetry("BusTimesController");
 const router = Router();
 
-
 router.get("/", async (req: Request, res: Response) => {
-  print("req.query", req.query, req.query.BusStop);
-	const num = Number(req.query.num) * 2 || 20;
+  // Set varibles based on the url used to reach this router
+	const NumberOfCalls = Number(req.query.num) || 50; // FIX ask to change the querry.num name
   const BusStop = (req.query.BusStop as string);
 
-	const response = await fetchWithRetry(`https://api.entur.io/geocoder/v1/autocomplete?text=${(BusStop + ", Trondheim").replace(" ", "%20")}`); // autocomplete, search
+  // Uses the BusStop name and gives us the id that we then use on the other BusAPI
+	const response = await fetchWithRetry(`https://api.entur.io/geocoder/v1/autocomplete?text=${(BusStop + ", Trondheim").replace(" ", "%20")}`);; // Change between these if something goes wrong:   autocomplete, search
   const BussID = await response.json();
-  
-	print("MAIN TEST ___________", (BusStop + ", Trondheim").replace(" ", "%20"), BussID, BussID.features[0].properties);
-	print(BussID.features[0].properties.id, `stopPlace( id: \"${BussID.features[0].properties.id}\" )`)
 
+  // How the BusAPI knows what to send back
   var query = `
     {
       stopPlace( id: "${BussID.features[0].properties.id}" ) {
         id
         name
-        estimatedCalls( numberOfDepartures: 30 ) {
+        estimatedCalls( numberOfDepartures: ${NumberOfCalls} ) {
           realtime
           aimedArrivalTime
           expectedArrivalTime
@@ -47,27 +45,25 @@ router.get("/", async (req: Request, res: Response) => {
 	  }
   `;
 
+  // Setup Extra info to the BusAPI
 	const options: RequestInit = {
 		method: "POST",
 		headers: { "Content-Type": "application/json", "ET-Client-Name": "your-app-name" },
 		body: JSON.stringify({ query }), // query
 	};
 
-	try {
+  try {
+    // Fetches the BusAPI
 		const response = await fetchWithRetry("https://api.entur.io/journey-planner/v3/graphql", options);
 		const json = (await response.json()) as Businfo;
-		print("PRINT json _________", json);
-		print(json.data.stopPlace.name, json.data.stopPlace.id)
 
 		const northBound: BusRoute[] = [];
 		const southBound: BusRoute[] = [];
-		const all: BusRoute[] = [];
 
 		const calls = json.data.stopPlace.estimatedCalls;
-		const LowestQuay = Math.min(...calls.map((call) => Number(call.quay.id.slice(9, call.quay.id.length))))
-		print(LowestQuay)
-		// console.log("All calls:  -- ", calls);
+		const LowestQuay = Math.min(...calls.map((call) => Number(call.quay.id.slice(9))))
 
+    // Each call is one bus taking one route
 		for (const call of calls) {
 			const id = call.serviceJourney.journeyPattern.line.id;
 			const parts = id.split(":")[2]?.split("_")[1];
@@ -80,14 +76,9 @@ router.get("/", async (req: Request, res: Response) => {
 				busLine,
 			};
 
-			// all.push(route);
-
-			// idk FIX
-			// if (call.serviceJourney.journeyPattern.line.direction === 1) {
 			if (call.quay.id === "NSR:Quay:" + LowestQuay.toString()) {
 				northBound.push(route);
-			// } else if (call.serviceJourney.journeyPattern.line.direction === 2) {
-			} else if (Number(call.quay.id.slice(9, call.quay.id.length)) >= LowestQuay) {
+			} else if (Number(call.quay.id.slice(9)) >= LowestQuay) {
 				southBound.push(route);
 			}
 		}
@@ -95,16 +86,12 @@ router.get("/", async (req: Request, res: Response) => {
 		const busStop: BusStop = {
 			northBound,
 			southBound,
-			// all,
 		};
-
-		// console.log("res:  -- ", busStop);
-		return res.json([busStop, BussID, query, `https://api.entur.io/geocoder/v1/search?text=${(BusStop + ", Trondheim").replace(" ", "%20")}`]);
+    return res.json([busStop, BussID, query, `https://api.entur.io/geocoder/v1/search?text=${(BusStop + ", Trondheim").replace(" ", "%20")}`]);
 	} catch (err) {
 		console.error("Bus API failed", err);
 		return res.status(503).send("Get BusRoutes router unavailable");
 	}
 });
-
 
 export default router;

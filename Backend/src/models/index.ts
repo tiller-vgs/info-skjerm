@@ -1,18 +1,14 @@
-// export * from "./Event.ts";
-export * from "./BusDepartureJsonResponse.ts";
 export * from "./BusDepartures.ts";
-// export * from "./WeatherForecastObject.ts";
-// export * from "./WeatherJsonResponse.ts";
-// export * from "./WeatherJsonResponseNextDays.ts";
-// export * from "./WeatherJsonResponseToday.ts";
-// export * from "./WeatherOutputObjects.ts";
-// export * from "./WeatherInputObjects.ts";
-export * from "./Generell.ts";
 export * from "./WeatherObjects.ts";
 export * from "./Announcement.ts";
 
+export type Listify<T> = { [K in keyof T]: T[K][] };
+
+
 /*
-Oppsett av alle typer:  ER FEIL
+PLEASE FIX DETTE ER FIEL
+
+Oppsett av alle typer:
 From BusDepartureJsonResponse:
 BusStop     | BusRoute
 

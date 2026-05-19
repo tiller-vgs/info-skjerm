@@ -1,8 +1,9 @@
+// Script that will run every day from the server
+
 import { GetWeatherAPI } from "@controllers";
 import { prisma } from "@prismaclient";
 import type { DayOfWeatherObjects } from "@models";
 import { print } from "./TestPrinting";
-import { Prisma } from "@generated/client";
 
 
 const ADayOfWeatherObjects = (await GetWeatherAPI(2))[1]! as DayOfWeatherObjects;

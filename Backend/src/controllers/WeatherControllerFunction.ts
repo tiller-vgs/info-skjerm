@@ -7,7 +7,12 @@ const fetchWithRetry = MakefetchWithRetry("WeatherForecastController");
 const API_URL = "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=63.21&lon=10.22";
 
 export async function GetWeatherAPI(DayAmount: number = 3) {
-	// check database for time sets and hour amount
+	// Fetches the WeatherAPI
+	const response = await fetchWithRetry(API_URL);
+	const json = (await response.json()) as EntireWeather;
+	const Timeseries = json.properties.timeseries;
+	
+	// Gets varibles saved in the database
 	const AdminTable = await prisma.adminTable.findUnique({ where: { id: 1 } });
 	if (AdminTable === null) {
 		console.error("Can't get adminTable from database");
@@ -17,9 +22,8 @@ export async function GetWeatherAPI(DayAmount: number = 3) {
 	const TimeSetsHoures: string[][] = TimeSets.map(t => t.split("-").map(x => x.slice(0, 2)));
 	let StartDate: string = AdminTable.startdate || "today";
 
-	let HourAmount: number = 60;
-	print("DayAmount", DayAmount);
-	// DayAmount = 3; // FIX
+
+	// DayAmount = 3; // FIX maybe if anyone wants to get dayamount from the db
 	// if (UsedbForHourAmount) {
 	// 	HourAmount = AdminTable.houramount || 3;
 	// } else {
@@ -36,30 +40,18 @@ export async function GetWeatherAPI(DayAmount: number = 3) {
 		filled: "false",
 	};
 
-	// inacurate for no FIX
-	const StartTime = new Date().toISOString().split("T")[1]!.slice(0, -8);
 	if (StartDate === "today") {
 		StartDate = new Date().toISOString().split("T")[0]!;
 		StartDate = StartDate.slice(5);
 	}
 	let StartDateDaysPlusMonth = Number(StartDate.split("-")[0]!) * 100 + Number(StartDate.split("-")[1]!);
-	print("StartTime", StartDate, StartTime);
 
-	const response = await fetchWithRetry(API_URL);
-	const json = (await response.json()) as EntireWeather;
-	const Timeseries = json.properties.timeseries;
-	// console.log("weathercontroller2: response:   ", Timeseries);
 
 	let FirstActiveDay: string = "";
 	let SavedTimeSetIndex: number = 0;
 	let SavedDays: number = -1;
 	let LastSavedDatePlusMonth: number = StartDateDaysPlusMonth;
 	let DaysExtended: number = 0;
-
-	// type listefy makes an object, an object where each property becomes a list with the origanrl property in it
-	// const ListsOfWeatherObjectAllDays: Listify<HelperWeatherObject>[][] = [];
-	// const ListsOfWeatherObjectInTimeSet: Listify<HelperWeatherObject>[] = [];
-	// let ListsOfWeatherObject: Listify<HelperWeatherObject> = makeEmptyListified({...EmptyHelperWeatherObject});
 
 	let ATimeSetOfFrontendWeatherObject: HelperWeatherObject[] = [];
 	let AllTimeSetOfWeatherObject: HelperWeatherObject[][] = Array.from({ length: TimeSets.length }, () => []);
@@ -72,32 +64,33 @@ export async function GetWeatherAPI(DayAmount: number = 3) {
 	// Timeserie is where all the the information for one hour is
 	for (const Timeserie of Timeseries) {
 		try {
+			// If the API stops giving hourly updates don't get more data
 			if (!Timeserie.data.instant) {
 				print("Broken Timeserie", Timeserie);
 				break;
 			}
-			print("Timeserie", Timeserie);
 
 			const FullDate = Timeserie.time.split("T")[0]!;
-			const date = FullDate.slice(5, FullDate.length);
+			const date = FullDate.slice(5);
 			const DayPlusMonth = Number(date.split("-")[0]!) * 100 + Number(date.split("-")[1]!);
 
-			// get the index for with part of TimeSets this Timeserie is
 			const FullTime = Timeserie.time.split("T")[1]!.split("Z")[0]!;
-			const time = FullTime.slice(0, FullTime.length - 3);
+			const time = FullTime.slice(0, -3);
 			const Hour = Number(time.slice(0, 2));
 
-			// see if the date is after StartDate if not dont run any code under this
+			// Checks for if it needs to suplement with the database's stored values and if it is too early to run the code under here
 			if (FirstActiveDay === "") {
-				// print(date, FirstActiveDay, StartDate, StartDateDaysPlusMonth, DayPlusMonth);
+				// If the date is not after StartDate dont run any code under this
 				if (StartDateDaysPlusMonth + DaysExtended > DayPlusMonth) {
 					continue;
 				}
-				// print(date + " is or is after first allowed day: ", FirstActiveDay);
+				// If the current hour is after the first timesets begining dalay the startday by 1 and give the first day the value stored in the database
 				else if (Hour > Number(TimeSetsHoures[0]![0]!)) {
-					// GET LIST FROM DATABSE FIX
 					print("Get today from database");
-					WeatherObjectDays[DayPlusMonth - StartDateDaysPlusMonth + 1] = ((await prisma.earlyerWeatherdays.findUnique({ where: { id: 1 } }))!.data!.valueOf() as DayOfWeatherObjects).FrontendWeatherObject!.map((WeatherObject) => { const length = Number(WeatherObject.time.split("-")[1]!.slice(0, -3)) - Number(WeatherObject.time.split("-")[0]!.slice(0, -3)) + 1; return (Array.from({ length: length }, () => ({...WeatherObject, date: FullDate, filled: "true"}))) as HelperWeatherObject[]}); // [...AllTimeSetOfWeatherObject]; // GET LIST FROM DATABSE
+					WeatherObjectDays[DayPlusMonth - StartDateDaysPlusMonth + 1] = ((await prisma.earlyerWeatherdays.findUnique({ where: { id: 1 } }))!.data!.valueOf() as DayOfWeatherObjects).FrontendWeatherObject!.map(WeatherObject => {
+						const length = Number(WeatherObject.time.split("-")[1]!.slice(0, -3)) - Number(WeatherObject.time.split("-")[0]!.slice(0, -3)) + 1;
+						return Array.from({ length: length }, () => ({ ...WeatherObject, date: FullDate, filled: "true" })) as HelperWeatherObject[];
+					});
 					DaysExtended += 1;
 					LastSavedDatePlusMonth += 1;
 					continue;
@@ -106,46 +99,39 @@ export async function GetWeatherAPI(DayAmount: number = 3) {
 				}
 			}
 
-			// If it has gone for more than allowed days
+			// If it has gone for more than allowed days stop the for loop
 			const FirstActiveDayPlusMonth = Number(FirstActiveDay.split("-")[0]!) * 100 + Number(FirstActiveDay.split("-")[1]!);
 			if (FirstActiveDayPlusMonth + DayAmount <= DayPlusMonth) {
 				print("Broken because day is more than max day", SavedDays, FirstActiveDay, DayAmount, DayPlusMonth, FirstActiveDayPlusMonth + DayAmount);
 				break;
+			} else if (SavedDays >= DayAmount) { // Is a failsafe
+				console.error("Error from WeatherControllerFunction:   Check for more than amount of days not working", "  ||  On Timeserie:   ", Timeserie);
+				break;
 			}
-			if (SavedDays >= DayAmount) {
-				console.error("Error for WeatherControllerFunction:   Check for more than amount of days not working", "  ||  On Timeserie:   ", Timeserie);
-			}
-			// console.log("SavedDays:  ", SavedDays, "  ||  DayAmount:  ", DayAmount);
 
-			// If its the next day
+			// If its the next day save all timesets of WeatherObjects
 			if (DayPlusMonth > LastSavedDatePlusMonth) {
 				LastSavedDatePlusMonth = DayPlusMonth;
 				SavedDays += 1;
-				// print("Test make WeatherObjectDays:", FullDate, AllTimeSetOfWeatherObject, StartDateDaysPlusMonth, DayPlusMonth, WeatherObjectDays, SavedDays);
 				WeatherObjectDays[DayPlusMonth - StartDateDaysPlusMonth] = [...AllTimeSetOfWeatherObject];
 				AllTimeSetOfWeatherObject = Array.from({ length: TimeSets.length }, () => []);
 			}
 
 			const TimeSetIndex = TimeSetsHoures.findIndex(TimeSet => Hour >= Number(TimeSet[0]) && Hour <= Number(TimeSet[1]));
 			const WeatherData = Timeserie.data.instant.details;
-			console.log("weathercontroller2: TimeSetIndex:   ", TimeSetIndex, "  --  ", Hour, "  --  ", TimeSetsHoures, "  --  ", time);
-			let WeatherObject: HelperWeatherObject = EmptyHelperWeatherObject;
+			const WeatherObject: HelperWeatherObject = { ...EmptyHelperWeatherObject };
 			if (TimeSetIndex >= 0) {
-				WeatherObject = {
-					time: time,
-					date: FullDate,
-					symbol_code: Timeserie.data.next_1_hours.summary.symbol_code,
-					air_temperature: WeatherData.air_temperature,
-					wind_speed: WeatherData.wind_speed,
-					wind_from_direction: WeatherData.wind_from_direction,
-					filled: "true",
-				};
-				print("WeatherObject made", WeatherObject, TimeSetIndex);
+				WeatherObject.time = time;
+				WeatherObject.date = FullDate;
+				WeatherObject.symbol_code = Timeserie.data.next_1_hours.summary.symbol_code;
+				WeatherObject.air_temperature = WeatherData.air_temperature;
+				WeatherObject.wind_speed = WeatherData.wind_speed;
+				WeatherObject.wind_from_direction = WeatherData.wind_from_direction;
+				WeatherObject.filled = "true";
 			}
 
-			// if the current Timeserie is not in the same TimeSet as the last if so add list with current Timeset to the list for current day   FiX comment
+			// If the current hour of data is not in the same TimeSet as the last hour of data add the list with all WeatherObject in the current Timeset to the list for current day
 			if (SavedTimeSetIndex !== TimeSetIndex && SavedTimeSetIndex !== -1) {
-				print("Saved ATimeSetOfFrontendWeatherObject", ATimeSetOfFrontendWeatherObject, TimeSetIndex, SavedTimeSetIndex);
 				AllTimeSetOfWeatherObject[SavedTimeSetIndex] = [...ATimeSetOfFrontendWeatherObject];
 				ATimeSetOfFrontendWeatherObject.length = 0;
 			}
@@ -155,69 +141,67 @@ export async function GetWeatherAPI(DayAmount: number = 3) {
 			}
 			SavedTimeSetIndex = TimeSetIndex;
 		} catch (err) {
-			print("Error for WeatherControllerFunction:   ", err, "  ||  On Timeserie:   ", Timeserie);
+			print("Error from WeatherFunction: ", err, "On Timeserie: ", Timeserie);
 		}
 	}
 
-	// avrages the values for each timeset and put it in the right format
+
+
+	// THE NEXT PART SETS MOVES WEATHEROBJECTS SO THE FRONTEND CAN BETTER USE IT
+
 	const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 	const ListOfDayOfWeatherObjects: DayOfWeatherObjects[] = [];
-	// const ListOfTimeSetWorthOfFrontendWeatherObjects: Listify<FrontendWeatherObject>[] = [] as Listify<FrontendWeatherObject>[];
 
-	print(WeatherObjectDays);
 	for (const AllTimeSetOfWeatherObject of WeatherObjectDays) {
-		print("TestForCombiningWeatherObjects", AllTimeSetOfWeatherObject[0]![0], AllTimeSetOfWeatherObject);
-		// print("TestForCombiningWeatherObjects", days[new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay()], new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay(), AllTimeSetOfWeatherObject[0]![0]!.date, AllTimeSetOfWeatherObject[0]![0], AllTimeSetOfWeatherObject);
-
-		// FIX idk if needed
-		// const DayOfWeatherObjects: DayOfWeatherObjects = { day: days[new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay()] || "idk", date: AllTimeSetOfWeatherObject[0]![0]!.date || "idk", FrontendWeatherObject: [] };
-		let DayOfWeatherObjects: DayOfWeatherObjects = { day: "idk", date: "idk", FrontendWeatherObject: [] };
 		try {
-			DayOfWeatherObjects = { day: days[new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay()] || "idk", date: AllTimeSetOfWeatherObject[0]![0]!.date || "idk", FrontendWeatherObject: [] };
-		} catch (err) {
-			print("Error for WeatherFunction:   ", err);
-		}
-		// const DayOfWeatherObjects: DayOfWeatherObjects = { day: days[new Date(ListsOfWeatherObjectInTimeSet[0]!.date[0]!).getDay()] || "idk", FrontendWeatherObject: [] };
-		// const DayOfWeatherObjects: DayOfWeatherObjects = { day: "idk", FrontendWeatherObject: [] };
+			// print("TestForCombiningWeatherObjects", AllTimeSetOfWeatherObject[0]![0], AllTimeSetOfWeatherObject);
+			// print("TestForCombiningWeatherObjects", days[new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay()], new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay(), AllTimeSetOfWeatherObject[0]![0]!.date, AllTimeSetOfWeatherObject[0]![0], AllTimeSetOfWeatherObject);
 
-		const ADayOfTimeSetOfFrontendWeatherObject: FrontendWeatherObject[] = [] as FrontendWeatherObject[];
-
-		for (const ATimeSetOfWeatherObject of AllTimeSetOfWeatherObject) {
-			const ListifyFrontendWeatherObject: Listify<FrontendWeatherObject> = makeEmptyListified(EmptyHelperWeatherObject) as Listify<FrontendWeatherObject>;
-
-			for (let index = 0; index < ATimeSetOfWeatherObject.length; index++) {
-				const WeatherObject = ATimeSetOfWeatherObject[index]!;
-				if (WeatherObject.time != "") {
-					print("set ListifyFrontendWeatherObject", ListifyFrontendWeatherObject);
-					ListifyFrontendWeatherObject.time.push(WeatherObject.time);
-					ListifyFrontendWeatherObject.symbol_code.push(WeatherObject.symbol_code);
-					ListifyFrontendWeatherObject.air_temperature.push(WeatherObject.air_temperature);
-					ListifyFrontendWeatherObject.wind_speed.push(WeatherObject.wind_speed);
-					ListifyFrontendWeatherObject.wind_from_direction.push(WeatherObject.wind_from_direction);
-				} else {
-					ListifyFrontendWeatherObject.time.push("--:--");
-					ListifyFrontendWeatherObject.symbol_code.push("");
-					ListifyFrontendWeatherObject.air_temperature.push(NaN);
-					ListifyFrontendWeatherObject.wind_speed.push(NaN);
-					ListifyFrontendWeatherObject.wind_from_direction.push(NaN);
-				}
-			}
+			const ADayOfTimeSetOfFrontendWeatherObject: FrontendWeatherObject[] = [] as FrontendWeatherObject[];
+			let DayOfWeatherObjects: DayOfWeatherObjects = { day: "idk", date: "idk", FrontendWeatherObject: [] };
+			
 			try {
+				DayOfWeatherObjects = { day: days[new Date(AllTimeSetOfWeatherObject[0]![0]!.date).getDay()] || "idk", date: AllTimeSetOfWeatherObject[0]![0]!.date || "idk", FrontendWeatherObject: [] };
+			} catch (err) {
+				print("Error from WeatherFunction: ", err);
+			}
+
+			for (const ATimeSetOfWeatherObject of AllTimeSetOfWeatherObject) {
+				// Takes all WeatherObjects within a timeset and puts then into a listefied WeatherObjects (Meaning each property becomes a list of that property type)
+				const ListifyFrontendWeatherObject: Listify<FrontendWeatherObject> = makeEmptyListified(EmptyHelperWeatherObject);
+				for (let index = 0; index < ATimeSetOfWeatherObject.length; index++) {
+					const WeatherObject = ATimeSetOfWeatherObject[index]!;
+					if (WeatherObject.time != "") {
+						ListifyFrontendWeatherObject.time.push(WeatherObject.time);
+						ListifyFrontendWeatherObject.symbol_code.push(WeatherObject.symbol_code);
+						ListifyFrontendWeatherObject.air_temperature.push(WeatherObject.air_temperature);
+						ListifyFrontendWeatherObject.wind_speed.push(WeatherObject.wind_speed);
+						ListifyFrontendWeatherObject.wind_from_direction.push(WeatherObject.wind_from_direction);
+					} else {
+						ListifyFrontendWeatherObject.time.push("--:--");
+						ListifyFrontendWeatherObject.symbol_code.push("");
+						ListifyFrontendWeatherObject.air_temperature.push(NaN);
+						ListifyFrontendWeatherObject.wind_speed.push(NaN);
+						ListifyFrontendWeatherObject.wind_from_direction.push(NaN);
+					}
+				}
+
+				// Avrages the values for each timeset and merges it into one object
 				const ATimeSetOfFrontendWeatherObject: FrontendWeatherObject = {} as FrontendWeatherObject;
-				print("ListifyFrontendWeatherObject.time.length: ", ListifyFrontendWeatherObject.time.length, ListifyFrontendWeatherObject);
+
 				ATimeSetOfFrontendWeatherObject.time = ListifyFrontendWeatherObject.time[0]! + "-" + ListifyFrontendWeatherObject.time[ListifyFrontendWeatherObject.time.length - 1]!;
-				ATimeSetOfFrontendWeatherObject.symbol_code = ListifyFrontendWeatherObject.symbol_code[Number((ListifyFrontendWeatherObject.symbol_code.length - 0.5).toFixed(0))]!; // NEEDS FIXING // ask martin how he want theise to be shown
+				ATimeSetOfFrontendWeatherObject.symbol_code = ListifyFrontendWeatherObject.symbol_code[Number((ListifyFrontendWeatherObject.symbol_code.length - 0.5).toFixed(0))]!;
 				ATimeSetOfFrontendWeatherObject.air_temperature = ListifyFrontendWeatherObject.air_temperature.reduce((a, b) => a + b, 0) / ListifyFrontendWeatherObject.air_temperature.length;
 				ATimeSetOfFrontendWeatherObject.wind_speed = ListifyFrontendWeatherObject.wind_speed.reduce((a, b) => a + b, 0) / ListifyFrontendWeatherObject.air_temperature.length;
 				ATimeSetOfFrontendWeatherObject.wind_from_direction = ListifyFrontendWeatherObject.wind_from_direction.reduce((a, b) => a + b, 0) / ListifyFrontendWeatherObject.wind_from_direction.length;
 
 				ADayOfTimeSetOfFrontendWeatherObject.push({ ...ATimeSetOfFrontendWeatherObject });
-			} catch (err) {
-				console.log("Weathercontroller error:   ", err);
 			}
+			DayOfWeatherObjects.FrontendWeatherObject = [...ADayOfTimeSetOfFrontendWeatherObject];
+			ListOfDayOfWeatherObjects.push({ ...DayOfWeatherObjects });
+		} catch (err) {
+			print("Error from WeatherFunction: ", err);
 		}
-		DayOfWeatherObjects.FrontendWeatherObject = [...ADayOfTimeSetOfFrontendWeatherObject];
-		ListOfDayOfWeatherObjects.push({ ...DayOfWeatherObjects });
 	}
 
 	return ListOfDayOfWeatherObjects.slice(1);

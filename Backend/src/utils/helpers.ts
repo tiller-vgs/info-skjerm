@@ -1,3 +1,5 @@
+// Random functions or other things that other scripts might have use of
+
 export function MakefetchWithRetry(fetchingWhat: string = "generell info") {
   return async (url: string, options: any = undefined): Promise<globalThis.Response> => {
     const allowedAttempts: number = 2;
