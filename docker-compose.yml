@@ -22,12 +22,18 @@ services:
       PORT: 3000
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
       BETTER_AUTH_URL: ${BETTER_AUTH_URL}
+      TQ_API_URL: ${TQ_API_URL}
+      TQ_API_KEY: ${TQ_API_KEY}
+      TQ_API_SECRET: ${TQ_API_SECRET}
     depends_on:
       db:
         condition: service_healthy
 
   frontend:
-    build: ./frontend/info-skjerm-2026
+    build:
+      context: ./frontend/info-skjerm-2026
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-}
     restart: unless-stopped
 
   nginx:
