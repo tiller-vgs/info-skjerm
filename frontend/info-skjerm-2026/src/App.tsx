@@ -5,6 +5,7 @@ import { Navbar, Authorization } from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+export const StaleTime = 1000 * 6// 0 * 5; // 5 minutes
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));

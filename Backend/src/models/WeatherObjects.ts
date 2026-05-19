@@ -34,6 +34,9 @@ export interface Summary {
   symbol_code: string;
 }
 
+
+// For frontend to reseve
+
 export interface DayOfWeatherObjects {
   day: string;
   date: string;

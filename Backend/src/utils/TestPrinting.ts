@@ -1,3 +1,5 @@
+// Function for easier and more viseble logs
+
 export function print(...items: any[]) {
 	let PrintingString: string = "";
 	for (let index = 0; index < items.length; index++) {
