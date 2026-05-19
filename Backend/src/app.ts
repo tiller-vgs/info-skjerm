@@ -26,6 +26,7 @@ app.use(express.json());
 app.use("/api/weather", controller.WeatherController);
 app.use("/api/database", controller.DatabaseController);
 app.use("/api/busdepartures", controller.BusController);
+app.use("/api/announcements", controller.AnnouncementsController);
 app.use("/api/test", controller.test);
 app.use("/api/test2", controller.test2);
 

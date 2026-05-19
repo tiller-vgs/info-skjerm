@@ -9,6 +9,7 @@ export * from "./BusDepartures.ts";
 // export * from "./WeatherInputObjects.ts";
 export * from "./Generell.ts";
 export * from "./WeatherObjects.ts";
+export * from "./Announcement.ts";
 
 /*
 Oppsett av alle typer:  ER FEIL

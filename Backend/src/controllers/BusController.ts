@@ -1,5 +1,3 @@
-// need to discuss what the frontend will resive and what format
-
 import { Router, Request, Response } from "express";
 import {BusStop, BusRoute, Businfo} from "@models";
 import { MakefetchWithRetry, print } from "@helpers";
@@ -11,78 +9,43 @@ const router = Router();
 router.get("/", async (req: Request, res: Response) => {
   print("req.query", req.query, req.query.BusStop);
 	const num = Number(req.query.num) * 2 || 20;
-	// const num = 20;
-	const BusStop = (req.query.BusStop as string);
-	// const BusStop = "Tiller VGS.";
-	// const BusStop = "Tillerterminalen";
-	// const BusStop = "city syd";
-	// const BusStopNumber = Number(BusStop) || 44029;
+  const BusStop = (req.query.BusStop as string);
 
-	// print("test:   ", BusStop, BusStop.replace(" ", "%20"));
 	const response = await fetchWithRetry(`https://api.entur.io/geocoder/v1/autocomplete?text=${(BusStop + ", Trondheim").replace(" ", "%20")}`); // autocomplete, search
-	const BussID = await response.json();
+  const BussID = await response.json();
+  
 	print("MAIN TEST ___________", (BusStop + ", Trondheim").replace(" ", "%20"), BussID, BussID.features[0].properties);
 	print(BussID.features[0].properties.id, `stopPlace( id: \"${BussID.features[0].properties.id}\" )`)
 
-	// city syd nord = 75612 sør = 75611
-//   var query = `
-//     {
-//       stopPlace( id: \"${BussID.features[0].properties.id}\" ) {
-//         id
-//         name
-//         estimatedCalls( numberOfDepartures: ` + num.toString() + ` ) {
-//           realtime
-//           aimedArrivalTime
-//           expectedArrivalTime
-//           destinationDisplay {
-//             frontText
-//           }
-//           quay {
-//             id
-//           }
-//           serviceJourney {
-//             journeyPattern {
-//               line {
-//                 id
-//                 name
-//                 transportMode
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }     
-//   `;
   var query = `
     {
-		stopPlace( id: "${BussID.features[0].properties.id}" ) {
-			id
-			name
-			estimatedCalls( numberOfDepartures: 30 ) {
-				realtime
-				aimedArrivalTime
-				expectedArrivalTime
-				destinationDisplay {
-					frontText
-				}
-				quay {
-					id
-				}
-				serviceJourney {
-					journeyPattern {
-						line {
-							id
-							name
-							transportMode
-							publicCode
-						}
-					}
-				}
-			}
-		}
-	}
-  	`;// line.direction
-  print("query", query);
+      stopPlace( id: "${BussID.features[0].properties.id}" ) {
+        id
+        name
+        estimatedCalls( numberOfDepartures: 30 ) {
+          realtime
+          aimedArrivalTime
+          expectedArrivalTime
+          destinationDisplay {
+            frontText
+          }
+          quay {
+            id
+          }
+          serviceJourney {
+            journeyPattern {
+              line {
+                id
+                name
+                transportMode
+                publicCode
+              }
+            }
+          }
+        }
+      }
+	  }
+  `;
 
 	const options: RequestInit = {
 		method: "POST",
@@ -139,10 +102,9 @@ router.get("/", async (req: Request, res: Response) => {
 		return res.json([busStop, BussID, query, `https://api.entur.io/geocoder/v1/search?text=${(BusStop + ", Trondheim").replace(" ", "%20")}`]);
 	} catch (err) {
 		console.error("Bus API failed", err);
-		return res.status(503).send("Bus service unavailable");
+		return res.status(503).send("Get BusRoutes router unavailable");
 	}
 });
 
 
-// '{"query": "{ stopPlace( id: \"NSR:StopPlace:44029\" ) { id name estimatedCalls( numberOfDepartures: 10 ) { realtime aimedArrivalTime expectedArrivalTime destinationDisplay { frontText } quay { id } serviceJourney { journeyPattern { line { id name transportMode } } } } }}"}'
 export default router;

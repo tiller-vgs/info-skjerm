@@ -2,7 +2,6 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 // Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   // provider = "prisma-client"
   provider = "prisma-client-js"
@@ -15,24 +14,34 @@ datasource db {
   provider = "postgresql"
 }
 
-model AdminTable {
-  id            Int      // can only exist one table with id 1
+model adminTable { // can only exist one table with id 1
+  id            Int
   startdate     String
-  dayamount     Int
-  dbdayamount   Int
+  houramount     Int
+  dbhouramount   Int
   timesets      String[]
   
   @@unique([id])
   @@map("admintable")
 }
 
-model earlyerweatherdays {
-  dayname       String
-  data          Json[]
+model earlyerWeatherdays { // can only exist one table with id 1
+  id            Int
+  date          String
+  data          Json
 
-  @@unique([data])
+  @@unique([id])
   @@map("earlyerweatherdays")
 }
+
+model Announcements {
+  id            Int       @id @default(autoincrement())
+  text          String
+
+  @@unique([id])
+  @@map("announcements")
+}
+
 
 model User {
   id            String    @id
