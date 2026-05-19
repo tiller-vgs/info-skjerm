@@ -195,7 +195,11 @@ function TQLeaderboard() {
                               {user.title}
                             </RarityText>
                             <Typography>{user.name}</Typography>
-                            <Typography variant="h6" color="Highlight">
+                            <Typography
+                              variant="h6"
+                              color="Highlight"
+                              sx={{ color: "rgb(0, 120, 215)" }}
+                            >
                               &quot;{user.username}&quot;
                             </Typography>
                             <Typography>{user.lastname}</Typography>
