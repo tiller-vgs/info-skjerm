@@ -3,15 +3,12 @@
 
 function WeatherDisplay() {
   // const {data, error} = useWeatherFetch();
-
   //   if (data === 'isLoading') {
   //   return <span>Loading...</span>
   // }
-
   // if (data === 'error') {
   //   return <span>Error: {error.message}</span>
   // }
-
   // return (
   //   <div className="flex flex-row">
   //     {data?.slice(0, 2).map((day: WeatherDay, i: number) => (

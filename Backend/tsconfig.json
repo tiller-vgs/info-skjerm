@@ -1,25 +1,30 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     // File Layout
-    "rootDir": "./src",
+    // "rootDir": "./src",
     "outDir": "./dist",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "ESNext",
-    "target": "ES2020",
-    "types": [],
+    "target": "ES2023",
+    "types": ["node"],
     "moduleResolution": "bundler",
+    "esModuleInterop": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
 
     "paths": {
       "*": ["./src/*"],
-      "@models": ["./src/models/index.ts"],
-      "@helpers": ["./src/utils/index.ts"],
+      "@models": ["./src/models"],
+      "@helpers": ["./src/utils"],
       "@db": ["./src/db/context.ts"],
-      "@controllers": ["./src/controllers/index.ts"]
+      "@controllers": ["./src/controllers"],
+      "@prismaclient": ["./src/lib/prisma.ts"],
+      "@lib/*": ["./src/lib/*"],
+      "@generated/*": ["./generated/prisma/*"]
     },
 
     // For nodejs:
@@ -51,5 +56,7 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
-  }
+  },
+  "exclude": [], // , "prisma/**/*.ts", "prisma.config.ts", "prisma.config.ts" // put if it gives an error for this file
+  "include": ["src", "prisma.config.ts"]
 }

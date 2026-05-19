@@ -1,12 +1,14 @@
+// import BusRoute from "../components/BusRoute";
 import { BusRotator, AnnouncmentRotator } from "../components/ContentRotator";
 // import WeatherDisplay from "../components/WeatherDisplay";
 import DateAndTimeDisplay from "../components/DateAndTimeDisplay";
 import Paper from "@mui/material/Paper";
+import WeatherBoxBox from "../components/WeatherBoxBox";
 
 function InfoScreen() {
   return (
-    <table className="flex flex-row w-screen h-screen p-5">
-      <tr className="flex flex-col w-3/4 h-full pr-5">
+    <div className="flex flex-row w-screen h-screen p-5">
+      <div className="flex flex-col w-3/4 h-full pr-5">
         {/* Weather & Time */}
         <Paper
           sx={{
@@ -23,6 +25,7 @@ function InfoScreen() {
         >
           <DateAndTimeDisplay />
           <p>Weather</p>
+          <WeatherBoxBox />
           {/* <WeatherDisplay /> */}
         </Paper>
         {/* TillerQuest & Announcements */}
@@ -40,27 +43,25 @@ function InfoScreen() {
         >
           <AnnouncmentRotator />
         </Paper>
-      </tr>
+      </div>
 
       {/* Busses */}
-      <tr className="w-1/4">
-        <Paper
-          sx={{
-            backgroundColor: "#1e2227",
-            width: "100%",
-            height: "100%",
-            textAlign: "center",
-            color: "#e2e2e2",
-            padding: "1rem",
-          }}
-          variant="elevation"
-          elevation={24}
-          square={false}
-        >
-          <BusRotator />
-        </Paper>
-      </tr>
-    </table>
+      <Paper
+        sx={{
+          backgroundColor: "#1e2227",
+          width: "25%",
+          height: "100%",
+          textAlign: "center",
+          color: "#e2e2e2",
+          padding: "1rem",
+        }}
+        variant="elevation"
+        elevation={24}
+        square={false}
+      >
+        <BusRotator />
+      </Paper>
+    </div>
   );
 }
 

@@ -1,12 +1,13 @@
-export * from "./Event.ts";
-export * from "./BusDepartureJsonResponse.ts";
 export * from "./BusDepartures.ts";
-export * from "./WeatherForecastObject.ts";
-export * from "./WeatherJsonResponse.ts";
-export * from "./WeatherJsonResponseNextDays.ts";
-export * from "./WeatherJsonResponseToday.ts";
+export * from "./WeatherObjects.ts";
+export * from "./Announcement.ts";
+
+export type Listify<T> = { [K in keyof T]: T[K][] };
+
 
 /*
+PLEASE FIX DETTE ER FIEL
+
 Oppsett av alle typer:
 From BusDepartureJsonResponse:
 BusStop     | BusRoute
@@ -39,4 +40,10 @@ NextDaysWeatherForcast  | WeatherJsonResponseNextDays
 
 From WeatherJsonResponseToday:
 TodayWeatherForcast     | WeatherJsonResponseToday
+
+From WeatherOutputObjects:
+DayOfWeatherObjects     | FrontendWeatherObject
+
+From Generell:
+Listify
 */
