@@ -28,7 +28,6 @@ export interface TQLeaderboardUser {
   name: string | null;
   guildName: string | null;
   username: string | null;
-  lastname: string | null;
   schoolClass: string | null;
   level: number;
   xp: number;

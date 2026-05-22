@@ -104,7 +104,7 @@ function TQLeaderboard() {
                             >
                               &quot;{user.username}&quot;
                             </Typography>
-                            <Typography>{user.lastname}</Typography>
+                            {/*<Typography>{user.lastname}</Typography>*/}
                           </div>
                         </TableCell>
                         <TableCell
@@ -202,7 +202,7 @@ function TQLeaderboard() {
                             >
                               &quot;{user.username}&quot;
                             </Typography>
-                            <Typography>{user.lastname}</Typography>
+                            {/*<Typography>{user.lastname}</Typography>*/}
                           </div>
                         </TableCell>
                         <TableCell

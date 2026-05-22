@@ -123,6 +123,17 @@ export const TillerQuestTheme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        "*": {
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        },
+        "*::-webkit-scrollbar": {
+          display: "none",
+        },
+      },
+    },
     MuiLinearProgress: {
       styleOverrides: {
         root: {

@@ -9,7 +9,6 @@ interface TQUser {
   titleRarity: string;
   name: string;
   username: string;
-  lastname: string;
   image: string;
   level: number;
   class: string;
@@ -70,7 +69,7 @@ async function fetchLeaderboard(
 
 // Prisma enum values use "Class_1IM1" format; strip the prefix for the frontend
 function normalizeUsers(users: TQUser[]): TQUser[] {
-  return users.map((u) => ({
+  return users.map(({ lastname: _omit, ...u }: TQUser & { lastname?: string }) => ({
     ...u,
     schoolClass: u.schoolClass.replace(/^Class_/, ""),
   }));

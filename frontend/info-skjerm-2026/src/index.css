@@ -162,3 +162,12 @@ h1 {
     animation: shine 7s ease-in-out infinite;
   }
 }
+/* Hide scrollbar globally */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
