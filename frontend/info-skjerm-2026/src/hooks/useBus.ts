@@ -1,20 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import type { BusStop } from "@types";
 
-export const useBus = (_BusStopName: string, _NumberOfBusses: number) => {
-  // print("_BusStopName_", _BusStopName, _BusStopName.replace(" ", "%20"), _NumberOfBusses)
+export const useBus = (busStopName: string, numberOfBusses: number) => {
   return useQuery({
-    queryKey: ["BusStopsBothWays", _BusStopName],
+    queryKey: ["BusStopsBothWays", busStopName],
     queryFn: async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/busdepartures?BusStop=${_BusStopName.replace(" ", "%20")}&num=${_NumberOfBusses.toString()}`,
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/busdepartures?BusStop=${busStopName}&num=${numberOfBusses}`,
       );
-      if (response.statusText !== "OK") {
-        console.log(response.status, response.statusText);
-        return response.statusText;
-      }
-      const BusStop = (await response.json()) as BusStop;
-      return BusStop;
+      const data = await res.json();
+      return data;
     },
+    staleTime: 1000 * 60, // 1 min
   });
 };
