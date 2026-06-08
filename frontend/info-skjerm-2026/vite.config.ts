@@ -10,4 +10,18 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
+  server: {
+    // When VITE_PROXY_TARGET is set (e.g. in Docker dev), proxy /api to the backend
+    // container so the browser only needs to reach the Vite dev server.
+    ...(process.env.VITE_PROXY_TARGET
+      ? {
+          proxy: {
+            "/api": {
+              target: process.env.VITE_PROXY_TARGET,
+              changeOrigin: true,
+            },
+          },
+        }
+      : {}),
+  },
 });
