@@ -24,7 +24,7 @@ const ClockDisplay = () => {
 
   return (
     <div id="clock">
-      <h1 className="text-4xl text-center">{formattedTime}</h1>
+      <h1 className="text-6xl text-center">{formattedTime}</h1>
     </div>
   );
 };
@@ -47,13 +47,12 @@ const DateAndTimeDisplay: React.FC = () => {
   const week = getWeekNumber(now);
 
   return (
-    <div className="flex align-middle justify-around p-2">
+    <div className="flex items-center justify-around p-2 h-full">
       <ClockDisplay />
-      <h1 className="text-center text-4xl">
+      <h1 className="text-center text-6xl">
         {dd}.{mm}.{yy}
       </h1>
-      <h1 className="text-center text-4xl">Uke {week}</h1>
-      
+      <h1 className="text-center text-6xl">Uke {week}</h1>
     </div>
   );
 };
