@@ -15,7 +15,7 @@ function BusRoute({ RouteData }: { RouteData: BusRouteType }) {
       <div className="flex items-center gap-2 min-w-0">
         {/* Buss number */}
         <div className="bg-tkyellow text-black h-fit min-w-[3vw] px-2 rounded-lg flex items-center justify-center font-bold text-[2vh]">
-          <DirectionsBusIcon />
+          <DirectionsBusIcon sx={{ fontSize: "inherit" }} />
           {RouteData.busLine}
         </div>
         {/* Buss navn */}
