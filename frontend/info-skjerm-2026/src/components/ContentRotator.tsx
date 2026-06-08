@@ -2,6 +2,7 @@ import React, { useState, useEffect, type JSX } from "react";
 import BusRouteList from "./BusRouteList";
 // import AnnouncementsGrid from "./AnnouncementsGrid";
 import TQLeaderboard from "./TQLeaderboard";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 
 const busStops: string[] = ["Tiller VGS.", "City Syd", "Tillerterminalen"];
 
@@ -22,7 +23,10 @@ export const BusRotator: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-[4vh]">{busStops[index]}</h2>
+      <h2 className="text-[4vh]">
+        <DirectionsBusIcon />
+        {busStops[index]}
+      </h2>
 
       <BusRouteList
         key={busStops[index]}
