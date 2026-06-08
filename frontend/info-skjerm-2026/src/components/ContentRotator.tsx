@@ -22,7 +22,7 @@ export const BusRotator: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl">{busStops[index]}</h2>
+      <h2 className="text-[4vh]">{busStops[index]}</h2>
 
       <BusRouteList
         key={busStops[index]}

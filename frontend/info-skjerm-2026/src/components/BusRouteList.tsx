@@ -11,24 +11,45 @@ function BusRouteList({
   NumberOfBusses: number;
   AccualNumberOfBusses: number;
 }) {
-  const { data, isError, isLoading, isPending } = useBus(
-    BusStopName.replace(" ", "%20"),
-    NumberOfBusses,
-  );
+  const BusResponse = useBus(BusStopName, NumberOfBusses);
+
+  const error = BusResponse.error;
+  const isLoading = BusResponse.isLoading;
   let busData: BusStop = {} as BusStop;
   const directions: Array<keyof BusStop> = ["northBound", "southBound"];
-  busData = data! as BusStop;
-
-  if (isError) {
-    return <div key={"error"}>Error fetching bus data</div>;
+  try {
+    const data = BusResponse.data!;
+    if (typeof data == "string") {
+      return <p>{data}</p>;
+    }
+    busData = BusResponse.data! as BusStop;
+  } catch (err) {
+    console.log("Error accessing bus data", err);
+    return (
+      <div className="text-[2vh]" key={"tryerror"}>
+        Error accessing bus data
+      </div>
+    );
   }
 
-  if (isLoading || isPending) {
-    return <div key={"isLoading"}>Loading bus data...</div>;
+  if (error) {
+    return (
+      <div className="text-[2vh]" key={"error"}>
+        Error fetching bus data
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="text-[2vh]" key={"isLoading"}>
+        Loading bus data...
+      </div>
+    );
   }
 
   if (!busData) {
-    return <div>No bus data available</div>;
+    return <div className="text-[2vh]">No bus data available</div>;
   }
 
   return (
