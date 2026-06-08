@@ -45,6 +45,9 @@ services:
       dockerfile: Dockerfile.dev
     restart: unless-stopped
     environment:
+      # Empty string so all fetch("/api/...") calls stay relative and go through the Vite proxy.
+      # Overrides any VITE_API_BASE_URL=http://localhost:3000 set in the host .env file.
+      VITE_API_BASE_URL: ""
       # Vite dev server proxies /api to the backend container — browser never needs to reach it directly
       VITE_PROXY_TARGET: http://backend:3000
     volumes:
