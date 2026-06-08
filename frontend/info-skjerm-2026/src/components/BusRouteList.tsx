@@ -1,11 +1,11 @@
 import type { BusStop } from "@types";
 import { useBus } from "../hooks/useBus";
-import BusRoute from "./BusRoute";
+// import BusRoute from "./BusRoute";
 
 function BusRouteList({
   BusStopName,
   NumberOfBusses,
-  AccualNumberOfBusses,
+  // AccualNumberOfBusses,
 }: {
   BusStopName: string;
   NumberOfBusses: number;
@@ -16,7 +16,7 @@ function BusRouteList({
     NumberOfBusses,
   );
   let busData: BusStop = {} as BusStop;
-  const directions: Array<keyof BusStop> = ["northBound", "southBound"];
+  // const directions: Array<keyof BusStop> = ["northBound", "southBound"];
   busData = data! as BusStop;
 
   if (isError) {
@@ -34,7 +34,7 @@ function BusRouteList({
   return (
     <>
       {/* Map viser begge borderne rundt bussene som ankommer */}
-      {directions.map((direction, index) => {
+      {/* {directions.map((direction, index) => {
         return (
           <div
             className="bg-tqbackground  rounded-2xl shadow-2xl p-3 mt-5 border border-zinc-800"
@@ -49,7 +49,8 @@ function BusRouteList({
             </div>
           </div>
         );
-      })}
+      })} */}
+      {JSON.stringify(busData)}
     </>
   );
 }
