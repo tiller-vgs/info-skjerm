@@ -11,28 +11,15 @@ function BusRouteList({
   NumberOfBusses: number;
   AccualNumberOfBusses: number;
 }) {
-  const BusResponse = useBus(BusStopName, NumberOfBusses);
-
-  const error = BusResponse.error;
-  const isLoading = BusResponse.isLoading;
+  const { data, isError, isLoading, isPending } = useBus(
+    BusStopName.replace(" ", "%20"),
+    NumberOfBusses,
+  );
   let busData: BusStop = {} as BusStop;
   const directions: Array<keyof BusStop> = ["northBound", "southBound"];
-  try {
-    const data = BusResponse.data!;
-    if (typeof data == "string") {
-      return <p>{data}</p>;
-    }
-    busData = BusResponse.data! as BusStop;
-  } catch (err) {
-    console.log("Error accessing bus data", err);
-    return (
-      <div className="text-[2vh]" key={"tryerror"}>
-        Error accessing bus data
-      </div>
-    );
-  }
+  busData = data! as BusStop;
 
-  if (error) {
+  if (isError) {
     return (
       <div className="text-[2vh]" key={"error"}>
         Error fetching bus data
@@ -40,7 +27,7 @@ function BusRouteList({
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isPending) {
     return (
       <div className="text-[2vh]" key={"isLoading"}>
         Loading bus data...
