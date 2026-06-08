@@ -13,7 +13,7 @@ function InfoScreen() {
         <Paper
           sx={{
             backgroundColor: "#1e2227",
-            height: "25%",
+            height: "15%",
             textAlign: "center",
             color: "#e2e2e2",
             marginBottom: "1.25rem",
@@ -33,7 +33,7 @@ function InfoScreen() {
         <Paper
           sx={{
             backgroundColor: "#1e2227",
-            height: "75%",
+            height: "85%",
             textAlign: "center",
             color: "#e2e2e2",
             padding: "1rem",

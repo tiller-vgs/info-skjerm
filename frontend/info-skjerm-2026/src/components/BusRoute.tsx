@@ -1,4 +1,5 @@
 import type { BusRouteType } from "@types";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 
 function BusRoute({ RouteData }: { RouteData: BusRouteType }) {
   // console.log(RouteData);
@@ -14,6 +15,7 @@ function BusRoute({ RouteData }: { RouteData: BusRouteType }) {
       <div className="flex items-center gap-2 min-w-0">
         {/* Buss number */}
         <div className="bg-tkyellow text-black h-8 min-w-10.5 px-2 rounded-lg flex items-center justify-center font-bold text-sm">
+          <DirectionsBusIcon />
           {RouteData.busLine}
         </div>
         {/* Buss navn */}

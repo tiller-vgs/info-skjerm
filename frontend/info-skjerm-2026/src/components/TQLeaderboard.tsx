@@ -34,16 +34,16 @@ function TQLeaderboard() {
 
   return (
     <ThemeProvider theme={TillerQuestTheme}>
-      <div className="grid grid-cols-2 gap-4 h-full">
+      <div className="grid grid-cols-2 gap-4 h-full pt-2">
         <div className="flex flex-col justify-start items-center h-full w-full min-h-0">
-          <Typography variant="h4" component={"h2"}>
+          <Typography variant="h4" component={"h2"} sx={{ fontSize: "4vh" }}>
             VG1
           </Typography>
           {isLoadingVG1 || isPendingVG1 || isErrorVG1 ? (
             isErrorVG1 ? (
-              <div>Feil ved lasting av VG1 leaderboard.</div>
+              <p className="text-[2vh]">Feil ved lasting av VG1 leaderboard.</p>
             ) : (
-              <div>Laster inn VG1 leaderboard...</div>
+              <p className="text-[2vh]">Laster inn VG1 leaderboard...</p>
             )
           ) : (
             <ScrollWindow
@@ -134,14 +134,14 @@ function TQLeaderboard() {
           )}
         </div>
         <div className="flex flex-col justify-start items-center h-full w-full min-h-0">
-          <Typography variant="h4" component={"h2"}>
+          <Typography variant="h4" component={"h2"} sx={{ fontSize: "4vh" }}>
             VG2
           </Typography>
           {isLoadingVG2 || isPendingVG2 || isErrorVG2 ? (
             isErrorVG2 ? (
-              <div>Feil ved lasting av VG2 leaderboard.</div>
+              <p className="text-[2vh]">Feil ved lasting av VG2 leaderboard.</p>
             ) : (
-              <div>Laster inn VG2 leaderboard...</div>
+              <p className="text-[2vh]">Laster inn VG2 leaderboard...</p>
             )
           ) : (
             <ScrollWindow
