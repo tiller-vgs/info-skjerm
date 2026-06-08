@@ -14,7 +14,7 @@ function BusRoute({ RouteData }: { RouteData: BusRouteType }) {
     <div className="bg-tqboxes  text-white rounded-xl px-3 py-2 flex items-center justify-between border border-tkyellowdimmed">
       <div className="flex items-center gap-2 min-w-0">
         {/* Buss number */}
-        <div className="bg-tkyellow text-black h-8 min-w-10.5 px-2 rounded-lg flex items-center justify-center font-bold text-[2vh]">
+        <div className="bg-tkyellow text-black h-fit min-w-10.5 px-2 rounded-lg flex items-center justify-center font-bold text-[2vh]">
           <DirectionsBusIcon />
           {RouteData.busLine}
         </div>
@@ -24,7 +24,7 @@ function BusRoute({ RouteData }: { RouteData: BusRouteType }) {
         </p>
       </div>
       {/* Når den ankommer */}
-      <p className="text-[3vh] font-bold">{time}</p>
+      <p className="text-[2vh] font-bold">{time}</p>
     </div>
   );
 }
