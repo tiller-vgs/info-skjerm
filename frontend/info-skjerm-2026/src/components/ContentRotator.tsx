@@ -11,7 +11,7 @@ const StaleTime = 1000 * 60;
 export const BusRotator: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
   const NumberOfBusses = 30;
-  const AccualNumberOfBusses = 10;
+  const AccualNumberOfBusses = 9;
 
   useEffect(() => {
     const interval = setInterval(() => {
