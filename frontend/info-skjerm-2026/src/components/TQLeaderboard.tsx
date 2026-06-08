@@ -139,9 +139,9 @@ function TQLeaderboard() {
           </Typography>
           {isLoadingVG2 || isPendingVG2 || isErrorVG2 ? (
             isErrorVG2 ? (
-              <p className="text-[2vh]">Feil ved lasting av VG1 leaderboard.</p>
+              <p className="text-[2vh]">Feil ved lasting av VG2 leaderboard.</p>
             ) : (
-              <p className="text-[2vh]">Laster inn VG1 leaderboard...</p>
+              <p className="text-[2vh]">Laster inn VG2 leaderboard...</p>
             )
           ) : (
             <ScrollWindow
