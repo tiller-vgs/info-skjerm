@@ -11,7 +11,7 @@ const StaleTime = 1000 * 60;
 export const BusRotator: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
   const NumberOfBusses = 30;
-  const AccualNumberOfBusses = 7;
+  const AccualNumberOfBusses = 10;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,7 +24,7 @@ export const BusRotator: React.FC = () => {
   return (
     <div>
       <h2 className="text-[4vh]">
-        <DirectionsBusIcon />
+        <DirectionsBusIcon sx={{ fontSize: "inherit" }} />
         {busStops[index]}
       </h2>
 
