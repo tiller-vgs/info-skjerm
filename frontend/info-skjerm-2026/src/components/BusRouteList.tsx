@@ -1,11 +1,11 @@
 import type { BusStop } from "@types";
 import { useBus } from "../hooks/useBus";
-// import BusRoute from "./BusRoute";
+import BusRoute from "./BusRoute";
 
 function BusRouteList({
   BusStopName,
   NumberOfBusses,
-  // AccualNumberOfBusses,
+  AccualNumberOfBusses,
 }: {
   BusStopName: string;
   NumberOfBusses: number;
@@ -16,7 +16,7 @@ function BusRouteList({
     NumberOfBusses,
   );
   let busData: BusStop = {} as BusStop;
-  // const directions: Array<keyof BusStop> = ["northBound", "southBound"];
+  const directions: Array<keyof BusStop> = ["northBound", "southBound"];
   busData = data! as BusStop;
 
   if (isError) {
