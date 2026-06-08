@@ -34,7 +34,7 @@ function BusRouteList({
   return (
     <>
       {/* Map viser begge borderne rundt bussene som ankommer */}
-      {/* {directions.map((direction, index) => {
+      {directions.map((direction, index) => {
         return (
           <div
             className="bg-tqbackground  rounded-2xl shadow-2xl p-3 mt-5 border border-zinc-800"
@@ -49,8 +49,7 @@ function BusRouteList({
             </div>
           </div>
         );
-      })} */}
-      {JSON.stringify(busData)}
+      })}
     </>
   );
 }
