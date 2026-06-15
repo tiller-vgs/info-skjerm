@@ -63,13 +63,13 @@ function TQLeaderboard() {
                 <Table aria-label="leaderboard">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center" colSpan={2}>
+                      <TableCell sx={{ fontSize: "2vh" }} align="center" colSpan={2}>
                         User
                       </TableCell>
-                      <TableCell align="center">XP</TableCell>
-                      <TableCell align="center">Level</TableCell>
-                      <TableCell align="center">Guild</TableCell>
-                      <TableCell align="center">Schoolclass</TableCell>
+                      <TableCell sx={{ fontSize: "2vh" }} align="center">XP</TableCell>
+                      <TableCell sx={{ fontSize: "2vh" }} align="center">Level</TableCell>
+                      <TableCell sx={{ fontSize: "2vh" }} align="center">Guild</TableCell>
+                      <TableCell sx={{ fontSize: "2vh" }} align="center">Schoolclass</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -81,26 +81,24 @@ function TQLeaderboard() {
                         }}
                       >
                         <TableCell align="center">
-                          <div className="flex justify-center w-28 h-28 m-auto self-center from-zinc-600 to-zinc-700 bg-radial p-1.5 rounded-full">
+                          <div className="flex justify-center h-[10vh] w-[10vh] m-auto self-center from-zinc-600 to-zinc-700 bg-radial p-1.5 rounded-full">
                             <img
                               className="rounded-full"
                               src={`https://tillerquest.tiller.blog/classes/${user.image}.png`}
                             />
                           </div>
                         </TableCell>
-                        <TableCell sx={{ fontSize: "125%" }} align="center">
-                          <div className="flex flex-col text-purple-400 text-center text-lg items-center ">
+                        <TableCell sx={{ fontSize: "2vh" }} align="center">
+                          <div className="flex flex-col text-purple-400 text-center items-center">
                             <RarityText
                               rarity={user.titleRarity || "Common"}
                               width="full"
                             >
                               {user.title}
                             </RarityText>
-                            <Typography>{user.name}</Typography>
+                            <Typography sx={{ fontSize: "2vh" }}>{user.name}</Typography>
                             <Typography
-                              variant="h6"
-                              color="Highlight"
-                              sx={{ color: "rgb(0, 120, 215)" }}
+                              sx={{ fontSize: "2vh", color: "rgb(0, 120, 215)" }}
                             >
                               &quot;{user.username}&quot;
                             </Typography>
@@ -108,21 +106,21 @@ function TQLeaderboard() {
                           </div>
                         </TableCell>
                         <TableCell
-                          sx={{ fontSize: "125%", color: "lightgreen" }}
+                          sx={{ fontSize: "2vh", color: "lightgreen" }}
                           align="center"
                         >
                           {user.xp}
                         </TableCell>
-                        {/* <TableCell sx={{ fontSize: "125%" }} align="center">
+                        {/* <TableCell sx={{ fontSize: "2vh" }} align="center">
                   {user.class}
                 </TableCell> */}
-                        <TableCell sx={{ fontSize: "125%" }} align="center">
+                        <TableCell sx={{ fontSize: "2vh" }} align="center">
                           {user.level}
                         </TableCell>
-                        <TableCell sx={{ fontSize: "125%" }} align="center">
+                        <TableCell sx={{ fontSize: "2vh" }} align="center">
                           {user.guildName}
                         </TableCell>
-                        <TableCell sx={{ fontSize: "125%" }} align="center">
+                        <TableCell sx={{ fontSize: "2vh" }} align="center">
                           {user.schoolClass}
                         </TableCell>
                       </TableRow>
@@ -161,13 +159,13 @@ function TQLeaderboard() {
                 <Table aria-label="leaderboard">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center" colSpan={2}>
+                      <TableCell sx={{ fontSize: "2vh" }} align="center" colSpan={2}>
                         User
                       </TableCell>
-                      <TableCell align="center">XP</TableCell>
-                      <TableCell align="center">Level</TableCell>
-                      <TableCell align="center">Guild</TableCell>
-                      <TableCell align="center">Schoolclass</TableCell>
+                      <TableCell sx={{ fontSize: "2vh" }} align="center">XP</TableCell>
+                      <TableCell sx={{ fontSize: "2vh" }} align="center">Level</TableCell>
+                      <TableCell sx={{ fontSize: "2vh" }} align="center">Guild</TableCell>
+                      <TableCell sx={{ fontSize: "2vh" }} align="center">Schoolclass</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -179,26 +177,24 @@ function TQLeaderboard() {
                         }}
                       >
                         <TableCell align="center">
-                          <div className="flex justify-center w-28 h-28 m-auto self-center from-zinc-600 to-zinc-700 bg-radial p-1.5 rounded-full">
+                          <div className="flex justify-center h-[10vh] w-[10vh] m-auto self-center from-zinc-600 to-zinc-700 bg-radial p-1.5 rounded-full">
                             <img
                               className="rounded-full"
                               src={`https://tillerquest.tiller.blog/classes/${user.image}.png`}
                             />
                           </div>
                         </TableCell>
-                        <TableCell sx={{ fontSize: "125%" }} align="center">
-                          <div className="flex flex-col text-purple-400 text-center text-lg items-center ">
+                        <TableCell sx={{ fontSize: "2vh" }} align="center">
+                          <div className="flex flex-col text-purple-400 text-center items-center">
                             <RarityText
                               rarity={user.titleRarity || "Common"}
                               width="full"
                             >
                               {user.title}
                             </RarityText>
-                            <Typography>{user.name}</Typography>
+                            <Typography sx={{ fontSize: "2vh" }}>{user.name}</Typography>
                             <Typography
-                              variant="h6"
-                              color="Highlight"
-                              sx={{ color: "rgb(0, 120, 215)" }}
+                              sx={{ fontSize: "2vh", color: "rgb(0, 120, 215)" }}
                             >
                               &quot;{user.username}&quot;
                             </Typography>
@@ -206,21 +202,21 @@ function TQLeaderboard() {
                           </div>
                         </TableCell>
                         <TableCell
-                          sx={{ fontSize: "125%", color: "lightgreen" }}
+                          sx={{ fontSize: "2vh", color: "lightgreen" }}
                           align="center"
                         >
                           {user.xp}
                         </TableCell>
-                        {/* <TableCell sx={{ fontSize: "125%" }} align="center">
+                        {/* <TableCell sx={{ fontSize: "2vh" }} align="center">
                   {user.class}
                 </TableCell> */}
-                        <TableCell sx={{ fontSize: "125%" }} align="center">
+                        <TableCell sx={{ fontSize: "2vh" }} align="center">
                           {user.level}
                         </TableCell>
-                        <TableCell sx={{ fontSize: "125%" }} align="center">
+                        <TableCell sx={{ fontSize: "2vh" }} align="center">
                           {user.guildName}
                         </TableCell>
-                        <TableCell sx={{ fontSize: "125%" }} align="center">
+                        <TableCell sx={{ fontSize: "2vh" }} align="center">
                           {user.schoolClass}
                         </TableCell>
                       </TableRow>
