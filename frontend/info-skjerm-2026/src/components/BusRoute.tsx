@@ -39,7 +39,7 @@ function BusRoute({ RouteData }: { RouteData: BusRouteType }) {
         </p>
       </div>
       {/* Når den ankommer */}
-      <p className=`text-[2vh] font-bold ${textColor}`>{time}</p>
+      <p className={`text-[2vh] font-bold ${textColor}`}>{time}</p>
     </div>
   );
 }
