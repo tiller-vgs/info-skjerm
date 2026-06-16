@@ -16,8 +16,8 @@ function BusRoute({ RouteData }: { RouteData: BusRouteType }) {
   if (new Date(RouteData.time) <= new Date(Date.now() + 60 * 1000)) {
     time = "Nå";
     textColor = "text-yellow-500";
-  } // If the bus arrives in less than 10 minutes, simplify the time to minutes remaining
-  else if (new Date(RouteData.time) <= new Date(Date.now() + 20 * 60 * 1000)) {
+  } // If the bus arrives in less than 15 minutes, simplify the time to minutes remaining
+  else if (new Date(RouteData.time) <= new Date(Date.now() + 15 * 60 * 1000)) {
     const minutesRemaining = Math.round(
       (new Date(RouteData.time).getTime() - Date.now()) / (60 * 1000),
     );
@@ -39,7 +39,9 @@ function BusRoute({ RouteData }: { RouteData: BusRouteType }) {
         </p>
       </div>
       {/* Når den ankommer */}
-      <p className={`text-[2vh] font-bold ${textColor}`}>{time}</p>
+      <p className={`text-[2vh] font-bold whitespace-nowrap ${textColor}`}>
+        {time}
+      </p>
     </div>
   );
 }

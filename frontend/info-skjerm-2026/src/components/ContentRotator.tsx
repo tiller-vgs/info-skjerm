@@ -4,7 +4,7 @@ import BusRouteList from "./BusRouteList";
 import TQLeaderboard from "./TQLeaderboard";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 
-const busStops: string[] = ["Tiller VGS.", "City Syd", "Tillerterminalen"];
+const busStops: string[] = ["Tiller VGS", "City Syd", "Tillerterminalen"];
 
 const StaleTime = 1000 * 15;
 
