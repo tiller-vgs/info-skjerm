@@ -45,10 +45,12 @@ function BusRouteList({
       {directions.map((direction, index) => {
         return (
           <div
-            className="bg-tqbackground  rounded-2xl shadow-2xl p-3 mt-5 border border-zinc-800"
+            className="bg-tqbackground  rounded-2xl shadow-2xl p-3 mb-[1vh] mt-5 border border-zinc-800"
             key={"direction" + direction}
           >
-            <p className="text-tqwhitetext text-sm mb-2">Retning {index + 1}</p>
+            <p className="text-tqwhitetext text-[2vh] mb-2">
+              Retning {index + 1}
+            </p>
 
             <div className="space-y-1.5">
               {busData[direction].slice(0, AccualNumberOfBusses).map((bus) => (
