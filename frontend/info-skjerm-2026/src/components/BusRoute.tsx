@@ -4,11 +4,26 @@ import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 function BusRoute({ RouteData }: { RouteData: BusRouteType }) {
   // console.log(RouteData);
 
-  const time = new Date(RouteData.time).toLocaleTimeString("en-GB", {
+  let time = new Date(RouteData.time).toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
   });
+
+  let textColor = "text-white";
+
+  // If the bus arrives in less than a minute, simplify the time display to "Arriving soon"
+  if (new Date(RouteData.time) <= new Date(Date.now() + 60 * 1000)) {
+    time = "Nå";
+    textColor = "text-yellow-500";
+  } // If the bus arrives in less than 10 minutes, simplify the time to minutes remaining
+  else if (new Date(RouteData.time) <= new Date(Date.now() + 20 * 60 * 1000)) {
+    const minutesRemaining = Math.round(
+      (new Date(RouteData.time).getTime() - Date.now()) / (60 * 1000),
+    );
+    time = `${minutesRemaining} min`;
+    textColor = "text-yellow-500";
+  }
 
   return (
     <div className="bg-tqboxes  text-white rounded-xl px-3 py-2 flex items-center justify-between border border-tkyellowdimmed my-2">
