@@ -2,6 +2,7 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
+COPY .npmrc ./
 RUN npm ci
 
 # VITE_API_BASE_URL is baked into the bundle at build time by Vite.
