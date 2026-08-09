@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "./styles/react-big-calendar.scss";
 import App from "./App";
 import "@fontsource-variable/inter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

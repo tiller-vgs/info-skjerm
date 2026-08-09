@@ -1,8 +1,9 @@
-import React, { useState, useEffect, type JSX } from "react";
+import React, { useState, useEffect, type JSX, useMemo } from "react";
 import BusRouteList from "./BusRouteList";
 // import AnnouncementsGrid from "./AnnouncementsGrid";
 import TQLeaderboard from "./TQLeaderboard";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
+import CalendarWrapper from "./CalendarWrapper";
 
 const busStops: string[] = ["Tiller VGS", "City Syd", "Tillerterminalen"];
 
@@ -39,8 +40,9 @@ export const BusRotator: React.FC = () => {
 };
 
 const announcments: (string | JSX.Element)[] = [
-  <TQLeaderboard />,
-  <TQLeaderboard />,
+  // <TQLeaderboard />,
+  // <TQLeaderboard />,
+  <CalendarWrapper />,
 ];
 
 export const AnnouncmentRotator: React.FC = () => {
