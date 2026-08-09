@@ -11,7 +11,7 @@ import z from "zod";
 import { loginSchema } from "../lib/schema";
 import { authClient } from "../lib/auth-client";
 import { toast } from "react-toastify";
-import { redirect } from "react-router";
+import { useNavigate } from "react-router";
 
 function Login() {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -22,6 +22,8 @@ function Login() {
     },
   });
 
+  const navigate = useNavigate();
+
   async function onSubmit(data: z.infer<typeof loginSchema>) {
     const result = await authClient.signIn.username({
       username: data.username,
@@ -29,16 +31,11 @@ function Login() {
     });
 
     if (result.error) {
-      toast.error("Login failed", {
-        data: {
-          title: "Login failed",
-          content: result.error.message || "Unable to login",
-        },
-      });
+      toast.error(result.error.message || "Login failed");
       return;
     }
     toast.success("Login successful!");
-    redirect("/admin/dashboard");
+    navigate("/admin/dashboard");
   }
 
   return (
