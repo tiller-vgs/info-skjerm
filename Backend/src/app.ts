@@ -23,6 +23,7 @@ app.use(express.json());
 app.use("/api/weather", controller.WeatherController);
 app.use("/api/busdepartures", controller.BusController);
 app.use("/api/announcements", controller.AnnouncementsController);
+app.use("/api/calendar", controller.CalendarController);
 app.use("/api/test", controller.test);
 
 app.use("/api/tqleaderboard", controller.TQLeaderboardController);

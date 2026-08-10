@@ -52,7 +52,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
     },
 }));
 
-export default function HorizontalSpacingToggleButton() {
+export default async function AdminDashboard() {
   const [alignment, setAlignment] = React.useState<string | null>("left");
 
   // Liste over info som trengs for å mappe admin knappene
@@ -78,7 +78,6 @@ export default function HorizontalSpacingToggleButton() {
       aria: "right aligned",
     },
   ];
-  console.log(adminButtons);
 
   const handleAlignment = (
     _event: React.MouseEvent<HTMLElement>,

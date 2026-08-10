@@ -11,37 +11,58 @@ datasource db {
   provider = "postgresql"
 }
 
-model adminTable { // can only exist one table with id 1
-  id            Int
-  startdate     String
-  houramount     Int
-  dbhouramount   Int
-  timesets      String[]
-  
+enum Role {
+  MODERATOR
+  ADMIN
+}
+
+model adminTable {
+  id           Int
+  startdate    String
+  houramount   Int
+  dbhouramount Int
+  timesets     String[]
+
   @@unique([id])
   @@map("admintable")
 }
 
-model earlyerWeatherdays { // can only exist one table with id 1
-  id            Int
-  date          String
-  data          Json
+model earlyerWeatherdays {
+  id   Int
+  date String
+  data Json
 
   @@unique([id])
   @@map("earlyerweatherdays")
 }
 
 model Announcements {
-  id            Int       @id @default(autoincrement())
-  title         String
-  content          String
-  dateStart     String
-  dateEnd       String
+  id        Int    @id @default(autoincrement())
+  title     String
+  content   String
+  dateStart String
+  dateEnd   String
 
   @@unique([id])
   @@map("announcements")
 }
 
+model ClassCalendarEvent {
+  id         Int      @id @default(autoincrement())
+  title      String
+  start      String
+  end        String
+  groupId    String
+  resourceId String
+  allDay     Boolean  @default(false)
+  desc       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  createdBy  String
+  updatedBy  String
+
+  @@map("class_calendar_event")
+}
 
 model User {
   id              String    @id
@@ -52,6 +73,7 @@ model User {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   username        String
+  role            Role      @default(MODERATOR)
   displayUsername String?
   sessions        Session[]
   accounts        Account[]
