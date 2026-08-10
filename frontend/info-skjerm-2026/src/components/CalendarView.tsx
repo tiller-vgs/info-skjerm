@@ -1,37 +1,16 @@
-import { Calendar, luxonLocalizer, Views, type View } from "react-big-calendar";
+import { Calendar, luxonLocalizer } from "react-big-calendar";
 import { DateTime, Settings } from "luxon";
-import { useCallback, useState } from "react";
+import {
+  CALENDAR_RESOURCES,
+  GROUP_COLORS,
+  type CalendarResource,
+  type ClassEvent,
+} from "../types/calendar";
 
 Settings.defaultZone = "Europe/Oslo";
 
-function CalendarWrapper() {
+function CalendarView() {
   const localizer = luxonLocalizer(DateTime, { firstDayOfWeek: 1 });
-
-  type SchoolGroup = "1IM1/2" | "1IM3/4" | "2IT1/2" | "2MP1";
-
-  type CalendarResource = {
-    resourceId: SchoolGroup;
-    resourceTitle: string;
-  };
-
-  type ClassEvent = {
-    id: number;
-    title: string;
-    start: Date;
-    end: Date;
-    groupId: SchoolGroup;
-    resourceId: SchoolGroup;
-    allDay?: boolean;
-    desc?: string;
-  };
-
-  const [view, setView] = useState<View>(Views.DAY);
-  const [date, setDate] = useState(DateTime.local().toJSDate());
-  const onNavigate = useCallback(
-    (newDate: Date) => setDate(newDate),
-    [setDate],
-  );
-  const onView = useCallback((newView: View) => setView(newView), [setView]);
 
   const events: ClassEvent[] = [
     {
@@ -68,16 +47,6 @@ function CalendarWrapper() {
     },
   ];
 
-  const GROUP_COLORS: Record<
-    SchoolGroup,
-    { bg: string; border: string; text: string }
-  > = {
-    "1IM1/2": { bg: "#0ea5e9", border: "#0284c7", text: "#ffffff" },
-    "1IM3/4": { bg: "#22c55e", border: "#15803d", text: "#ffffff" },
-    "2IT1/2": { bg: "#f59e0b", border: "#b45309", text: "#111827" },
-    "2MP1": { bg: "#ef4444", border: "#b91c1c", text: "#ffffff" },
-  };
-
   const eventPropGetter = (event: ClassEvent) => {
     const c = GROUP_COLORS[event.groupId];
     return {
@@ -90,12 +59,7 @@ function CalendarWrapper() {
     };
   };
 
-  const resources: CalendarResource[] = [
-    { resourceId: "1IM1/2", resourceTitle: "1IM1/2" },
-    { resourceId: "1IM3/4", resourceTitle: "1IM3/4" },
-    { resourceId: "2IT1/2", resourceTitle: "2IT1/2" },
-    { resourceId: "2MP1", resourceTitle: "2MP1" },
-  ];
+  const resources: CalendarResource[] = CALENDAR_RESOURCES;
 
   const minTime = DateTime.local()
     .set({ hour: 8, minute: 0, second: 0, millisecond: 0 })
@@ -107,21 +71,16 @@ function CalendarWrapper() {
   return (
     <Calendar<ClassEvent, CalendarResource>
       className="tq-rbc-theme"
+      dayLayoutAlgorithm="no-overlap"
       resources={resources}
       resourceAccessor="resourceId"
       resourceIdAccessor="resourceId"
       resourceTitleAccessor="resourceTitle"
       events={events}
       eventPropGetter={eventPropGetter}
-      //   timeslots={4}
       toolbar={false}
-      //   step={15}
       culture="nb-NO"
-      date={date}
-      onNavigate={onNavigate}
-      onView={onView}
-      view={view}
-      views={["day", "work_week"]}
+      views={["day"]}
       localizer={localizer}
       defaultView="day"
       enableAutoScroll
@@ -134,4 +93,4 @@ function CalendarWrapper() {
   );
 }
 
-export default CalendarWrapper;
+export default CalendarView;

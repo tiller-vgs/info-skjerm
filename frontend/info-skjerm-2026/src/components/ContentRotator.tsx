@@ -3,7 +3,7 @@ import BusRouteList from "./BusRouteList";
 // import AnnouncementsGrid from "./AnnouncementsGrid";
 import TQLeaderboard from "./TQLeaderboard";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
-import CalendarWrapper from "./CalendarWrapper";
+import CalendarView from "./CalendarView";
 
 const busStops: string[] = ["Tiller VGS", "City Syd", "Tillerterminalen"];
 
@@ -42,7 +42,7 @@ export const BusRotator: React.FC = () => {
 const announcments: (string | JSX.Element)[] = [
   // <TQLeaderboard />,
   // <TQLeaderboard />,
-  <CalendarWrapper />,
+  <CalendarView />,
 ];
 
 export const AnnouncmentRotator: React.FC = () => {
@@ -51,7 +51,7 @@ export const AnnouncmentRotator: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % announcments.length);
-    }, 12000);
+    }, 12000); // in milliseconds (12 seconds)
 
     return () => clearInterval(interval);
   }, []);
