@@ -36,6 +36,9 @@ import {
   useDeleteCalendarEvent,
   useUpdateCalendarEvent,
 } from "../hooks/useCalendarEvents";
+import dragAndDropModule from "react-big-calendar/lib/addons/dragAndDrop";
+import type { EventInteractionArgs } from "react-big-calendar/lib/addons/dragAndDrop";
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
 Settings.defaultZone = "Europe/Oslo";
 
@@ -44,6 +47,10 @@ type SlotDraft = {
   end: Date;
   groupId: ClassEvent["groupId"];
 };
+
+const withDragAndDrop =
+  ((dragAndDropModule as { default?: unknown }).default ??
+    dragAndDropModule) as typeof import("react-big-calendar/lib/addons/dragAndDrop").default;
 
 function CalendarForm() {
   const { data: events = [] } = useCalendarEvents();
@@ -74,6 +81,8 @@ function CalendarForm() {
     [setDate],
   );
   const onView = useCallback((newView: View) => setView(newView), [setView]);
+
+  const DnDCalendar = withDragAndDrop<ClassEvent, CalendarResource>(Calendar);
 
   const eventPropGetter = (event: ClassEvent) => {
     const c = GROUP_COLORS[event.groupId];
@@ -206,10 +215,50 @@ function CalendarForm() {
     });
   };
 
+  const handleEventTimeChange = useCallback(
+    ({ event, start, end, resourceId }: EventInteractionArgs<ClassEvent>) => {
+      const updatedGroupId = isSchoolGroup(resourceId)
+        ? resourceId
+        : event.groupId;
+      const updatedEvent: ClassEvent = {
+        ...event,
+        start: new Date(start),
+        end: new Date(end),
+        groupId: updatedGroupId,
+        resourceId: updatedGroupId,
+      };
+
+      setLocalEvents((prev) =>
+        prev.map((currentEvent) =>
+          currentEvent.id === updatedEvent.id ? updatedEvent : currentEvent,
+        ),
+      );
+
+      updateEventMutation.mutate(updatedEvent, {
+        onSuccess: (savedEvent) => {
+          setLocalEvents((prev) =>
+            prev.map((currentEvent) =>
+              currentEvent.id === savedEvent.id ? savedEvent : currentEvent,
+            ),
+          );
+        },
+        onError: () => {
+          setLocalEvents((prev) =>
+            prev.map((currentEvent) =>
+              currentEvent.id === event.id ? event : currentEvent,
+            ),
+          );
+        },
+      });
+    },
+    [updateEventMutation],
+  );
+
   return (
     <>
-      <Calendar<ClassEvent, CalendarResource>
+      <DnDCalendar
         dayLayoutAlgorithm="no-overlap"
+        resizable
         className="tq-rbc-theme mt-20 p-5"
         resources={resources}
         resourceAccessor="resourceId"
@@ -236,6 +285,8 @@ function CalendarForm() {
         selectable
         onSelectEvent={handleSelectEvent}
         onSelectSlot={handleSelectSlot}
+        onEventDrop={handleEventTimeChange}
+        onEventResize={handleEventTimeChange}
       />
 
       <Dialog
