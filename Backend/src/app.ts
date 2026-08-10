@@ -8,7 +8,7 @@ import { toNodeHandler } from "better-auth/node";
 
 // dotenv.config({ path: "./.env", override: true, debug: true });
 
-const PORT = process.env.PORT || "3000";
+const PORT = "3000";
 const app = express();
 
 // Better Auth handler must be mounted before express.json() // IDK if it needs to be here or what FIX ask martin

@@ -16,6 +16,7 @@ export const authClient = createAuthClient({
           type: "string",
           default: "MODERATOR",
           enum: ["ADMIN", "MODERATOR"],
+          input: false,
         },
         username: {
           type: "string",

@@ -9,7 +9,7 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
-  trustedOrigins: ["http://localhost:5173"], // if the frontend does not find the backend, check this setting
+  trustedOrigins: ["http://localhost", "http://localhost:5173"], // if the frontend does not find the backend, check this setting
   baseURL:
     process.env.BETTER_AUTH_URL ||
     `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
@@ -27,6 +27,7 @@ export const auth = betterAuth({
         default: "MODERATOR",
         enum: ["ADMIN", "MODERATOR"],
         returned: true,
+        input: false,
       },
       username: {
         type: "string",
