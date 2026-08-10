@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx tsx src/app.ts",
     "prisma": "prisma",
-    "dev": "tsx src/app.ts",
+    "dev": "tsx --watch src/app.ts",
     "setdb": "npx prisma generate && npx prisma db push",
     "dbsetup": "setdb",
     "resetdb": "npx prisma generate && npx prisma db push && npx prisma db execute --file ./prisma/fill.sql",

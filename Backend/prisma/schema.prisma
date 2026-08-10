@@ -47,6 +47,23 @@ model Announcements {
   @@map("announcements")
 }
 
+model ClassCalendarEvent {
+  id         Int      @id @default(autoincrement())
+  title      String
+  start      String
+  end        String
+  groupId    String
+  resourceId String
+  allDay     Boolean  @default(false)
+  desc       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  createdBy  String
+  updatedBy  String
+
+  @@map("class_calendar_event")
+}
+
 model User {
   id              String    @id
   name            String

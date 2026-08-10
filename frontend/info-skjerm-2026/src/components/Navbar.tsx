@@ -84,7 +84,7 @@ export function Navbar() {
                     className="hover:text-tkyellow transition"
                     to={"/calendar"}
                   >
-                    Edit calendar
+                    Rediger kalender
                   </NavLink>
                 </div>
               ))}

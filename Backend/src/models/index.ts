@@ -1,9 +1,9 @@
 export * from "./BusDepartures.ts";
 export * from "./WeatherObjects.ts";
 export * from "./Announcement.ts";
+export * from "./CalendarEvent.ts";
 
 export type Listify<T> = { [K in keyof T]: T[K][] };
-
 
 /*
 PLEASE FIX DETTE ER FIEL

@@ -5,8 +5,22 @@ import {
   type SlotInfo,
   type View,
 } from "react-big-calendar";
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { DateTime, Settings } from "luxon";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   CALENDAR_RESOURCES,
   DEFAULT_GROUP,
@@ -15,49 +29,46 @@ import {
   type CalendarResource,
   type ClassEvent,
 } from "../types/calendar";
+import {
+  type CreateCalendarEventInput,
+  useCalendarEvents,
+  useCreateCalendarEvent,
+  useDeleteCalendarEvent,
+  useUpdateCalendarEvent,
+} from "../hooks/useCalendarEvents";
 
 Settings.defaultZone = "Europe/Oslo";
 
-const dummyEvents: ClassEvent[] = [
-  {
-    id: 14,
-    title: "Today",
-    start: new Date(new Date().setHours(new Date().getHours() - 13)),
-    end: new Date(new Date().setHours(new Date().getHours() + 1)),
-    groupId: "1IM1/2",
-    resourceId: "1IM1/2",
-  },
-  {
-    id: 140,
-    title: "Today",
-    start: new Date(new Date().setHours(new Date().getHours() - 11)),
-    end: new Date(new Date().setHours(new Date().getHours() + 3)),
-    groupId: "1IM3/4",
-    resourceId: "1IM3/4",
-  },
-  {
-    id: 141,
-    title: "Today",
-    start: new Date(new Date().setHours(new Date().getHours() - 20)),
-    end: new Date(new Date().setHours(new Date().getHours() + 1)),
-    groupId: "2MP1",
-    resourceId: "2MP1",
-  },
-  {
-    id: 142,
-    title: "Today",
-    start: new Date(new Date().setHours(new Date().getHours() - 10)),
-    end: new Date(new Date().setHours(new Date().getHours() + 1)),
-    groupId: "2IT1/2",
-    resourceId: "2IT1/2",
-  },
-];
+type SlotDraft = {
+  start: Date;
+  end: Date;
+  groupId: ClassEvent["groupId"];
+};
+
 function CalendarForm() {
-  const [events, setEvents] = useState(dummyEvents);
+  const { data: events = [] } = useCalendarEvents();
+  const createEventMutation = useCreateCalendarEvent();
+  const updateEventMutation = useUpdateCalendarEvent();
+  const deleteEventMutation = useDeleteCalendarEvent();
+  const [localEvents, setLocalEvents] = useState<ClassEvent[]>([]);
   const localizer = luxonLocalizer(DateTime, { firstDayOfWeek: 1 });
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [slotDraft, setSlotDraft] = useState<SlotDraft | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<ClassEvent | null>(null);
+  const [titleInput, setTitleInput] = useState("");
+  const [descInput, setDescInput] = useState("");
+  const [groupInput, setGroupInput] =
+    useState<ClassEvent["groupId"]>(DEFAULT_GROUP);
+  const [isRecurring, setIsRecurring] = useState(false);
+  const [recurrenceUntil, setRecurrenceUntil] = useState("");
 
   const [view, setView] = useState<View>(Views.DAY);
   const [date, setDate] = useState(DateTime.local().toJSDate());
+  useEffect(() => {
+    setLocalEvents(events);
+  }, [events]);
+
   const onNavigate = useCallback(
     (newDate: Date) => setDate(newDate),
     [setDate],
@@ -87,62 +98,280 @@ function CalendarForm() {
 
   const handleSelectSlot = useCallback(
     ({ start, end, resourceId }: SlotInfo) => {
-      const title = window.prompt("New Event Name");
-      if (!title) {
-        return;
-      }
-
       const groupId = isSchoolGroup(resourceId) ? resourceId : DEFAULT_GROUP;
-      const newEvent: ClassEvent = {
-        id: Date.now(),
-        title,
-        start,
-        end,
-        groupId,
-        resourceId: groupId,
-        desc: "Local-only event",
-      };
 
-      setEvents((prev) => [...prev, newEvent]);
+      setSlotDraft({ start, end, groupId });
+      setTitleInput("");
+      setDescInput("");
+      setGroupInput(groupId);
+      setIsRecurring(false);
+      setRecurrenceUntil("");
+      setCreateDialogOpen(true);
     },
     [],
   );
 
-  const handleSelectEvent = useCallback(
-    (event: ClassEvent) => window.alert(event.title),
-    [],
-  );
+  const handleSelectEvent = useCallback((event: ClassEvent) => {
+    setSelectedEvent(event);
+    setTitleInput(event.title);
+    setDescInput(event.desc ?? "");
+    setGroupInput(event.groupId);
+    setEditDialogOpen(true);
+  }, []);
+
+  const closeCreateDialog = () => {
+    setCreateDialogOpen(false);
+    setSlotDraft(null);
+  };
+
+  const closeEditDialog = () => {
+    setEditDialogOpen(false);
+    setSelectedEvent(null);
+  };
+
+  const handleCreateEvent = () => {
+    if (!slotDraft) {
+      return;
+    }
+
+    const trimmedTitle = titleInput.trim();
+    if (!trimmedTitle) {
+      return;
+    }
+
+    const payload: CreateCalendarEventInput = {
+      title: trimmedTitle,
+      start: slotDraft.start,
+      end: slotDraft.end,
+      groupId: groupInput,
+      resourceId: groupInput,
+      desc: descInput.trim() ? descInput.trim() : undefined,
+    };
+
+    if (isRecurring && recurrenceUntil) {
+      payload.recurrenceUntil = recurrenceUntil;
+    }
+
+    createEventMutation.mutate(payload, {
+      onSuccess: (createdEvents) => {
+        setLocalEvents((prev) => [...prev, ...createdEvents]);
+        closeCreateDialog();
+      },
+    });
+  };
+
+  const handleUpdateEvent = () => {
+    if (!selectedEvent) {
+      return;
+    }
+
+    const trimmedTitle = titleInput.trim();
+    if (!trimmedTitle) {
+      return;
+    }
+
+    updateEventMutation.mutate(
+      {
+        ...selectedEvent,
+        title: trimmedTitle,
+        desc: descInput.trim() ? descInput.trim() : undefined,
+        groupId: groupInput,
+        resourceId: groupInput,
+      },
+      {
+        onSuccess: (updatedEvent) => {
+          setLocalEvents((prev) =>
+            prev.map((currentEvent) =>
+              currentEvent.id === updatedEvent.id ? updatedEvent : currentEvent,
+            ),
+          );
+          closeEditDialog();
+        },
+      },
+    );
+  };
+
+  const handleDeleteEvent = () => {
+    if (!selectedEvent) {
+      return;
+    }
+
+    deleteEventMutation.mutate(selectedEvent.id, {
+      onSuccess: () => {
+        setLocalEvents((prev) =>
+          prev.filter(({ id }) => id !== selectedEvent.id),
+        );
+        closeEditDialog();
+      },
+    });
+  };
 
   return (
-    <Calendar<ClassEvent, CalendarResource>
-      dayLayoutAlgorithm="no-overlap"
-      className="tq-rbc-theme mt-20 p-5"
-      resources={resources}
-      resourceAccessor="resourceId"
-      resourceIdAccessor="resourceId"
-      resourceTitleAccessor="resourceTitle"
-      events={events}
-      eventPropGetter={eventPropGetter}
-      //   timeslots={4}
-      step={5}
-      culture="nb-NO"
-      date={date}
-      onNavigate={onNavigate}
-      onView={onView}
-      view={view}
-      views={["day", "work_week"]}
-      localizer={localizer}
-      defaultView="day"
-      enableAutoScroll
-      scrollToTime={DateTime.local().toJSDate()}
-      min={minTime}
-      max={maxTime}
-      startAccessor="start"
-      endAccessor="end"
-      selectable
-      onSelectEvent={handleSelectEvent}
-      onSelectSlot={handleSelectSlot}
-    />
+    <>
+      <Calendar<ClassEvent, CalendarResource>
+        dayLayoutAlgorithm="no-overlap"
+        className="tq-rbc-theme mt-20 p-5"
+        resources={resources}
+        resourceAccessor="resourceId"
+        resourceIdAccessor="resourceId"
+        resourceTitleAccessor="resourceTitle"
+        events={localEvents}
+        eventPropGetter={eventPropGetter}
+        //   timeslots={4}
+        step={5}
+        culture="nb-NO"
+        date={date}
+        onNavigate={onNavigate}
+        onView={onView}
+        view={view}
+        views={["day", "work_week"]}
+        localizer={localizer}
+        defaultView="day"
+        enableAutoScroll
+        scrollToTime={DateTime.local().toJSDate()}
+        min={minTime}
+        max={maxTime}
+        startAccessor="start"
+        endAccessor="end"
+        selectable
+        onSelectEvent={handleSelectEvent}
+        onSelectSlot={handleSelectSlot}
+      />
+
+      <Dialog
+        open={createDialogOpen}
+        onClose={closeCreateDialog}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Lag ny hendelse</DialogTitle>
+        <DialogContent>
+          <div className="mt-2 flex flex-col gap-4">
+            <TextField
+              label="Tittel"
+              value={titleInput}
+              onChange={(event) => setTitleInput(event.target.value)}
+              autoFocus
+              fullWidth
+            />
+            <TextField
+              label="Beskrivelse (ikke nødvendig)"
+              value={descInput}
+              onChange={(event) => setDescInput(event.target.value)}
+              fullWidth
+              multiline
+              minRows={2}
+            />
+            <FormControl fullWidth>
+              <InputLabel id="calendar-create-group-label">Gruppe</InputLabel>
+              <Select
+                labelId="calendar-create-group-label"
+                value={groupInput}
+                label="Gruppe"
+                onChange={(event) =>
+                  setGroupInput(event.target.value as ClassEvent["groupId"])
+                }
+              >
+                {resources.map((resource) => (
+                  <MenuItem
+                    key={resource.resourceId}
+                    value={resource.resourceId}
+                  >
+                    {resource.resourceTitle}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isRecurring}
+                  onChange={(event) => setIsRecurring(event.target.checked)}
+                />
+              }
+              label="Repeter ukentlig"
+            />
+            {isRecurring ? (
+              <TextField
+                label="Repeter til"
+                type="date"
+                value={recurrenceUntil}
+                onChange={(event) => setRecurrenceUntil(event.target.value)}
+                slotProps={{
+                  inputLabel: {
+                    shrink: true,
+                  },
+                }}
+                fullWidth
+              />
+            ) : null}
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeCreateDialog}>Avbryt</Button>
+          <Button onClick={handleCreateEvent} variant="contained">
+            Lagre
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={editDialogOpen}
+        onClose={closeEditDialog}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Rediger hendelse</DialogTitle>
+        <DialogContent>
+          <div className="mt-2 flex flex-col gap-4">
+            <TextField
+              label="Tittel"
+              value={titleInput}
+              onChange={(event) => setTitleInput(event.target.value)}
+              autoFocus
+              fullWidth
+            />
+            <TextField
+              label="Beskrivelse (ikke nødvendig)"
+              value={descInput}
+              onChange={(event) => setDescInput(event.target.value)}
+              fullWidth
+              multiline
+              minRows={2}
+            />
+            <FormControl fullWidth>
+              <InputLabel id="calendar-edit-group-label">Gruppe</InputLabel>
+              <Select
+                labelId="calendar-edit-group-label"
+                value={groupInput}
+                label="Gruppe"
+                onChange={(event) =>
+                  setGroupInput(event.target.value as ClassEvent["groupId"])
+                }
+              >
+                {resources.map((resource) => (
+                  <MenuItem
+                    key={resource.resourceId}
+                    value={resource.resourceId}
+                  >
+                    {resource.resourceTitle}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button color="error" onClick={handleDeleteEvent}>
+            Slett
+          </Button>
+          <Button onClick={closeEditDialog}>Cancel</Button>
+          <Button onClick={handleUpdateEvent} variant="contained">
+            Lagre
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }
 
