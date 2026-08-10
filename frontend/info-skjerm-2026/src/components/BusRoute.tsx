@@ -26,22 +26,20 @@ function BusRoute({ RouteData }: { RouteData: BusRouteType }) {
   }
 
   return (
-    <div className="bg-tqboxes  text-white rounded-xl px-3 py-2 flex items-center justify-between border border-tkyellowdimmed my-2">
-      <div className="flex items-center gap-2 min-w-0">
+    <div className="bg-tqboxes text-white rounded-xl px-3.5 py-2.5 flex items-center justify-between border border-tkyellowdimmed my-1 3xl:my-2 gap-3 min-w-0">
+      <div className="flex items-center gap-2.5 min-w-0 flex-1">
         {/* Buss number */}
-        <div className="bg-tkyellow text-black h-fit min-w-[3vw] px-2 rounded-lg flex items-center justify-center font-bold text-[2vh]">
+        <div className="bg-tkyellow text-black text-lg 3xl:text-5xl h-fit min-w-[2.5em] py-0.5 3xl:py-3 rounded-lg flex items-center justify-center font-bold">
           <DirectionsBusIcon sx={{ fontSize: "inherit" }} />
           {RouteData.busLine}
         </div>
         {/* Buss navn */}
-        <p className="font-medium text-[2vh] truncate pr-2">
+        <p className="font-medium text-lg 3xl:text-4xl truncate pr-1 leading-tight min-w-0">
           {RouteData.destination}
         </p>
       </div>
       {/* Når den ankommer */}
-      <p className={`text-[2vh] font-bold whitespace-nowrap ${textColor}`}>
-        {time}
-      </p>
+      <p className={`font-bold text-lg 3xl:text-5xl ${textColor}`}>{time}</p>
     </div>
   );
 }

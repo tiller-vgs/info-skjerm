@@ -20,6 +20,7 @@
 .tq-rbc-theme.rbc-calendar {
   color: #e2e2e2;
   font-family: "Inter Variable", Inter, sans-serif;
+  font-size: clamp(1rem, 1.1vw, 1.85rem);
 }
 
 .tq-rbc-theme .rbc-toolbar {
@@ -67,10 +68,10 @@
 .tq-rbc-theme .rbc-header {
   background-color: #1e2227;
   color: #e2e2e2;
-  font-size: 0.9rem;
+  font-size: clamp(1rem, 1.2vw, 2.5rem);
   font-weight: 700;
   letter-spacing: 0.02em;
-  padding: 0.55rem 0.25rem;
+  padding: 0.65rem 0.35rem;
 }
 
 .tq-rbc-theme .rbc-time-header-content,
@@ -101,6 +102,7 @@
 .tq-rbc-theme .rbc-time-header-gutter .rbc-label {
   color: #9ca3af;
   font-weight: 600;
+  font-size: clamp(0.95rem, 1.05vw, 2rem);
 }
 
 .tq-rbc-theme .rbc-now .rbc-button-link,
@@ -112,6 +114,8 @@
 .tq-rbc-theme .rbc-day-slot .rbc-background-event {
   border: 1px solid #5b35a8;
   box-shadow: 0 4px 10px rgb(0 0 0 / 24%);
+  font-size: clamp(0.95rem, 1.05vw, 2rem);
+  line-height: 1.2;
 }
 
 .tq-rbc-theme .rbc-off-range-bg {

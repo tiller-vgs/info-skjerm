@@ -1,8 +1,6 @@
-import React, { useState, useEffect, type JSX, useMemo } from "react";
+import React, { useState, useEffect, type JSX } from "react";
 import BusRouteList from "./BusRouteList";
 // import AnnouncementsGrid from "./AnnouncementsGrid";
-import TQLeaderboard from "./TQLeaderboard";
-import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import CalendarView from "./CalendarView";
 
 const busStops: string[] = ["Tiller VGS", "City Syd", "Tillerterminalen"];
@@ -12,7 +10,7 @@ const StaleTime = 1000 * 15;
 export const BusRotator: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
   const NumberOfBusses = 30;
-  const AccualNumberOfBusses = 8;
+  const AccualNumberOfBusses = 6;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,12 +21,7 @@ export const BusRotator: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h2 className="text-[4vh]">
-        <DirectionsBusIcon sx={{ fontSize: "inherit" }} />
-        {busStops[index]}
-      </h2>
-
+    <div className="h-full min-h-0">
       <BusRouteList
         key={busStops[index]}
         NumberOfBusses={NumberOfBusses}

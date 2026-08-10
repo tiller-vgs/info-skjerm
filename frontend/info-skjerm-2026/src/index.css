@@ -27,6 +27,8 @@
   --color-epic: #a335ee;
   --color-legendary: #ff8000;
   --color-mythic: #ef4444;
+
+  --breakpoint-3xl: 140rem;
 }
 
 /*
