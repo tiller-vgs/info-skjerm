@@ -1,5 +1,5 @@
 // import BusRoute from "../components/BusRoute";
-import { BusRotator, AnnouncmentRotator } from "../components/ContentRotator";
+import { BusRotator, AnnouncementRotator } from "../components/ContentRotator";
 // import WeatherDisplay from "../components/WeatherDisplay";
 import DateAndTimeDisplay from "../components/DateAndTimeDisplay";
 import Paper from "@mui/material/Paper";
@@ -42,7 +42,7 @@ function InfoScreen() {
           elevation={24}
           square={false}
         >
-          <AnnouncmentRotator />
+          <AnnouncementRotator />
         </Paper>
       </div>
 

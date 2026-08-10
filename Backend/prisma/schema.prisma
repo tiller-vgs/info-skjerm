@@ -37,11 +37,15 @@ model earlyerWeatherdays {
 }
 
 model Announcements {
-  id        Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   title     String
   content   String
   dateStart String
   dateEnd   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String
+  updatedBy String
 
   @@unique([id])
   @@map("announcements")

@@ -9,7 +9,7 @@ import { styled } from "@mui/material/styles";
 import AdminPreferences from "../components/AdminPreferences";
 import Paper from "@mui/material/Paper";
 import Registrer from "../components/Registrer";
-import AnnouncementForm from "../components/AnnouncementForm";
+import AnnouncementAdminPanel from "../components/AnnouncementAdminPanel";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   gap: "2rem",
@@ -58,12 +58,12 @@ export default async function AdminDashboard() {
   // Liste over info som trengs for å mappe admin knappene
   const adminButtons = [
     {
-      text: "Kunngjør meldinger",
+      text: "Lag kunngjøringer",
       value: "left",
       aria: "left aligned",
     },
     {
-      text: "Slett kunngjøringer",
+      text: "Rediger kunngjøringer",
       value: "mid-left",
       aria: "mid-left aligned",
     },
@@ -117,8 +117,8 @@ export default async function AdminDashboard() {
             ))}
           </StyledToggleButtonGroup>
           <div className="w-full">
-            {alignment === "left" && <AnnouncementForm />}
-            {alignment === "mid-left" && "Slett kunngjøring"}
+            {alignment === "left" && <AnnouncementAdminPanel />}
+            {alignment === "mid-left" && <AnnouncementAdminPanel />}
             {alignment === "mid-right" && <AdminPreferences />}
             {alignment === "right" && <Registrer />}
           </div>

@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { AnnouncementType } from "@types";
 
 const StaleTime = 1000 * 60 * 5; // 5 minutt
@@ -9,9 +9,9 @@ export const getAnnouncements = () => {
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/api/announcements`,
       );
-      if (response.statusText !== "OK") {
+      if (!response.ok) {
         console.log(response.status, response.statusText);
-        return response.statusText;
+        throw new Error(response.statusText);
       }
       const AnnouncementList = (await response.json()) as AnnouncementType[];
       return AnnouncementList;
@@ -20,50 +20,77 @@ export const getAnnouncements = () => {
   });
 };
 
-// Change text to everything needed to make a anouncement object
-export const putAnnouncements = (AnnouncementObject: AnnouncementType) => {
-  return useQuery({
-    queryKey: ["putAnnouncements", AnnouncementObject],
-    queryFn: async () => {
+export const useAnnouncements = getAnnouncements;
+
+export const useAnnouncementMutations = () => {
+  const queryClient = useQueryClient();
+
+  const invalidateAnnouncements = async () => {
+    await queryClient.invalidateQueries({ queryKey: ["getAnnouncements"] });
+  };
+
+  const createAnnouncement = useMutation({
+    mutationFn: async (announcementObject: AnnouncementType) => {
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/api/announcements`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(AnnouncementObject),
+          credentials: "include",
+          body: JSON.stringify(announcementObject),
         },
       );
-      console.log(response);
-      if (!response.ok) {
-        console.log(response.status, response.statusText);
-        return response.statusText;
-      }
-      const PutAnnouncementConfirm = (await response.json()) as string;
-      return PutAnnouncementConfirm;
-    },
-    staleTime: StaleTime,
-  });
-};
 
-export const deleteAnnouncements = (id: number) => {
-  return useQuery({
-    queryKey: ["deleteAnnouncements"],
-    queryFn: async () => {
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      return (await response.json()) as string;
+    },
+    onSuccess: invalidateAnnouncements,
+  });
+
+  const updateAnnouncement = useMutation({
+    mutationFn: async (announcementObject: AnnouncementType) => {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/announcements`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(announcementObject),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      return (await response.json()) as string;
+    },
+    onSuccess: invalidateAnnouncements,
+  });
+
+  const deleteAnnouncement = useMutation({
+    mutationFn: async (id: number) => {
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/api/announcements`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ id }),
         },
       );
-      if (response.statusText !== "OK") {
-        console.log(response.status, response.statusText);
-        return response.statusText;
+
+      if (!response.ok) {
+        throw new Error(await response.text());
       }
-      const DeleteAnnouncementConfirm = (await response.json()) as string;
-      return DeleteAnnouncementConfirm;
+
+      return (await response.json()) as string;
     },
-    staleTime: StaleTime,
+    onSuccess: invalidateAnnouncements,
   });
+
+  return { createAnnouncement, updateAnnouncement, deleteAnnouncement };
 };

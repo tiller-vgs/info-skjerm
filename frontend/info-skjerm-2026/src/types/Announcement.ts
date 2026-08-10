@@ -1,6 +1,11 @@
 export interface AnnouncementType {
-	title: string;
-	content: string;
-	dateStart: string;
-	dateEnd: string;
+  id?: number;
+  title: string;
+  content: string;
+  dateStart: string;
+  dateEnd: string;
+  createdAt?: string;
+  updatedAt?: string;
+  createdBy?: string;
+  updatedBy?: string;
 }

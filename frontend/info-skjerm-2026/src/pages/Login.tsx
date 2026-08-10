@@ -35,7 +35,7 @@ function Login() {
       return;
     }
     toast.success("Login successful!");
-    navigate("/admin/dashboard");
+    navigate("/calendar");
   }
 
   return (
