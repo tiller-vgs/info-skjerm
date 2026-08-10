@@ -1,11 +1,13 @@
 import { lazy, Suspense } from "react";
 import "./index.css";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
-import { Navbar, Authorization } from "./components/Navbar";
+import { Navbar } from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CalendarForm from "./components/CalendarForm";
+import { Authorization } from "./components/Authorization";
 
-export const StaleTime = 1000 * 6// 0 * 5; // 5 minutes
+export const StaleTime = 1000 * 6; // 0 * 5; // 5 minutes
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -15,35 +17,45 @@ const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 function App() {
   return (
     <>
-    <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/" element={<Navbar />}>
-            <Route index element={<Home />} />
-            <Route path="info-screen">
-              <Route index element={<InfoScreen />} />
-            </Route>
-            <Route path="login">
-              <Route index element={<Login />} />
-            </Route>
-            <Route
-              path="admin"
-              element={
-                <Authorization>
-                  <Outlet />
-                </Authorization>
-              }
-            >
-              <Route path="dashboard">
-                <Route index element={<AdminDashboard />} />
+      <BrowserRouter>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Navbar />}>
+              <Route index element={<Home />} />
+              <Route path="info-screen">
+                <Route index element={<InfoScreen />} />
               </Route>
-              <Route path="register" element={<div>Admin Register</div>} />
+              <Route path="login">
+                <Route index element={<Login />} />
+              </Route>
+              <Route
+                path="admin"
+                element={
+                  <Authorization allowedRoles={["ADMIN"]}>
+                    <Outlet />
+                  </Authorization>
+                }
+              >
+                <Route path="dashboard">
+                  <Route index element={<AdminDashboard />} />
+                </Route>
+                <Route path="register" element={<div>Admin Register</div>} />
+              </Route>
+              <Route
+                path="calendar"
+                element={
+                  <Authorization allowedRoles={["ADMIN", "MODERATOR"]}>
+                    <CalendarForm />
+                  </Authorization>
+                }
+              />
+
+              <Route path="*" element={<div>404 Not Found</div>} />
             </Route>
-          </Route>
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
-    <ToastContainer position="bottom-right" />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+      <ToastContainer position="bottom-right" />
     </>
   );
 }

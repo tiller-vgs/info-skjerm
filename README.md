@@ -119,6 +119,14 @@ BETTER_AUTH_SECRET=<random secret>
 BETTER_AUTH_URL=http://site.example.com
 ```
 
+To enable local dev environment, create the following .env in the frontend workspace:
+
+```
+
+VITE_API_BASE_URL=http://backendurl:PORT
+
+```
+
 ---
 
 ## Commit convention

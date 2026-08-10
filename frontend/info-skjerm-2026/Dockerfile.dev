@@ -3,6 +3,7 @@ WORKDIR /app
 
 # Install deps — source is mounted at runtime, not copied
 COPY package*.json ./
+COPY .npmrc ./
 RUN npm ci
 
 EXPOSE 5173

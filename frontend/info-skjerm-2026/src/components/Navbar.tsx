@@ -1,25 +1,18 @@
-import type { PropsWithChildren } from "react";
-import { NavLink, Outlet, Navigate, useNavigate } from "react-router";
+import { NavLink, Outlet, useNavigate } from "react-router";
 import { authClient } from "../lib/auth-client";
 
-export const Authorization = ({ children }: PropsWithChildren) => {
-  const { data: session, isPending } = authClient.useSession();
-
-  if (isPending) return null;
-  if (!session?.user) return <Navigate to="/login" />;
-
-  return children;
-};
-
 export function Navbar() {
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
   const navigate = useNavigate();
-  const isLoggedIn = !!session?.user;
 
   async function handleSignOut() {
     await authClient.signOut();
     navigate("/login");
   }
+
+  if (isPending) return null;
+
+  console.log(session?.user);
 
   return (
     <>
@@ -46,6 +39,18 @@ export function Navbar() {
           </h1>
           {/* Valg alle har */}
           <nav className="flex items-center gap-6">
+            {session?.user?.role === "ADMIN" && (
+              <h3 className="text-yellow-500 font-bold">
+                {session?.user.name} - Admin
+              </h3>
+            )}
+
+            {session?.user?.role === "MODERATOR" && (
+              <h3 className="text-yellow-500 font-bold">
+                {session?.user.name} - Moderator
+              </h3>
+            )}
+
             <NavLink className="hover:text-tkyellow transition" to={"/"}>
               Hjem
             </NavLink>
@@ -56,13 +61,13 @@ export function Navbar() {
               Infoskjerm
             </NavLink>
 
-            {!isLoggedIn && (
+            {!session?.user && (
               <NavLink className="hover:text-tkyellow transition" to={"/login"}>
-                Logg in
+                Logg inn
               </NavLink>
             )}
 
-            {isLoggedIn && (
+            {session?.user.role === "ADMIN" && (
               <div className="flex items-center gap-6">
                 <NavLink
                   className="hover:text-tkyellow transition"
@@ -70,13 +75,26 @@ export function Navbar() {
                 >
                   Adminpanel
                 </NavLink>
-                <button
-                  className="hover:text-red-400 transition cursor-pointer"
-                  onClick={handleSignOut}
-                >
-                  Logg ut
-                </button>
               </div>
+            )}
+            {session?.user.role === "ADMIN" ||
+              (session?.user.role === "MODERATOR" && (
+                <div className="flex items-center gap-6">
+                  <NavLink
+                    className="hover:text-tkyellow transition"
+                    to={"/calendar"}
+                  >
+                    Rediger kalender
+                  </NavLink>
+                </div>
+              ))}
+            {session?.user && (
+              <button
+                className="hover:text-red-400 transition cursor-pointer"
+                onClick={handleSignOut}
+              >
+                Logg ut
+              </button>
             )}
           </nav>
         </div>

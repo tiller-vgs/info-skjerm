@@ -1,18 +1,31 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "@prismaclient";
-import { codes } from "@helpers"
+import { codes } from "@helpers";
+import { fromNodeHeaders } from "better-auth/node";
+import { auth } from "lib/auth";
 
 const router = Router();
 
 router.put("/", async (req: Request, res: Response) => {
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+  });
+
+  if (!session || !["ADMIN", "MODERATOR"].includes(session?.user?.role)) {
+    return res.status(403).send("Unauthorized");
+  }
+
   // Fill in with what frontend sends
   let WhatToChange: string;
   let WhatToChangeTo: string | string[] | number;
-  try{
+  try {
     WhatToChange = req.body.WhatToChange.toLowerCase();
     WhatToChangeTo = req.body.WhatToChangeTo;
   } catch (err) {
-    console.log("DatabaseController -- Error with setting varibles from request", err);
+    console.log(
+      "DatabaseController -- Error with setting varibles from request",
+      err,
+    );
     return res.status(400).send(codes.type);
   }
 
@@ -28,25 +41,27 @@ router.put("/", async (req: Request, res: Response) => {
       return res.status(400).send(codes.format_type);
     }
     // UPDATE AdminTable SET dayamount = ? (WhatToChangeTo)
-  }
-  
-  else if (WhatToChange === "timeseries") {
+  } else if (WhatToChange === "timeseries") {
     // Check if its the right format [ xx-xx 00|23-00|59, ... ]
     try {
-      if (!(WhatToChangeTo as string[]).every(item => /^(0[0-9]|1[0-9]|2[0-3]):00-([0-5][0-9]):00$ /.test(item))) {
+      if (
+        !(WhatToChangeTo as string[]).every((item) =>
+          /^(0[0-9]|1[0-9]|2[0-3]):00-([0-5][0-9]):00$ /.test(item),
+        )
+      ) {
         return res.status(400).send("timeseries" + codes.format);
       }
-		} catch (err) {
-			console.log("DatabaseController -- Error with checking format", err);
+    } catch (err) {
+      console.log("DatabaseController -- Error with checking format", err);
       return res.status(400).send(codes.format_type);
-		}
+    }
     // UPDATE AdminTable SET timeseries = ? (WhatToChangeTo)
-  }
-  
-  else if (WhatToChange === "startdate") {
+  } else if (WhatToChange === "startdate") {
     // Check if its the right format ( xx-xx 00|12-00|31 )
     try {
-      if (!/^(0[1-9]|1[0-2])-([1-2][1-9]|3[0-1])$/.test(WhatToChangeTo as string)) {
+      if (
+        !/^(0[1-9]|1[0-2])-([1-2][1-9]|3[0-1])$/.test(WhatToChangeTo as string)
+      ) {
         return res.status(400).send("startdate" + codes.format);
       }
     } catch (err) {
@@ -54,14 +69,18 @@ router.put("/", async (req: Request, res: Response) => {
       return res.status(400).send(codes.format_type);
     }
     // UPDATE AdminTable SET startdate = ? (WhatToChangeTo)
+  } else {
+    return res
+      .status(400)
+      .send("What you want to change dosen't exist or can't be changed");
   }
-  else {
-    return res.status(400).send("What you want to change dosen't exist or can't be changed");
-  }
-  
-  await prisma.adminTable.update({ where: { id: 1 }, data: { [WhatToChange]: WhatToChangeTo } });
+
+  await prisma.adminTable.update({
+    where: { id: 1 },
+    data: { [WhatToChange]: WhatToChangeTo },
+  });
   console.log("Changed AdminTable:  ", { [WhatToChange]: WhatToChangeTo });
   res.json("Changed AdminTable");
-})
+});
 
 export default router;
