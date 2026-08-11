@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { AnnouncementType } from "@types";
 
 const StaleTime = 1000 * 60 * 5; // 5 minutt
-export const getAnnouncements = () => {
+export const useAnnouncements = () => {
   return useQuery({
     queryKey: ["getAnnouncements"],
     queryFn: async () => {
@@ -19,8 +19,6 @@ export const getAnnouncements = () => {
     staleTime: StaleTime,
   });
 };
-
-export const useAnnouncements = getAnnouncements;
 
 export const useAnnouncementMutations = () => {
   const queryClient = useQueryClient();
