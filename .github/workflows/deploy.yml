@@ -26,6 +26,7 @@ jobs:
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
           BETTER_AUTH_URL: ${{ secrets.BETTER_AUTH_URL }}
           CLOUDFLARE_TUNNEL_TOKEN: ${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }}
+          VITE_TILLERQUEST_PUBLIC_URL: ${{ vars.VITE_TILLERQUEST_PUBLIC_URL }}
         run: |
           printf "POSTGRES_DB=%s\n"            "$POSTGRES_DB"            >  .env
           printf "POSTGRES_USER=%s\n"          "$POSTGRES_USER"          >> .env
@@ -33,6 +34,7 @@ jobs:
           printf "BETTER_AUTH_SECRET=%s\n"     "$BETTER_AUTH_SECRET"     >> .env
           printf "BETTER_AUTH_URL=%s\n"        "$BETTER_AUTH_URL"        >> .env
           printf "CLOUDFLARE_TUNNEL_TOKEN=%s\n" "$CLOUDFLARE_TUNNEL_TOKEN" >> .env
+          printf "VITE_TILLERQUEST_PUBLIC_URL=%s\n" "$VITE_TILLERQUEST_PUBLIC_URL" >> .env
 
       - name: Build and deploy
         run: docker compose up --build -d

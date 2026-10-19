@@ -5,10 +5,12 @@ COPY package*.json ./
 COPY .npmrc ./
 RUN npm ci
 
-# VITE_API_BASE_URL is baked into the bundle at build time by Vite.
+# VITE_* values are baked into the bundle at build time by Vite.
 # Pass empty string in production (same-origin nginx setup); override for other envs.
 ARG VITE_API_BASE_URL=""
 ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
+ARG VITE_TILLERQUEST_PUBLIC_URL=""
+ENV VITE_TILLERQUEST_PUBLIC_URL=${VITE_TILLERQUEST_PUBLIC_URL}
 
 COPY . .
 RUN npm run build

@@ -18,6 +18,8 @@ import { TillerQuestTheme } from "../lib/theme";
 import RarityText from "./RarityText";
 import { ScrollWindow } from "./ScrollWindow";
 
+const TILLERQUEST_PUBLIC_URL = import.meta.env.VITE_TILLERQUEST_PUBLIC_URL;
+
 function TQLeaderboard() {
   const {
     data: vg1Data,
@@ -84,7 +86,7 @@ function TQLeaderboard() {
                           <div className="flex justify-center h-[10vh] w-[10vh] m-auto self-center from-zinc-600 to-zinc-700 bg-radial p-1.5 rounded-full">
                             <img
                               className="rounded-full"
-                              src={`https://tillerquest.tiller.blog/classes/${user.image}.png`}
+                              src={`${TILLERQUEST_PUBLIC_URL}/classes/${user.image}.png`}
                             />
                           </div>
                         </TableCell>
@@ -180,7 +182,7 @@ function TQLeaderboard() {
                           <div className="flex justify-center h-[10vh] w-[10vh] m-auto self-center from-zinc-600 to-zinc-700 bg-radial p-1.5 rounded-full">
                             <img
                               className="rounded-full"
-                              src={`https://tillerquest.tiller.blog/classes/${user.image}.png`}
+                              src={`${TILLERQUEST_PUBLIC_URL}/classes/${user.image}.png`}
                             />
                           </div>
                         </TableCell>

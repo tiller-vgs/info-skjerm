@@ -69,6 +69,7 @@ nano .env
 | `POSTGRES_PASSWORD`  | A strong password                                |
 | `BETTER_AUTH_SECRET` | Long random string — run `openssl rand -hex 32`  |
 | `BETTER_AUTH_URL`    | Your public URL, e.g. `https://site.example.com` |
+| `VITE_TILLERQUEST_PUBLIC_URL` | Public TillerQuest URL used for leaderboard images |
 
 > The `.env` file is only needed for the first manual deploy. After that the GitHub Actions workflow writes it from repository secrets on every deploy.
 
@@ -107,7 +108,7 @@ Go to **Settings → Actions → Runners** in GitHub. The runner should appear w
 
 ---
 
-## Step 5 — Add GitHub Actions secrets
+## Step 5 — Add GitHub Actions secrets and variables
 
 Go to your repository → **Settings → Secrets and variables → Actions → New repository secret**
 
@@ -122,7 +123,7 @@ Add one secret for each variable:
 | `BETTER_AUTH_URL`         | Same as in your `.env` |
 | `CLOUDFLARE_TUNNEL_TOKEN` | The token from Step 4  |
 
-These are injected into the `.env` file by the deploy workflow on every run.
+Add `VITE_TILLERQUEST_PUBLIC_URL` as a repository Actions variable with the public TillerQuest URL, for example `https://tillerquest.tiller.blog`. The deploy workflow writes it to `.env` alongside the secrets on every run.
 
 ---
 
